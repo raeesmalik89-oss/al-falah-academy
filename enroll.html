@@ -331,7 +331,7 @@ a { text-decoration: none; color: inherit; }
           <div class="form-group">
             <label>Student's Full Name <span class="req">*</span></label>
             <input type="text" id="f_name" placeholder="e.g. Ahmad Ali / Fatima Noor" />
-            <span class="field-error" id="e_name">Please enter the student's name</span>
+            <span class="field-error" id="e_name">Please enter a valid name (at least 2 characters)</span>
           </div>
           <div class="form-group">
             <label>Enrolling for <span class="req">*</span></label>
@@ -574,6 +574,7 @@ a { text-decoration: none; color: inherit; }
           <div class="form-group">
             <label>Email Address</label>
             <input type="email" id="f_email" placeholder="your@email.com (optional)" />
+            <span class="field-error" id="e_email">Please enter a valid email address</span>
           </div>
         </div>
 
@@ -709,7 +710,13 @@ function radioVal(name) {
 function validateStep(step) {
   let ok = true;
   if (step === 1) {
-    ['name','for','age','gender','country'].forEach(f => {
+    // Name: at least 2 chars and contains a letter (Latin or Arabic/Urdu)
+    const nameVal = document.getElementById('f_name').value.trim();
+    const nameOk = nameVal.length >= 2 && /[a-zA-Z؀-ۿ]/.test(nameVal);
+    setErr('name', !nameOk);
+    if (!nameOk) ok = false;
+
+    ['for','age','gender','country'].forEach(f => {
       const v = !reqVal(f); setErr(f, v); if (v) ok = false;
     });
     if (!radioVal('level')) { setErr('level', true); ok = false; }
@@ -724,9 +731,28 @@ function validateStep(step) {
   if (step === 3) {
     if (!radioVal('time')) { setErr('time', true); ok = false; }
     else setErr('time', false);
-    const ph = document.getElementById('f_phone').value.trim();
-    if (!ph) { setErr('phone', true); ok = false; }
-    else setErr('phone', false);
+
+    // Phone: Pakistani mobile — 10 digits starting with 3 (after +92 prefix)
+    const phRaw = document.getElementById('f_phone').value.trim().replace(/[\s\-]/g, '');
+    const phoneEl = document.getElementById('e_phone');
+    if (!phRaw) {
+      phoneEl.textContent = 'Please enter your WhatsApp number';
+      setErr('phone', true); ok = false;
+    } else if (!/^3[0-9]{9}$/.test(phRaw)) {
+      phoneEl.textContent = 'Enter a valid number (e.g. 3XX XXXXXXX — 10 digits after +92)';
+      setErr('phone', true); ok = false;
+    } else {
+      setErr('phone', false);
+    }
+
+    // Email: optional — validate format only if provided
+    const emailVal = document.getElementById('f_email').value.trim();
+    if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
+      setErr('email', true); ok = false;
+    } else {
+      setErr('email', false);
+    }
+
     if (!document.getElementById('f_agree').checked) { setErr('agree', true); ok = false; }
     else setErr('agree', false);
   }
