@@ -1531,8 +1531,15 @@ let qlIsPlaying     = false;
 let qlFilteredList  = [...SURAHS];
 
 function qlAudioUrl(num, reciter) {
-  // Islamic Network CDN — reliable, free, 128kbps
-  return `https://cdn.islamic.network/quran/audio-surah/128/${reciter}/${num}.mp3`;
+  // Per-reciter CDN mapping — verified working sources
+  const pad = n => String(n).padStart(3, '0');
+  const cdnMap = {
+    'ar.alafasy':            `https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${num}.mp3`,
+    'ar.abdurrahmaansudais': `https://cdn.islamic.network/quran/audio-surah/64/ar.abdurrahmaansudais/${num}.mp3`,
+    'ar.husary':             `https://cdn.islamic.network/quran/audio-surah/64/ar.husary/${num}.mp3`,
+    'ar.minshawi':           `https://cdn.islamic.network/quran/audio-surah/64/ar.minshawi/${num}.mp3`,
+  };
+  return cdnMap[reciter] || `https://cdn.islamic.network/quran/audio-surah/64/${reciter}/${num}.mp3`;
 }
 
 function qlRenderGrid(list) {
@@ -1578,8 +1585,12 @@ function qlPlay(num) {
   const player   = document.getElementById('qlPlayer');
 
   audio.src = qlAudioUrl(num, qlCurrentReciter);
-  audio.play();
+  audio.play().catch(() => {});
   qlIsPlaying = true;
+  audio.onerror = () => {
+    showToast('⚠️ Audio unavailable for this reciter. Try another.');
+    qlIsPlaying = false;
+  };
 
   player.style.display = 'block';
   // Add bottom padding so content isn't hidden behind player
