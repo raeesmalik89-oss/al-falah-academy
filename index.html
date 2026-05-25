@@ -29,8 +29,8 @@
       <li><a href="#hadith-day">Hadith</a></li>
       <li><a href="#ayah-day">Ayah</a></li>
       <li><a href="#quran-listen">Quran</a></li>
-      <li><a href="#downloads">📥 Downloads</a></li>
-      <li><a href="#gallery">🖼 Gallery</a></li>
+      <li><a href="#downloads">Downloads</a></li>
+      <li><a href="#gallery">Gallery</a></li>
       <li><a href="#books">Free Books</a></li>
       <li><a href="#dars">Dars</a></li>
       <li><a href="enroll.html" class="nav-cta">Enroll Free</a></li>
@@ -44,8 +44,8 @@
     <a href="#hadith-day" onclick="toggleMenu()">Hadith of the Day</a>
     <a href="#ayah-day" onclick="toggleMenu()">Ayah of the Day</a>
     <a href="#quran-listen" onclick="toggleMenu()">Quran Listening</a>
-    <a href="#downloads" onclick="toggleMenu()">📥 Free Downloads</a>
-    <a href="#gallery" onclick="toggleMenu()">🖼 Resource Gallery</a>
+    <a href="#downloads" onclick="toggleMenu()">Free Downloads</a>
+    <a href="#gallery" onclick="toggleMenu()">Resource Gallery</a>
     <a href="#books" onclick="toggleMenu()">Free Books</a>
     <a href="#dars" onclick="toggleMenu()">Dars / News</a>
     <a href="enroll.html" onclick="toggleMenu()">Enroll Free</a>
@@ -57,14 +57,55 @@
   <div class="hero-overlay"></div>
   <div class="container hero-inner">
 
-    <!-- Islamic Calendar Bar -->
-    <div class="islamic-calendar-bar" id="islamicCalBar">
-      <span class="ical-item" id="icalHijri">🌙 Loading…</span>
-      <span class="ical-sep">|</span>
-      <span class="ical-item" id="icalGregorian">📅 Loading…</span>
-      <span class="ical-sep">|</span>
-      <span class="ical-item" id="icalDay">⏰ Loading…</span>
+    <!-- Islamic Date & Prayer Bar -->
+    <div id="islamicCalBar" style="background:rgba(0,0,0,0.25);padding:6px 16px;display:flex;align-items:center;justify-content:center;gap:18px;flex-wrap:wrap;font-size:13px;color:rgba(255,255,255,0.9);letter-spacing:0.2px;">
+      <span id="icalHijri" style="display:flex;align-items:center;gap:5px;">🌙 <span id="hijriDateTxt">—</span></span>
+      <span style="opacity:0.4">·</span>
+      <span id="icalGregorian" style="display:flex;align-items:center;gap:5px;">📅 <span id="gregDateTxt">—</span></span>
+      <span style="opacity:0.4">·</span>
+      <span style="display:flex;align-items:center;gap:5px;">🕌 Fajr <span id="fajrTxt">—</span></span>
+      <span style="opacity:0.4">·</span>
+      <span style="display:flex;align-items:center;gap:5px;">Dhuhr <span id="dhuhrTxt">—</span></span>
+      <span style="opacity:0.4">·</span>
+      <span style="display:flex;align-items:center;gap:5px;">Asr <span id="asrTxt">—</span></span>
+      <span style="opacity:0.4">·</span>
+      <span style="display:flex;align-items:center;gap:5px;">Maghrib <span id="maghribTxt">—</span></span>
     </div>
+    <script>
+    (function(){
+      // Hijri date calculation
+      function toHijri(d){
+        var jd=Math.floor((14+d.getMonth()+1)/12);var y=d.getFullYear()+4800-jd;var m=d.getMonth()+1+12*jd-3;
+        var jdn=d.getDate()+Math.floor((153*m+2)/5)+365*y+Math.floor(y/4)-Math.floor(y/100)+Math.floor(y/400)-32045;
+        var l=jdn-1948440+10632;var n=Math.floor((l-1)/10631);l=l-10631*n+354;
+        var j=(Math.floor((10985-l)/5316))*(Math.floor((50*l)/17719))+(Math.floor(l/5670))*(Math.floor((43*l)/15238));
+        l=l-(Math.floor((30-j)/15))*(Math.floor((17719*j)/50))-(Math.floor(j/16))*(Math.floor((15238*j)/43))+29;
+        var hm=Math.floor((24*l)/709);var hd=l-Math.floor((709*hm)/24);var hy=30*n+j-30;
+        var months=['Muharram','Safar','Rabi al-Awwal','Rabi al-Thani','Jumada al-Ula','Jumada al-Akhirah','Rajab','Sha\'ban','Ramadan','Shawwal','Dhul Qa\'dah','Dhul Hijjah'];
+        return hd+' '+months[hm-1]+' '+hy;
+      }
+      var now=new Date();
+      document.getElementById('hijriDateTxt').textContent=toHijri(now);
+      var days=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      var months2=['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+      document.getElementById('gregDateTxt').textContent=days[now.getDay()]+', '+now.getDate()+' '+months2[now.getMonth()]+' '+now.getFullYear();
+      // Fetch prayer times
+      fetch('https://api.aladhan.com/v1/timingsByCity?city=Islamabad&country=Pakistan&method=1')
+        .then(function(r){return r.json();})
+        .then(function(d){
+          var t=d.data.timings;
+          document.getElementById('fajrTxt').textContent=t.Fajr;
+          document.getElementById('dhuhrTxt').textContent=t.Dhuhr;
+          document.getElementById('asrTxt').textContent=t.Asr;
+          document.getElementById('maghribTxt').textContent=t.Maghrib;
+        }).catch(function(){
+          document.getElementById('fajrTxt').textContent='04:21';
+          document.getElementById('dhuhrTxt').textContent='12:10';
+          document.getElementById('asrTxt').textContent='15:40';
+          document.getElementById('maghribTxt').textContent='19:15';
+        });
+    })();
+    </script>
 
     <div class="hero-arabic">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
     <h1>Learn Quran & Hadith<br><span class="highlight">From Qualified Scholars</span></h1>
@@ -141,117 +182,48 @@
 </section>
 
 <!-- ── QIBLA FINDER ───────────────────────────────────────────────────────── -->
-<section class="section qibla-section" id="qibla">
+<!-- ── ISLAMIC TOOLS ───────────────────────────────────────────────────────── -->
+<section class="section" id="qibla" style="background:#f7f9f4;">
   <div class="container">
     <div class="section-header">
-      <div class="section-badge">🕋 اتجاه القبلة</div>
-      <h2>Qibla Direction Finder</h2>
-      <p>Find the direction of the Kaaba from your exact location</p>
+      <div class="section-badge">Islamic Tools</div>
+      <h2>Quran, Hadith &amp; Qibla</h2>
+      <p>Daily Islamic tools — free to use, updated every day</p>
     </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
 
-    <div class="qibla-layout">
-
-      <!-- Compass -->
-      <div class="qibla-compass-wrap">
-        <div class="qibla-compass" id="qiblaCompass">
-          <!-- Outer ring -->
-          <svg class="qibla-ring-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
-            <!-- Outer decorative ring -->
-            <circle cx="150" cy="150" r="145" fill="none" stroke="#c8972a" stroke-width="2" opacity="0.4"/>
-            <circle cx="150" cy="150" r="138" fill="none" stroke="#c8972a" stroke-width="0.5" opacity="0.3"/>
-            <!-- Tick marks -->
-            <g stroke="#c8972a" stroke-width="1" opacity="0.5">
-              <line x1="150" y1="8"  x2="150" y2="20"/>
-              <line x1="150" y1="280" x2="150" y2="292"/>
-              <line x1="8"   y1="150" x2="20"  y2="150"/>
-              <line x1="280" y1="150" x2="292" y2="150"/>
-            </g>
-            <!-- Cardinal labels -->
-            <text x="150" y="34"  text-anchor="middle" fill="#c8972a" font-size="14" font-weight="700" font-family="serif">N</text>
-            <text x="150" y="278" text-anchor="middle" fill="#c8972a" font-size="14" font-weight="700" font-family="serif">S</text>
-            <text x="272" y="155" text-anchor="middle" fill="#c8972a" font-size="14" font-weight="700" font-family="serif">E</text>
-            <text x="28"  y="155" text-anchor="middle" fill="#c8972a" font-size="14" font-weight="700" font-family="serif">W</text>
-            <!-- Degree marks every 30° -->
-            <g stroke="#c8972a" stroke-width="0.8" opacity="0.3">
-              <line x1="150" y1="8" x2="150" y2="16" transform="rotate(30 150 150)"/>
-              <line x1="150" y1="8" x2="150" y2="16" transform="rotate(60 150 150)"/>
-              <line x1="150" y1="8" x2="150" y2="16" transform="rotate(120 150 150)"/>
-              <line x1="150" y1="8" x2="150" y2="16" transform="rotate(150 150 150)"/>
-              <line x1="150" y1="8" x2="150" y2="16" transform="rotate(210 150 150)"/>
-              <line x1="150" y1="8" x2="150" y2="16" transform="rotate(240 150 150)"/>
-              <line x1="150" y1="8" x2="150" y2="16" transform="rotate(300 150 150)"/>
-              <line x1="150" y1="8" x2="150" y2="16" transform="rotate(330 150 150)"/>
-            </g>
-            <!-- Inner circle -->
-            <circle cx="150" cy="150" r="110" fill="rgba(26,107,58,0.08)" stroke="#1a6b3a" stroke-width="1" opacity="0.4"/>
-          </svg>
-
-          <!-- Needle (rotated by JS) -->
-          <div class="qibla-needle-wrap" id="qiblaNeedle">
-            <svg class="qibla-needle-svg" viewBox="0 0 40 220" xmlns="http://www.w3.org/2000/svg">
-              <!-- North tip — gold, points to Qibla -->
-              <polygon points="20,0 27,90 20,105 13,90" fill="#c8972a"/>
-              <!-- Kaaba icon at tip -->
-              <rect x="14" y="2" width="12" height="12" rx="2" fill="#1a1a1a"/>
-              <!-- South tip — dark -->
-              <polygon points="20,220 27,130 20,115 13,130" fill="#1a4030" opacity="0.7"/>
-              <!-- Center circle -->
-              <circle cx="20" cy="110" r="10" fill="#fff" stroke="#c8972a" stroke-width="2"/>
-              <circle cx="20" cy="110" r="4"  fill="#c8972a"/>
-            </svg>
-          </div>
-
-          <!-- Center label -->
-          <div class="qibla-center-label" id="qiblaCenterLabel">
-            <div class="qibla-kaaba-icon">🕋</div>
-          </div>
-        </div>
-
-        <!-- Degree display -->
-        <div class="qibla-degree-badge" id="qiblaDegree"></div>
+      <!-- Qibla Card -->
+      <div style="background:#fff; border:0.5px solid #e0e0d8; border-radius:16px; padding:28px 22px; box-shadow:0 2px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
+        <div style="font-size:2.2rem; margin-bottom:14px;">🕋</div>
+        <div style="font-size:16px; font-weight:700; color:#1a1a1a; margin-bottom:8px;">Qibla Finder</div>
+        <div style="font-size:13px; color:#555; margin-bottom:14px; line-height:1.6;">Find the exact direction of the Kaaba from your location.</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">📍 Uses your GPS location</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">🧭 Degree bearing shown</div>
+        <div style="font-size:12px; color:#555; margin-bottom:20px;">📏 Distance to Makkah</div>
+        <button onclick="findQibla()" style="background:#1a6b3a; color:#fff; border:none; border-radius:10px; padding:12px; font-size:13px; font-weight:700; cursor:pointer; margin-top:auto; width:100%;">Find My Qibla</button>
+        <div id="qiblaResult" style="margin-top:8px; font-size:12px; color:#1a6b3a; font-weight:600; text-align:center; min-height:18px;"></div>
       </div>
 
-      <!-- Info panel -->
-      <div class="qibla-info">
-        <div class="qibla-status" id="qiblaStatus">
-          <div class="qibla-status-icon">📍</div>
-          <div id="qiblaStatusText">
-            <strong>Allow Location Access</strong><br>
-            <span>Click the button below to find Qibla from your exact location</span>
-          </div>
-        </div>
+      <!-- Hadith Card -->
+      <div style="background:#fff; border:0.5px solid #e0e0d8; border-radius:16px; padding:28px 22px; box-shadow:0 2px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
+        <div style="font-size:2.2rem; margin-bottom:14px;">📿</div>
+        <div style="font-size:16px; font-weight:700; color:#1a1a1a; margin-bottom:8px;">Hadith of the Day</div>
+        <div style="font-size:13px; color:#555; margin-bottom:14px; line-height:1.6;">Authentic hadith from Bukhari, Muslim &amp; Nawawi — new every day.</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">📚 Sahih Bukhari · Muslim</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">🌍 Arabic, Urdu &amp; English</div>
+        <div style="font-size:12px; color:#555; margin-bottom:20px;">🔁 Changes daily</div>
+        <a href="#hadith-day" style="background:#c8972a; color:#fff; border-radius:10px; padding:12px; font-size:13px; font-weight:700; text-decoration:none; text-align:center; margin-top:auto; display:block;">Read Hadith</a>
+      </div>
 
-        <div class="qibla-details" id="qiblaDetails" style="display:none">
-          <div class="qibla-detail-row">
-            <span class="qd-label">📍 Your Location</span>
-            <span class="qd-val" id="qdLocation">—</span>
-          </div>
-          <div class="qibla-detail-row">
-            <span class="qd-label">🧭 Qibla Direction</span>
-            <span class="qd-val" id="qdBearing">—</span>
-          </div>
-          <div class="qibla-detail-row">
-            <span class="qd-label">📏 Distance to Kaaba</span>
-            <span class="qd-val" id="qdDistance">—</span>
-          </div>
-          <div class="qibla-detail-row">
-            <span class="qd-label">🕋 Kaaba Coordinates</span>
-            <span class="qd-val">21.4225°N, 39.8262°E</span>
-          </div>
-        </div>
-
-        <button class="qibla-find-btn" id="qiblaBtn" onclick="findQibla()">
-          🕋 Find My Qibla Direction
-        </button>
-
-        <div class="qibla-note">
-          <strong>On mobile?</strong> For a live rotating compass that follows your phone, allow both location and device orientation when prompted.
-        </div>
-
-        <div class="qibla-dua">
-          <div class="qibla-dua-ar">وَحَيْثُ مَا كُنتُمْ فَوَلُّوا وُجُوهَكُمْ شَطْرَهُ</div>
-          <div class="qibla-dua-tr">"Wherever you are, turn your faces towards it." — Al-Baqarah 2:144</div>
-        </div>
+      <!-- Ayah Card -->
+      <div style="background:#fff; border:0.5px solid #e0e0d8; border-radius:16px; padding:28px 22px; box-shadow:0 2px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
+        <div style="font-size:2.2rem; margin-bottom:14px;">📖</div>
+        <div style="font-size:16px; font-weight:700; color:#1a1a1a; margin-bottom:8px;">Ayah of the Day</div>
+        <div style="font-size:13px; color:#555; margin-bottom:14px; line-height:1.6;">A new verse from the Holy Quran every day with translation.</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">🕌 Full Arabic text</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">📝 Urdu &amp; English</div>
+        <div style="font-size:12px; color:#555; margin-bottom:20px;">🌿 Tafsir reference</div>
+        <a href="#ayah-day" style="background:#1a6b3a; color:#fff; border-radius:10px; padding:12px; font-size:13px; font-weight:700; text-decoration:none; text-align:center; margin-top:auto; display:block;">Read Ayah</a>
       </div>
 
     </div>
@@ -676,7 +648,7 @@
             <span class="gtag">Makhraj Chart</span>
             <span class="gtag">Short Surahs</span>
           </div>
-          <a href="Al-Falah-Noorani-Qaida.html" target="_blank" class="gallery-btn green-btn">📖 Open &amp; Print</a>
+          <a href="Al-Falah-Noorani-Qaida.pdf" download="Al-Falah-Noorani-Qaida.pdf" class="gallery-btn green-btn">⬇ Download PDF</a>
         </div>
       </div>
 
@@ -705,7 +677,7 @@
             <span class="gtag">شام وظائف</span>
             <span class="gtag">With References</span>
           </div>
-          <a href="Al-Falah-Duas-Azkar.html" target="_blank" class="gallery-btn gold-btn">🤲 Open &amp; Print</a>
+          <a href="Al-Falah-Duas-Azkar.pdf" download="Al-Falah-Duas-Azkar.pdf" class="gallery-btn gold-btn">⬇ Download PDF</a>
         </div>
       </div>
 
@@ -2105,4 +2077,112 @@ const DARS_VIDEOS = {
   hadith: [
     {
       ep: 1,
-      title: 'اربعین نووی
+      title: 'اربعین نووی — Forty Hadith',
+      desc: 'Explanation of Imam al-Nawawi\'s 40 most important Hadith — a foundation for every Muslim.',
+      scholar: 'Dr. Muhammad Naeem',
+      youtube: '',
+      date: '',
+      duration: ''
+    },
+    {
+      ep: 2,
+      title: 'Sahih al-Bukhari — Introduction',
+      desc: 'Introduction to the most authentic Hadith collection — its author, methodology, and importance.',
+      scholar: 'Dr. Muhammad Naeem',
+      youtube: '',
+      date: '',
+      duration: ''
+    },
+    {
+      ep: 3,
+      title: 'Riyad us-Saliheen — Daily Hadith',
+      desc: 'Gardens of the Righteous — selected Hadiths for daily spiritual practice and character building.',
+      scholar: 'Dr. Muhammad Naeem',
+      youtube: '',
+      date: '',
+      duration: ''
+    }
+  ]
+};
+
+// ── DARS RENDERING ──────────────────────────────────────
+function renderDars(type) {
+  const panel = document.getElementById(type === 'quran' ? 'darsQuran' : 'darsHadith');
+  const videos = DARS_VIDEOS[type] || [];
+  const countEl = document.getElementById(type === 'quran' ? 'countQuran' : 'countHadith');
+  const liveCount = videos.filter(v => v.youtube).length;
+  if (countEl) countEl.textContent = liveCount ? `${liveCount}` : '';
+
+  if (!videos.length) { panel.innerHTML = '<p style="color:#888;text-align:center;padding:40px">No videos yet</p>'; return; }
+
+  panel.innerHTML = videos.map(v => `
+    <div class="dars-card ${v.youtube ? '' : 'dars-coming-soon'}">
+      <div class="dars-thumb ${v.youtube ? '' : 'dars-thumb-placeholder'}">
+        ${v.youtube
+          ? `<img src="https://img.youtube.com/vi/${v.youtube}/mqdefault.jpg" alt="${v.title}" loading="lazy" /><button class="dars-play-btn" onclick="openDarsModal('${v.youtube}','${v.title.replace(/'/g,"\\'")}')">▶</button>`
+          : `<div class="dars-soon-icon">📹</div><div class="dars-soon-label">Coming Soon</div>`}
+      </div>
+      <div class="dars-info">
+        <div class="dars-ep-badge">Ep ${v.ep}</div>
+        <h3 class="dars-title">${v.title}</h3>
+        <p class="dars-desc">${v.desc}</p>
+        <div class="dars-meta">
+          <span>👨‍🏫 ${v.scholar}</span>
+          ${v.date ? `<span>📅 ${v.date}</span>` : ''}
+          ${v.duration ? `<span>⏱ ${v.duration}</span>` : ''}
+        </div>
+        ${v.youtube
+          ? `<button class="dars-watch-btn" onclick="openDarsModal('${v.youtube}','${v.title.replace(/'/g,"\\'")}')">▶ Watch Now</button>`
+          : `<button class="dars-watch-btn dars-watch-soon" disabled>🔔 Coming Soon</button>`}
+      </div>
+    </div>
+  `).join('');
+}
+
+function openDarsModal(ytId, title) {
+  document.getElementById('darsModalTitle').textContent = title;
+  document.getElementById('darsModalPlayer').innerHTML =
+    `<iframe width="100%" height="360" src="https://www.youtube.com/embed/${ytId}?autoplay=1" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>`;
+  document.getElementById('darsModal').style.display = 'flex';
+}
+
+function closeDarsModal(e) {
+  if (e && e.target !== document.getElementById('darsModal') && !e.target.classList.contains('dars-modal-close')) return;
+  document.getElementById('darsModal').style.display = 'none';
+  document.getElementById('darsModalPlayer').innerHTML = '';
+}
+
+function switchDars(type, btn) {
+  document.querySelectorAll('.dars-tab').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('darsQuran').style.display  = type === 'quran'  ? '' : 'none';
+  document.getElementById('darsHadith').style.display = type === 'hadith' ? '' : 'none';
+}
+
+// ══════════════════════════════════════════════════════════
+// PAGE INIT — runs once DOM is ready
+// ══════════════════════════════════════════════════════════
+document.addEventListener('DOMContentLoaded', function () {
+
+  // 1. Prayer Times (Azan section)
+  loadAzan();
+
+  // 2. Hadith of the Day
+  currentHadithIdx = getTodayHadithIndex();
+  renderHadith(currentHadithIdx);
+
+  // 3. Ayah of the Day
+  currentAyahNum = getTodayAyahNumber();
+  loadAyah(currentAyahNum);
+
+  // 4. Free Books Library
+  loadBooks();
+
+  // 5. Dars Videos
+  renderDars('quran');
+  renderDars('hadith');
+
+});
+</script>
+</body>
+</html>
