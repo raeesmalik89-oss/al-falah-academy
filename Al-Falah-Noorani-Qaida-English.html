@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Al-Falah Noorani Qaida — English Edition</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Open+Sans:wght@400;600;700&display=swap');
+
+  :root {
+    --primary: #1a6b3a;
+    --primary-light: #e8f7ee;
+    --gold: #c8972a;
+    --gold-light: #fdf6e3;
+    --blue-light: #e8f4fd;
+    --blue: #2980b9;
+    --text: #2c3e50;
+    --border: #b0d4c0;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    background: #f0f7f2;
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ── TOP BAR ─────────────────────────────────── */
+  .top-bar {
+    background: var(--primary);
+    color: #fff;
+    padding: 10px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .top-bar span { font-size: 13px; opacity: .85; }
+  .top-bar-btns { display: flex; gap: 8px; }
+  .top-bar-btns a {
+    text-decoration: none;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity .2s;
+  }
+  .btn-view  { background: #fff; color: var(--primary); }
+  .btn-dl    { background: var(--gold); color: #fff; }
+  .top-bar-btns a:hover { opacity: .85; }
+
+  /* ── COVER ───────────────────────────────────── */
+  .cover {
+    background: linear-gradient(135deg, var(--primary) 0%, #0e4a28 100%);
+    color: #fff;
+    text-align: center;
+    padding: 50px 20px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .cover-logo {
+    width: 90px; height: 90px;
+    border-radius: 50%;
+    background: rgba(255,255,255,.15);
+    border: 3px solid rgba(255,255,255,.4);
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 20px;
+    font-size: 40px;
+  }
+  .cover h1 { font-size: clamp(22px,4vw,32px); font-weight: 700; letter-spacing: 1px; }
+  .cover h2 { font-family: 'Amiri', serif; font-size: clamp(22px,4vw,36px); margin: 8px 0; color: #f9d97a; }
+  .cover p  { font-size: 14px; opacity: .8; margin-top: 6px; }
+  .cover-badge {
+    display: inline-block;
+    margin-top: 18px;
+    background: var(--gold);
+    color: #fff;
+    padding: 6px 22px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: .5px;
+  }
+  .cover-arabic {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: #f9d97a;
+    margin-top: 12px;
+    direction: rtl;
+  }
+
+  /* ── INTRO BOX ───────────────────────────────── */
+  .intro-box {
+    background: var(--blue-light);
+    border-left: 5px solid var(--blue);
+    max-width: 860px;
+    margin: 30px auto;
+    padding: 20px 24px;
+    border-radius: 0 10px 10px 0;
+    font-size: 14px;
+  }
+  .intro-box h3 { color: var(--blue); margin-bottom: 8px; font-size: 16px; }
+
+  /* ── LESSON WRAPPER ──────────────────────────── */
+  .lesson-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 16px 60px;
+  }
+
+  /* ── LESSON CARD ─────────────────────────────── */
+  .lesson {
+    background: #fff;
+    border-radius: 14px;
+    margin-bottom: 30px;
+    overflow: hidden;
+    box-shadow: 0 3px 14px rgba(0,0,0,.07);
+    border: 1px solid var(--border);
+  }
+  .lesson-header {
+    background: linear-gradient(90deg, var(--primary) 0%, #2ecc71 100%);
+    color: #fff;
+    padding: 14px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .lesson-num {
+    background: rgba(255,255,255,.25);
+    border-radius: 50%;
+    width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; font-size: 15px;
+    flex-shrink: 0;
+  }
+  .lesson-title-en { font-size: 17px; font-weight: 700; }
+  .lesson-title-ar { font-family: 'Amiri', serif; font-size: 20px; color: #f9d97a; direction: rtl; }
+  .lesson-body { padding: 20px 22px; }
+  .rule-box {
+    background: var(--gold-light);
+    border: 1px solid var(--gold);
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    font-size: 13.5px;
+  }
+  .rule-box strong { color: var(--gold); display: block; margin-bottom: 4px; font-size: 14px; }
+
+  /* ── ARABIC GRIDS ────────────────────────────── */
+  .arabic-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    justify-content: center;
+    margin: 14px 0;
+    direction: rtl;
+  }
+  .letter-card {
+    min-width: 52px;
+    padding: 10px 8px 6px;
+    border-radius: 10px;
+    text-align: center;
+    border: 1.5px solid var(--border);
+    background: var(--blue-light);
+    transition: transform .15s;
+  }
+  .letter-card:hover { transform: scale(1.06); background: var(--primary-light); }
+  .letter-card .ar { font-family: 'Amiri', serif; font-size: 26px; line-height: 1.2; color: var(--primary); }
+  .letter-card .en { font-size: 10px; color: #666; margin-top: 3px; }
+
+  .gold-card  { background: var(--gold-light); border-color: var(--gold); }
+  .gold-card .ar { color: var(--gold); }
+
+  /* ── TABLES ──────────────────────────────────── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 14px 0;
+    font-size: 14px;
+  }
+  th {
+    background: var(--primary);
+    color: #fff;
+    padding: 9px 12px;
+    text-align: center;
+    font-size: 13px;
+  }
+  td {
+    padding: 8px 12px;
+    text-align: center;
+    border: 1px solid #d9eadf;
+  }
+  tr:nth-child(even) td { background: var(--blue-light); }
+  .ar-cell { font-family: 'Amiri', serif; font-size: 22px; color: var(--primary); direction: rtl; }
+
+  /* ── HARAKAAT COLOR CARDS ────────────────────── */
+  .harak-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 12px;
+    margin: 14px 0;
+  }
+  .harak-card {
+    border-radius: 10px;
+    padding: 14px 12px;
+    text-align: center;
+    border: 1.5px solid transparent;
+  }
+  .harak-card .ar { font-family: 'Amiri', serif; font-size: 30px; margin-bottom: 6px; }
+  .harak-card .name { font-weight: 700; font-size: 13px; }
+  .harak-card .sound { font-size: 12px; color: #555; margin-top: 3px; }
+  .fatha   { background: #fff3cd; border-color: #f0c040; }
+  .fatha .ar { color: #b8860b; }
+  .kasra   { background: #d4edff; border-color: #5aace0; }
+  .kasra .ar { color: #1565a8; }
+  .damma   { background: #e8f5e9; border-color: #56b06b; }
+  .damma .ar { color: #1a7d34; }
+  .sukoon  { background: #f3e5f5; border-color: #9b59b6; }
+  .sukoon .ar { color: #6c3483; }
+  .shadda  { background: #fde8e8; border-color: #e05050; }
+  .shadda .ar { color: #c0392b; }
+  .tanwin  { background: #e8f7f0; border-color: #27ae60; }
+  .tanwin .ar { color: #1a7d34; }
+
+  /* ── TAJWEED RULES ───────────────────────────── */
+  .tajweed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 14px;
+    margin: 14px 0;
+  }
+  .tajweed-card {
+    background: var(--primary-light);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 14px;
+  }
+  .tajweed-card h4 { color: var(--primary); font-size: 14px; margin-bottom: 6px; }
+  .tajweed-card .ar { font-family: 'Amiri', serif; font-size: 22px; color: var(--primary); direction: rtl; display: block; margin-bottom: 4px; }
+  .tajweed-card p { font-size: 12.5px; color: #444; }
+
+  /* ── MAKHRAJ SVG DIAGRAM ─────────────────────── */
+  .makhraj-section {
+    background: #fff;
+    border-radius: 14px;
+    padding: 28px 22px;
+    margin-bottom: 30px;
+    box-shadow: 0 3px 14px rgba(0,0,0,.07);
+    border: 1px solid var(--border);
+  }
+  .makhraj-section h2 {
+    color: var(--primary);
+    text-align: center;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+  .makhraj-section > p { text-align: center; font-size: 13px; color: #666; margin-bottom: 20px; }
+  .makhraj-diagram { max-width: 680px; margin: 0 auto; }
+  .makhraj-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+    margin-top: 22px;
+  }
+  .makhraj-item {
+    background: var(--blue-light);
+    border-radius: 8px;
+    padding: 10px 14px;
+    border-left: 4px solid var(--primary);
+  }
+  .makhraj-item h4 { font-size: 13px; color: var(--primary); margin-bottom: 4px; }
+  .makhraj-item .ar { font-family: 'Amiri', serif; font-size: 18px; color: var(--gold); direction: rtl; }
+  .makhraj-item p { font-size: 12px; color: #555; }
+
+  /* ── SURAH SECTION ───────────────────────────── */
+  .surah-section {
+    background: linear-gradient(135deg, #0e4a28 0%, var(--primary) 100%);
+    border-radius: 14px;
+    padding: 28px 22px;
+    margin-bottom: 30px;
+    color: #fff;
+  }
+  .surah-section h2 { text-align: center; font-size: 20px; margin-bottom: 20px; }
+  .surah-card {
+    background: rgba(255,255,255,.12);
+    border-radius: 10px;
+    padding: 16px 18px;
+    margin-bottom: 14px;
+    border: 1px solid rgba(255,255,255,.2);
+  }
+  .surah-name {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 10px;
+    flex-wrap: wrap; gap: 6px;
+  }
+  .surah-name-en { font-weight: 700; font-size: 15px; }
+  .surah-name-ar { font-family: 'Amiri', serif; font-size: 22px; color: #f9d97a; direction: rtl; }
+  .surah-ayah {
+    font-family: 'Amiri', serif;
+    font-size: 24px;
+    line-height: 2.2;
+    color: #fff;
+    text-align: right;
+    direction: rtl;
+    border-top: 1px solid rgba(255,255,255,.2);
+    padding-top: 10px;
+  }
+
+  /* ── FOOTER ──────────────────────────────────── */
+  .footer {
+    background: var(--primary);
+    color: #fff;
+    text-align: center;
+    padding: 26px 20px;
+    font-size: 13px;
+  }
+  .footer .ar-footer { font-family: 'Amiri', serif; font-size: 20px; color: #f9d97a; margin-bottom: 8px; direction: rtl; }
+  .watermark { opacity: .6; font-size: 12px; margin-top: 8px; }
+
+  @media print {
+    .top-bar { display: none; }
+    .lesson { box-shadow: none; border: 1px solid #ccc; }
+    body { background: #fff; }
+  }
+  @media (max-width: 500px) {
+    .lesson-header { flex-direction: column; align-items: flex-start; }
+    .arabic-grid { gap: 6px; }
+    .letter-card { min-width: 44px; }
+    .letter-card .ar { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <span>📖 Al-Falah Islamic Academy — Noorani Qaida (English Edition)</span>
+  <div class="top-bar-btns">
+    <a class="btn-view" href="Al-Falah-Noorani-Qaida-English.html" target="_blank">👁 View Online</a>
+    <a class="btn-dl" href="Al-Falah-Noorani-Qaida.pdf" download="Al-Falah-Noorani-Qaida.pdf">⬇ Download PDF</a>
+  </div>
+</div>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-logo">📖</div>
+  <h1>Al-Falah Noorani Qaida</h1>
+  <h2>القاعدة النورانية</h2>
+  <p>Learn to Read the Quran — Step by Step with English Guidance</p>
+  <div class="cover-arabic">بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحِیۡمِ</div>
+  <div class="cover-badge">🕌 Al-Falah Islamic Academy — Free Educational Resource</div>
+</div>
+
+<!-- INTRO -->
+<div class="intro-box">
+  <h3>ℹ️ How to Use This Book</h3>
+  <p>This Noorani Qaida teaches you to read the Quran from the very beginning. Start from Lesson 1 and go in order. Each lesson builds on the previous one. Read each Arabic letter and example aloud. Practice until you are confident before moving to the next lesson. <strong>Consistency is key</strong> — even 15 minutes a day will produce excellent results within weeks.</p>
+</div>
+
+<div class="lesson-wrap">
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 1 — ARABIC ALPHABET (HUROOF TAHAJJI)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">1</div>
+    <div>
+      <div class="lesson-title-en">The Arabic Alphabet (Individual Letters)</div>
+      <div class="lesson-title-ar">حروف التهجي</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      The Arabic alphabet has <strong>29 letters</strong>. Each letter has a name and a sound. All Quranic letters are written from <strong>right to left</strong>. Learn each letter's name and its basic sound carefully.
+    </div>
+    <div class="arabic-grid">
+      <div class="letter-card"><div class="ar">ا</div><div class="en">Alif</div></div>
+      <div class="letter-card"><div class="ar">ب</div><div class="en">Baa</div></div>
+      <div class="letter-card"><div class="ar">پ</div><div class="en">Paa*</div></div>
+      <div class="letter-card"><div class="ar">ت</div><div class="en">Taa</div></div>
+      <div class="letter-card"><div class="ar">ٹ</div><div class="en">Ttaa*</div></div>
+      <div class="letter-card"><div class="ar">ث</div><div class="en">Thaa</div></div>
+      <div class="letter-card"><div class="ar">ج</div><div class="en">Jeem</div></div>
+      <div class="letter-card"><div class="ar">چ</div><div class="en">Chaa*</div></div>
+      <div class="letter-card"><div class="ar">ح</div><div class="en">Haa</div></div>
+      <div class="letter-card"><div class="ar">خ</div><div class="en">Khaa</div></div>
+      <div class="letter-card"><div class="ar">د</div><div class="en">Daal</div></div>
+      <div class="letter-card"><div class="ar">ڈ</div><div class="en">Ddaal*</div></div>
+      <div class="letter-card"><div class="ar">ذ</div><div class="en">Dhaal</div></div>
+      <div class="letter-card"><div class="ar">ر</div><div class="en">Raa</div></div>
+      <div class="letter-card"><div class="ar">ز</div><div class="en">Zayn</div></div>
+      <div class="letter-card"><div class="ar">ژ</div><div class="en">Zhaa*</div></div>
+      <div class="letter-card"><div class="ar">س</div><div class="en">Seen</div></div>
+      <div class="letter-card"><div class="ar">ش</div><div class="en">Sheen</div></div>
+      <div class="letter-card"><div class="ar">ص</div><div class="en">Saad</div></div>
+      <div class="letter-card"><div class="ar">ض</div><div class="en">Daad</div></div>
+      <div class="letter-card"><div class="ar">ط</div><div class="en">Ttaa</div></div>
+      <div class="letter-card"><div class="ar">ظ</div><div class="en">Ddhaa</div></div>
+      <div class="letter-card"><div class="ar">ع</div><div class="en">ʿAyn</div></div>
+      <div class="letter-card"><div class="ar">غ</div><div class="en">Ghayn</div></div>
+      <div class="letter-card"><div class="ar">ف</div><div class="en">Faa</div></div>
+      <div class="letter-card"><div class="ar">ق</div><div class="en">Qaaf</div></div>
+      <div class="letter-card"><div class="ar">ک</div><div class="en">Kaaf</div></div>
+      <div class="letter-card"><div class="ar">گ</div><div class="en">Gaaf*</div></div>
+      <div class="letter-card"><div class="ar">ل</div><div class="en">Laam</div></div>
+      <div class="letter-card"><div class="ar">م</div><div class="en">Meem</div></div>
+      <div class="letter-card"><div class="ar">ن</div><div class="en">Noon</div></div>
+      <div class="letter-card"><div class="ar">و</div><div class="en">Waaw</div></div>
+      <div class="letter-card"><div class="ar">ہ</div><div class="en">Haa</div></div>
+      <div class="letter-card"><div class="ar">ی</div><div class="en">Yaa</div></div>
+      <div class="letter-card gold-card"><div class="ar">ء</div><div class="en">Hamza</div></div>
+    </div>
+    <p style="font-size:12px;color:#888;margin-top:8px;">* Letters marked with (*) are used in Urdu/Persian but not in classical Arabic.</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 2 — JOINED FORMS (MURAKKABAH)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">2</div>
+    <div>
+      <div class="lesson-title-en">Joined Letter Forms</div>
+      <div class="lesson-title-ar">حروف مرکبہ</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      Most Arabic letters change their shape when they join with other letters. Each letter can appear in four positions: <strong>isolated</strong>, <strong>initial</strong> (beginning), <strong>medial</strong> (middle), and <strong>final</strong> (end).
+    </div>
+    <table>
+      <tr><th>Letter</th><th>Isolated</th><th>Initial</th><th>Medial</th><th>Final</th><th>Name</th></tr>
+      <tr><td class="ar-cell">ب</td><td class="ar-cell">ب</td><td class="ar-cell">بـ</td><td class="ar-cell">ـبـ</td><td class="ar-cell">ـب</td><td>Baa</td></tr>
+      <tr><td class="ar-cell">ت</td><td class="ar-cell">ت</td><td class="ar-cell">تـ</td><td class="ar-cell">ـتـ</td><td class="ar-cell">ـت</td><td>Taa</td></tr>
+      <tr><td class="ar-cell">ج</td><td class="ar-cell">ج</td><td class="ar-cell">جـ</td><td class="ar-cell">ـجـ</td><td class="ar-cell">ـج</td><td>Jeem</td></tr>
+      <tr><td class="ar-cell">ع</td><td class="ar-cell">ع</td><td class="ar-cell">عـ</td><td class="ar-cell">ـعـ</td><td class="ar-cell">ـع</td><td>ʿAyn</td></tr>
+      <tr><td class="ar-cell">ف</td><td class="ar-cell">ف</td><td class="ar-cell">فـ</td><td class="ar-cell">ـفـ</td><td class="ar-cell">ـف</td><td>Faa</td></tr>
+      <tr><td class="ar-cell">ك</td><td class="ar-cell">ك</td><td class="ar-cell">كـ</td><td class="ar-cell">ـكـ</td><td class="ar-cell">ـك</td><td>Kaaf</td></tr>
+      <tr><td class="ar-cell">م</td><td class="ar-cell">م</td><td class="ar-cell">مـ</td><td class="ar-cell">ـمـ</td><td class="ar-cell">ـم</td><td>Meem</td></tr>
+    </table>
+    <div class="rule-box" style="margin-top:12px;">
+      <strong>⚠️ Non-Joining Letters</strong>
+      Six letters never join to the letter after them: <span style="font-family:'Amiri',serif;font-size:20px;direction:rtl;"> ا، د، ذ، ر، ز، و</span> (Alif, Daal, Dhaal, Raa, Zayn, Waaw).
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 3 — VOWELS (HARAKAAT)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">3</div>
+    <div>
+      <div class="lesson-title-en">Short Vowels (Harakaat)</div>
+      <div class="lesson-title-ar">حرکات</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      Arabic has three short vowel marks (harakaat) that are written above or below letters. They determine how a letter is pronounced. Without them, Arabic words would be unreadable for beginners.
+    </div>
+    <div class="harak-grid">
+      <div class="harak-card fatha">
+        <div class="ar">بَ</div>
+        <div class="name">Fatha</div>
+        <div class="sound">Sound: "a" — like "bat" → <em>ba</em></div>
+      </div>
+      <div class="harak-card kasra">
+        <div class="ar">بِ</div>
+        <div class="name">Kasra</div>
+        <div class="sound">Sound: "i" — like "bit" → <em>bi</em></div>
+      </div>
+      <div class="harak-card damma">
+        <div class="ar">بُ</div>
+        <div class="name">Damma</div>
+        <div class="sound">Sound: "u" — like "put" → <em>bu</em></div>
+      </div>
+    </div>
+    <p style="font-size:13px;margin:14px 0 6px;">Practice — read each syllable aloud:</p>
+    <div class="arabic-grid">
+      <div class="letter-card"><div class="ar">بَ</div><div class="en">ba</div></div>
+      <div class="letter-card"><div class="ar">بِ</div><div class="en">bi</div></div>
+      <div class="letter-card"><div class="ar">بُ</div><div class="en">bu</div></div>
+      <div class="letter-card"><div class="ar">تَ</div><div class="en">ta</div></div>
+      <div class="letter-card"><div class="ar">تِ</div><div class="en">ti</div></div>
+      <div class="letter-card"><div class="ar">تُ</div><div class="en">tu</div></div>
+      <div class="letter-card"><div class="ar">جَ</div><div class="en">ja</div></div>
+      <div class="letter-card"><div class="ar">جِ</div><div class="en">ji</div></div>
+      <div class="letter-card"><div class="ar">جُ</div><div class="en">ju</div></div>
+      <div class="letter-card"><div class="ar">مَ</div><div class="en">ma</div></div>
+      <div class="letter-card"><div class="ar">مِ</div><div class="en">mi</div></div>
+      <div class="letter-card"><div class="ar">مُ</div><div class="en">mu</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 4 — TANWIN (NUNATION)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">4</div>
+    <div>
+      <div class="lesson-title-en">Tanwin (Nunation — Double Vowels)</div>
+      <div class="lesson-title-ar">تنوین</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      Tanwin means "nunation" — adding an "n" sound at the end of a word. It is written as a doubled vowel mark and adds "-an", "-in", or "-un" to the pronunciation.
+    </div>
+    <div class="harak-grid">
+      <div class="harak-card fatha">
+        <div class="ar">بً</div>
+        <div class="name">Tanwin Fatha</div>
+        <div class="sound">Sound: "an" → <em>ban</em></div>
+      </div>
+      <div class="harak-card kasra">
+        <div class="ar">بٍ</div>
+        <div class="name">Tanwin Kasra</div>
+        <div class="sound">Sound: "in" → <em>bin</em></div>
+      </div>
+      <div class="harak-card damma">
+        <div class="ar">بٌ</div>
+        <div class="name">Tanwin Damma</div>
+        <div class="sound">Sound: "un" → <em>bun</em></div>
+      </div>
+    </div>
+    <div class="arabic-grid" style="margin-top:14px;">
+      <div class="letter-card gold-card"><div class="ar">كِتَابٌ</div><div class="en">kitaabun</div></div>
+      <div class="letter-card gold-card"><div class="ar">رَجُلٌ</div><div class="en">rajulun</div></div>
+      <div class="letter-card gold-card"><div class="ar">بَيْتٌ</div><div class="en">baytun</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 5 — LONG VOWELS (HUROOF MADDAH)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">5</div>
+    <div>
+      <div class="lesson-title-en">Long Vowels (Huroof Maddah)</div>
+      <div class="lesson-title-ar">حروف مدّہ</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      Long vowels are formed by combining a short vowel with a vowel letter. They are held for <strong>two counts</strong> (two beats). There are three long vowels: long "aa", long "ii", and long "uu".
+    </div>
+    <table>
+      <tr><th>Long Vowel</th><th>Written As</th><th>Sound</th><th>Example</th><th>Meaning</th></tr>
+      <tr>
+        <td>Long "aa" (Madd-e-Tabi'i)</td>
+        <td class="ar-cell">اَ → آ / بَا</td>
+        <td>"aa" — like "father"</td>
+        <td class="ar-cell">قَالَ</td>
+        <td>He said</td>
+      </tr>
+      <tr>
+        <td>Long "ii"</td>
+        <td class="ar-cell">اِ → بِي</td>
+        <td>"ii" — like "beet"</td>
+        <td class="ar-cell">فِيهِ</td>
+        <td>In it</td>
+      </tr>
+      <tr>
+        <td>Long "uu"</td>
+        <td class="ar-cell">اُ → بُو</td>
+        <td>"uu" — like "moon"</td>
+        <td class="ar-cell">نُورٌ</td>
+        <td>Light</td>
+      </tr>
+    </table>
+    <div class="arabic-grid">
+      <div class="letter-card"><div class="ar">بَابٌ</div><div class="en">baab (door)</div></div>
+      <div class="letter-card"><div class="ar">دِينٌ</div><div class="en">deen (religion)</div></div>
+      <div class="letter-card"><div class="ar">نُورٌ</div><div class="en">noor (light)</div></div>
+      <div class="letter-card"><div class="ar">كِتَابٌ</div><div class="en">kitaab (book)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 6 — SUKOON (NO VOWEL)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">6</div>
+    <div>
+      <div class="lesson-title-en">Sukoon (Rest — No Vowel Sound)</div>
+      <div class="lesson-title-ar">سکون</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      The sukoon (ـْ) is a small circle placed above a letter. It means that letter carries <strong>no vowel</strong> — just the pure consonant sound. The letter stops dead without any "a", "i", or "u" after it.
+    </div>
+    <div class="arabic-grid">
+      <div class="letter-card"><div class="ar">بَيْتٌ</div><div class="en">bayt (house)</div></div>
+      <div class="letter-card"><div class="ar">عِلْمٌ</div><div class="en">ʿilm (knowledge)</div></div>
+      <div class="letter-card"><div class="ar">قَلْبٌ</div><div class="en">qalb (heart)</div></div>
+      <div class="letter-card"><div class="ar">مِنْ</div><div class="en">min (from)</div></div>
+    </div>
+    <div class="rule-box" style="margin-top:14px;">
+      <strong>✅ Practice Tip</strong>
+      When you see sukoon, say the consonant quickly and move to the next letter. Do not add any extra sound. Example: مَلَكٌ (malaK + un) — the ك has sukoon… wait, that has tanwin. Better: بِنْتٌ = b-i-n-t (bint = girl).
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 7 — SHADDAH (DOUBLED CONSONANT)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">7</div>
+    <div>
+      <div class="lesson-title-en">Shaddah (Doubled / Stressed Letter)</div>
+      <div class="lesson-title-ar">تشدید</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      The shaddah (ـّ) looks like a small "W" on top of a letter. It means the letter is doubled — pronounced twice. The first time with sukoon, the second with the vowel. Press the letter firmly and hold it briefly.
+    </div>
+    <div class="harak-grid">
+      <div class="harak-card shadda">
+        <div class="ar">بَّ</div>
+        <div class="name">Shaddah + Fatha</div>
+        <div class="sound">"bb-a" (press hard)</div>
+      </div>
+      <div class="harak-card shadda">
+        <div class="ar">بِّ</div>
+        <div class="name">Shaddah + Kasra</div>
+        <div class="sound">"bb-i"</div>
+      </div>
+      <div class="harak-card shadda">
+        <div class="ar">بُّ</div>
+        <div class="name">Shaddah + Damma</div>
+        <div class="sound">"bb-u"</div>
+      </div>
+    </div>
+    <div class="arabic-grid" style="margin-top:14px;">
+      <div class="letter-card"><div class="ar">رَبُّنَا</div><div class="en">rabbunaa (our Lord)</div></div>
+      <div class="letter-card"><div class="ar">اَلنَّبِيُّ</div><div class="en">an-nabiyy (the Prophet)</div></div>
+      <div class="letter-card"><div class="ar">حَقٌّ</div><div class="en">haqq (truth)</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 8 — SOFT LETTERS (HUROOF LEEN)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">8</div>
+    <div>
+      <div class="lesson-title-en">Soft / Flexible Letters (Huroof Leen)</div>
+      <div class="lesson-title-ar">حروف لین</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      When <strong>و</strong> or <strong>ی</strong> has sukoon and the letter before it has a <em>fatha</em>, these are called "letters of leen" (softness). They produce a soft gliding sound — like "ow" and "ay" in English.
+    </div>
+    <div class="arabic-grid">
+      <div class="letter-card"><div class="ar">خَوْف</div><div class="en">khawf (fear) — "ow"</div></div>
+      <div class="letter-card"><div class="ar">بَيْت</div><div class="en">bayt (house) — "ay"</div></div>
+      <div class="letter-card"><div class="ar">قَوْل</div><div class="en">qawl (speech) — "ow"</div></div>
+      <div class="letter-card"><div class="ar">عَيْن</div><div class="en">ʿayn (eye) — "ay"</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 9 — QALQALAH (ECHO SOUND)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">9</div>
+    <div>
+      <div class="lesson-title-en">Qalqalah (Echoing / Bouncing Sound)</div>
+      <div class="lesson-title-ar">قلقلہ</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      Qalqalah is a slight echo or bounce added to five letters when they have sukoon (no vowel) or appear at the end of a word. The five Qalqalah letters are remembered by the phrase: <strong>قُطُبُ جَدٍّ</strong> (qutbu jadd).
+    </div>
+    <div class="arabic-grid">
+      <div class="letter-card gold-card"><div class="ar">ق</div><div class="en">Qaaf</div></div>
+      <div class="letter-card gold-card"><div class="ar">ط</div><div class="en">Ttaa</div></div>
+      <div class="letter-card gold-card"><div class="ar">ب</div><div class="en">Baa</div></div>
+      <div class="letter-card gold-card"><div class="ar">ج</div><div class="en">Jeem</div></div>
+      <div class="letter-card gold-card"><div class="ar">د</div><div class="en">Daal</div></div>
+    </div>
+    <div class="tajweed-grid" style="margin-top:14px;">
+      <div class="tajweed-card">
+        <h4>Minor Qalqalah (mid-word)</h4>
+        <span class="ar">اَقْبَلَ</span>
+        <p>The ق has a light bounce because it has sukoon mid-word.</p>
+      </div>
+      <div class="tajweed-card">
+        <h4>Major Qalqalah (end of word)</h4>
+        <span class="ar">اَحَدٌ ۝</span>
+        <p>The د at the end of a verse gets a strong echoing bounce.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 10 — NOON SAAKIN & TANWIN RULES
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">10</div>
+    <div>
+      <div class="lesson-title-en">Rules of Noon Saakin &amp; Tanwin</div>
+      <div class="lesson-title-ar">نون ساکن و تنوین کے احکام</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      When a still noon (نْ) or tanwin appears before another letter, it changes its sound based on which letter follows. There are four main rules: Idghaam, Ikhfaa, Iqlaab, and Idhhaar.
+    </div>
+    <div class="tajweed-grid">
+      <div class="tajweed-card">
+        <h4>1. Idhhaar — Clear Noon</h4>
+        <span class="ar">مِنْ حَيْثُ</span>
+        <p>Before throat letters (ء ه ع غ ح خ) — pronounce noon clearly.</p>
+      </div>
+      <div class="tajweed-card">
+        <h4>2. Idghaam — Merge Noon</h4>
+        <span class="ar">مَن يَقُول</span>
+        <p>Before (ي ن م و ر ل) — noon merges into the next letter (usually with ghunnah).</p>
+      </div>
+      <div class="tajweed-card">
+        <h4>3. Ikhfaa — Hidden Noon</h4>
+        <span class="ar">مِن تَحْتِ</span>
+        <p>Before the remaining 15 letters — hold a nasal sound between noon and the next letter.</p>
+      </div>
+      <div class="tajweed-card">
+        <h4>4. Iqlaab — Noon becomes Meem</h4>
+        <span class="ar">مِن بَعْدِ</span>
+        <p>Before ب only — noon changes to a nasal "m" sound with lips slightly closed.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 11 — MEEM SAAKIN RULES
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">11</div>
+    <div>
+      <div class="lesson-title-en">Rules of Still Meem (Meem Saakin)</div>
+      <div class="lesson-title-ar">میم ساکن کے احکام</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      When Meem (مْ) has sukoon, it has three possible pronunciations based on the letter that follows it.
+    </div>
+    <div class="tajweed-grid">
+      <div class="tajweed-card">
+        <h4>Idghaam Shafawi</h4>
+        <span class="ar">هُم مَعَكُم</span>
+        <p>Before م — meem merges into the next meem with a nasal sound.</p>
+      </div>
+      <div class="tajweed-card">
+        <h4>Ikhfaa Shafawi</h4>
+        <span class="ar">هُم بِكُلِّ</span>
+        <p>Before ب — hold lips together briefly with a hidden nasal sound.</p>
+      </div>
+      <div class="tajweed-card">
+        <h4>Idhhaar Shafawi</h4>
+        <span class="ar">عَلَيْهِمْ وَ</span>
+        <p>Before all other letters — pronounce meem clearly and quickly.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 12 — STOPPING SIGNS (WAQF)
+═══════════════════════════════════════════════ -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div class="lesson-num">12</div>
+    <div>
+      <div class="lesson-title-en">Recitation Stop Signs (Waqf)</div>
+      <div class="lesson-title-ar">علامات وقف</div>
+    </div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">
+      <strong>📌 Key Rule</strong>
+      Stop signs (waqf) guide the reciter when to stop, pause, or continue. Stopping correctly is essential for preserving the meaning of the Quran.
+    </div>
+    <table>
+      <tr><th>Sign</th><th>Name</th><th>Meaning &amp; Action</th></tr>
+      <tr><td class="ar-cell">م</td><td>Waqf Laazim</td><td>Mandatory stop — <strong>must stop here</strong>, meaning changes if you continue.</td></tr>
+      <tr><td class="ar-cell">ط</td><td>Waqf Mutlaq</td><td>Absolute stop — highly recommended to stop.</td></tr>
+      <tr><td class="ar-cell">ج</td><td>Waqf Jaa'iz</td><td>Permissible stop — you may stop or continue.</td></tr>
+      <tr><td class="ar-cell">ز</td><td>Waqf Mujawwaz</td><td>Permissible but better to continue.</td></tr>
+      <tr><td class="ar-cell">ص</td><td>Waqf Murakhkhas</td><td>Allowed stop (only) due to long verse.</td></tr>
+      <tr><td class="ar-cell">قلي</td><td>Waqf Qali</td><td>Stopping is preferred.</td></tr>
+      <tr><td class="ar-cell">صلي</td><td>Wasle Aula</td><td>Continuing is preferred.</td></tr>
+      <tr><td class="ar-cell">لا</td><td>Laa Ta'quf</td><td>Do not stop — stopping here distorts the meaning.</td></tr>
+      <tr><td class="ar-cell">۝</td><td>Verse End</td><td>End of an ayah — it is sunnah to stop here.</td></tr>
+    </table>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     LESSON 13 — MAKHAARIJ (ARTICULATION POINTS)
+═══════════════════════════════════════════════ -->
+<div class="makhraj-section">
+  <h2>Lesson 13 — Makhaarij al-Huroof</h2>
+  <h2 style="font-family:'Amiri',serif;font-size:22px;color:var(--gold);direction:rtl;margin-top:4px;">مخارج الحروف</h2>
+  <p>The articulation points of Arabic letters — where each sound originates in the mouth or throat</p>
+
+  <div class="makhraj-diagram">
+    <!-- Mouth cross-section SVG -->
+    <svg viewBox="0 0 600 340" xmlns="http://www.w3.org/2000/svg" style="width:100%;border-radius:12px;background:#f0f7f2;">
+      <defs>
+        <radialGradient id="skinGrad" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#f8d5b0;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#e8b890;stop-opacity:1"/>
+        </radialGradient>
+        <radialGradient id="mouthGrad" cx="50%" cy="40%" r="60%">
+          <stop offset="0%" style="stop-color:#e8a0a0;stop-opacity:1"/>
+          <stop offset="100%" style="stop-color:#c06060;stop-opacity:1"/>
+        </radialGradient>
+      </defs>
+
+      <!-- Head outline -->
+      <ellipse cx="210" cy="155" rx="130" ry="145" fill="url(#skinGrad)" stroke="#c89060" stroke-width="2"/>
+      <!-- Neck -->
+      <rect x="160" y="295" width="100" height="40" rx="10" fill="#e8b890" stroke="#c89060" stroke-width="1.5"/>
+
+      <!-- Mouth cavity -->
+      <path d="M100,130 Q115,100 145,95 Q175,88 210,90 Q245,88 275,95 Q305,102 318,130
+               Q325,155 318,180 Q305,210 280,218 Q245,226 210,225 Q175,226 140,218
+               Q115,210 103,180 Q97,158 100,130Z"
+            fill="url(#mouthGrad)" stroke="#b05050" stroke-width="1.5" opacity=".9"/>
+
+      <!-- Tongue -->
+      <path d="M130,210 Q165,195 210,192 Q255,195 290,210 Q285,235 255,248 Q235,258 210,258
+               Q185,258 165,248 Q135,235 130,210Z"
+            fill="#d07878" stroke="#b05050" stroke-width="1.5"/>
+      <!-- Tongue tip -->
+      <ellipse cx="210" cy="195" rx="35" ry="14" fill="#c06868"/>
+
+      <!-- Hard palate -->
+      <path d="M145,95 Q210,75 275,95" fill="none" stroke="#e0e0e0" stroke-width="3" stroke-dasharray="5,3"/>
+      <!-- Soft palate / uvula -->
+      <path d="M265,118 Q285,130 278,148" fill="none" stroke="#b05050" stroke-width="2.5"/>
+      <circle cx="276" cy="150" r="6" fill="#c05050"/>
+
+      <!-- Teeth indicator -->
+      <rect x="148" y="92" width="12" height="16" rx="2" fill="#f0f0f0" stroke="#ccc" stroke-width="1"/>
+      <rect x="162" y="90" width="12" height="18" rx="2" fill="#f0f0f0" stroke="#ccc" stroke-width="1"/>
+      <rect x="176" y="89" width="12" height="19" rx="2" fill="#f0f0f0" stroke="#ccc" stroke-width="1"/>
+      <rect x="148" y="185" width="12" height="14" rx="2" fill="#f0f0f0" stroke="#ccc" stroke-width="1"/>
+      <rect x="162" y="188" width="12" height="14" rx="2" fill="#f0f0f0" stroke="#ccc" stroke-width="1"/>
+      <rect x="176" y="189" width="12" height="14" rx="2" fill="#f0f0f0" stroke="#ccc" stroke-width="1"/>
+
+      <!-- Throat area -->
+      <ellipse cx="210" cy="275" rx="42" ry="22" fill="#d08080" stroke="#b05050" stroke-width="1.5" opacity=".8"/>
+      <text x="210" y="280" text-anchor="middle" font-size="10" fill="#fff" font-family="Arial">throat</text>
+
+      <!-- ZONE LABELS with arrows -->
+      <!-- Zone 1: Throat (Halq) -->
+      <line x1="255" y1="270" x2="370" y2="295" stroke="#8B0000" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="372" y="280" width="190" height="32" rx="6" fill="#8B0000" opacity=".9"/>
+      <text x="382" y="293" font-size="11" fill="#fff" font-family="Arial" font-weight="bold">① Throat (Al-Halq)</text>
+      <text x="382" y="307" font-size="10" fill="#ffd" font-family="'Amiri',serif">ء ه ع غ ح خ</text>
+
+      <!-- Zone 2: Back of tongue/Uvula -->
+      <line x1="278" y1="148" x2="370" y2="145" stroke="#1a6b3a" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="372" y="131" width="190" height="32" rx="6" fill="#1a6b3a" opacity=".9"/>
+      <text x="382" y="144" font-size="11" fill="#fff" font-family="Arial" font-weight="bold">② Back Tongue / Uvula</text>
+      <text x="382" y="158" font-size="10" fill="#ffd" font-family="'Amiri',serif">ق ك غ خ</text>
+
+      <!-- Zone 3: Middle/front tongue -->
+      <line x1="248" y1="195" x2="370" y2="190" stroke="#c8972a" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="372" y="176" width="190" height="32" rx="6" fill="#c8972a" opacity=".9"/>
+      <text x="382" y="189" font-size="11" fill="#fff" font-family="Arial" font-weight="bold">③ Mid / Front Tongue</text>
+      <text x="382" y="203" font-size="10" fill="#fff" font-family="'Amiri',serif">ج ش ي ز س ص ل ن ر</text>
+
+      <!-- Zone 4: Teeth/Lips area -->
+      <line x1="172" y1="93" x2="120" y2="40" stroke="#2980b9" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="10" y="15" width="190" height="32" rx="6" fill="#2980b9" opacity=".9"/>
+      <text x="20" y="28" font-size="11" fill="#fff" font-family="Arial" font-weight="bold">④ Teeth &amp; Tip of Tongue</text>
+      <text x="20" y="42" font-size="10" fill="#fff" font-family="'Amiri',serif">ث ذ ظ ت د ط ن ل ر</text>
+
+      <!-- Zone 5: Lips -->
+      <path d="M130,130 Q140,122 155,120 Q180,116 210,116 Q240,116 265,120 Q280,122 290,130"
+            fill="#e87070" stroke="#c05050" stroke-width="2"/>
+      <path d="M130,130 Q140,140 155,143 Q180,147 210,147 Q240,147 265,143 Q280,140 290,130"
+            fill="#c06060" stroke="#a04040" stroke-width="1.5"/>
+      <line x1="145" y1="130" x2="80" y2="80" stroke="#9b59b6" stroke-width="1.5" stroke-dasharray="4,3"/>
+      <rect x="10" y="60" width="155" height="32" rx="6" fill="#9b59b6" opacity=".9"/>
+      <text x="20" y="73" font-size="11" fill="#fff" font-family="Arial" font-weight="bold">⑤ Lips (Ash-Shafataan)</text>
+      <text x="20" y="87" font-size="10" fill="#fff" font-family="'Amiri',serif">ب م و ف</text>
+
+      <text x="300" y="20" font-size="12" fill="#1a6b3a" font-family="Arial" font-weight="bold" text-anchor="middle">Al-Falah Academy — Makhaarij Diagram</text>
+    </svg>
+  </div>
+
+  <div class="makhraj-list">
+    <div class="makhraj-item">
+      <h4>① Al-Jawf (Hollow / Open Air)</h4>
+      <div class="ar">ا و ي</div>
+      <p>Long vowel letters — sound comes from open air in mouth/throat.</p>
+    </div>
+    <div class="makhraj-item">
+      <h4>② Al-Halq (Throat)</h4>
+      <div class="ar">ء ه ع غ ح خ</div>
+      <p>Six letters from different parts of the throat — deep, guttural sounds.</p>
+    </div>
+    <div class="makhraj-item">
+      <h4>③ Al-Lisaan (Tongue)</h4>
+      <div class="ar">ق ك ج ش ي ص ز س ض ل ن ر ط د ت ظ ذ ث</div>
+      <p>18 letters from different positions of the tongue — most Arabic sounds.</p>
+    </div>
+    <div class="makhraj-item">
+      <h4>④ Ash-Shafataan (Lips)</h4>
+      <div class="ar">ب م و ف</div>
+      <p>Four letters from the lips — labial sounds, some involving teeth.</p>
+    </div>
+    <div class="makhraj-item">
+      <h4>⑤ Al-Khayshoom (Nasal)</h4>
+      <div class="ar">غنّہ</div>
+      <p>Nasal passage — used for ghunnah (nasal sound in noon/meem with shaddah).</p>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SHORT SURAHS — PRACTICE
+═══════════════════════════════════════════════ -->
+<div class="surah-section">
+  <h2>📖 Practice — Short Surahs of the Quran</h2>
+
+  <div class="surah-card">
+    <div class="surah-name">
+      <span class="surah-name-en">Surah Al-Fatihah (The Opening) — Surah 1</span>
+      <span class="surah-name-ar">سورة الفاتحة</span>
+    </div>
+    <div class="surah-ayah">
+بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحِیۡمِ ۝ اَلۡحَمۡدُ لِلّٰهِ رَبِّ الۡعٰلَمِیۡنَ ۝ الرَّحۡمٰنِ الرَّحِیۡمِ ۝ مٰلِکِ یَوۡمِ الدِّیۡنِ ۝ اِیَّاکَ نَعۡبُدُ وَ اِیَّاکَ نَسۡتَعِیۡنُ ۝ اِہۡدِنَا الصِّرَاطَ الۡمُسۡتَقِیۡمَ ۝ صِرَاطَ الَّذِیۡنَ اَنۡعَمۡتَ عَلَیۡہِمۡ ۬ۙ غَیۡرِ الۡمَغۡضُوۡبِ عَلَیۡہِمۡ وَ لَا الضَّآلِّیۡنَ ۝
+    </div>
+  </div>
+
+  <div class="surah-card">
+    <div class="surah-name">
+      <span class="surah-name-en">Surah Al-Ikhlas (Sincerity) — Surah 112</span>
+      <span class="surah-name-ar">سورة الإخلاص</span>
+    </div>
+    <div class="surah-ayah">
+بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحِیۡمِ ۝ قُلۡ هُوَ اللّٰهُ اَحَدٌ ۝ اَللّٰهُ الصَّمَدُ ۝ لَمۡ یَلِدۡ وَ لَمۡ یُوۡلَدۡ ۝ وَ لَمۡ یَکُنۡ لَّهٗ کُفُوًا اَحَدٌ ۝
+    </div>
+  </div>
+
+  <div class="surah-card">
+    <div class="surah-name">
+      <span class="surah-name-en">Surah Al-Falaq (The Daybreak) — Surah 113</span>
+      <span class="surah-name-ar">سورة الفلق</span>
+    </div>
+    <div class="surah-ayah">
+بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحِیۡمِ ۝ قُلۡ اَعُوۡذُ بِرَبِّ الۡفَلَقِ ۝ مِنۡ شَرِّ مَا خَلَقَ ۝ وَ مِنۡ شَرِّ غَاسِقٍ اِذَا وَقَبَ ۝ وَ مِنۡ شَرِّ النَّفّٰثٰتِ فِی الۡعُقَدِ ۝ وَ مِنۡ شَرِّ حَاسِدٍ اِذَا حَسَدَ ۝
+    </div>
+  </div>
+
+  <div class="surah-card">
+    <div class="surah-name">
+      <span class="surah-name-en">Surah An-Nas (Mankind) — Surah 114</span>
+      <span class="surah-name-ar">سورة الناس</span>
+    </div>
+    <div class="surah-ayah">
+بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحِیۡمِ ۝ قُلۡ اَعُوۡذُ بِرَبِّ النَّاسِ ۝ مَلِکِ النَّاسِ ۝ اِلٰهِ النَّاسِ ۝ مِنۡ شَرِّ الۡوَسۡوَاسِ ۬ۙ الۡخَنَّاسِ ۝ الَّذِیۡ یُوَسۡوِسُ فِیۡ صُدُوۡرِ النَّاسِ ۝ مِنَ الۡجِنَّةِ وَ النَّاسِ ۝
+    </div>
+  </div>
+
+  <div class="surah-card">
+    <div class="surah-name">
+      <span class="surah-name-en">Surah Al-Kawthar (Abundance) — Surah 108</span>
+      <span class="surah-name-ar">سورة الكوثر</span>
+    </div>
+    <div class="surah-ayah">
+بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحِیۡمِ ۝ اِنَّاۤ اَعۡطَیۡنٰکَ الۡکَوۡثَرَ ۝ فَصَلِّ لِرَبِّکَ وَ انۡحَرۡ ۝ اِنَّ شَانِئَکَ هُوَ الۡاَبۡتَرُ ۝
+    </div>
+  </div>
+
+  <div class="surah-card">
+    <div class="surah-name">
+      <span class="surah-name-en">Surah Al-Asr (Time) — Surah 103</span>
+      <span class="surah-name-ar">سورة العصر</span>
+    </div>
+    <div class="surah-ayah">
+بِسۡمِ اللّٰهِ الرَّحۡمٰنِ الرَّحِیۡمِ ۝ وَ الۡعَصۡرِ ۝ اِنَّ الۡاِنۡسَانَ لَفِیۡ خُسۡرٍ ۝ اِلَّا الَّذِیۡنَ اٰمَنُوۡا وَ عَمِلُوا الصّٰلِحٰتِ وَ تَوَاصَوۡا بِالۡحَقِّ وَ تَوَاصَوۡا بِالصَّبۡرِ ۝
+    </div>
+  </div>
+</div>
+
+</div><!-- end lesson-wrap -->
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="ar-footer">الجزاء الخير لمن علّم القرآن وتعلّمه</div>
+  <p>The best reward is for those who teach the Quran and learn it.</p>
+  <div class="watermark">© Al-Falah Islamic Academy — Free to use for educational purposes. Not for commercial sale.</div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Al-Falah Islamic Academy — نورانی قاعدہ (اردو)</title>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Noto+Nastaliq+Urdu:wght@400;500;700&family=Scheherazade+New:wght@400;700&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --green:      #1a6b3a;
+  --green-dark: #0f4523;
+  --green-mid:  #2d8a50;
+  --green-light:#e8f5ee;
+  --gold:       #c8972a;
+  --gold-light: #fef8e8;
+  --gold-border:#e8c870;
+  --blue:       #2563eb;
+  --blue-light: #e8f4fd;
+  --blue-mid:   #bfdbfe;
+  --cream:      #f8faff;
+  --border:     #c5d8f0;
+  --red:        #b22222;
+  --red-light:  #fde8e8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--cream);color:#1a1a1a;direction:rtl;font-family:'Noto Nastaliq Urdu',serif;}
+
+/* TOP BAR */
+.top-bar{background:var(--green-dark);color:#fff;text-align:center;padding:10px 16px;position:sticky;top:0;z-index:999;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+.top-bar-title{font-family:'Inter',sans-serif;font-size:13px;font-weight:600;direction:ltr;}
+.top-bar a.dl-btn{background:var(--gold);color:#fff;padding:6px 20px;border-radius:20px;font-size:13px;font-weight:700;text-decoration:none;font-family:'Inter',sans-serif;white-space:nowrap;}
+.top-bar a.dl-btn:hover{background:#e8b84b;}
+.top-bar a.view-btn{background:transparent;color:rgba(255,255,255,.85);padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600;text-decoration:none;border:1.5px solid rgba(255,255,255,.4);font-family:'Inter',sans-serif;white-space:nowrap;margin-left:8px;direction:ltr;}
+@media print{.top-bar{display:none;}}
+
+.page{max-width:900px;margin:0 auto;padding:0 16px 60px;}
+
+/* COVER */
+.cover{background:linear-gradient(150deg,var(--green-dark) 0%,var(--green) 50%,#2d8a50 100%);color:#fff;text-align:center;padding:50px 24px 44px;border-radius:0 0 28px 28px;margin-bottom:32px;position:relative;overflow:hidden;}
+.cover::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.cv-bismillah{font-family:'Amiri',serif;font-size:2.4rem;color:var(--gold-border);margin-bottom:12px;line-height:1.6;}
+.cv-academy-ur{font-family:'Noto Nastaliq Urdu',serif;font-size:1.3rem;font-weight:700;color:rgba(255,255,255,.9);margin-bottom:4px;}
+.cv-academy-en{font-family:'Inter',sans-serif;font-size:.9rem;letter-spacing:2px;color:var(--gold-border);direction:ltr;margin-bottom:20px;}
+.cv-divider{width:140px;height:2px;background:linear-gradient(to right,transparent,var(--gold-border),transparent);margin:0 auto 20px;}
+.cv-title{font-family:'Amiri',serif;font-size:3rem;color:#fff;line-height:1.3;margin-bottom:6px;}
+.cv-subtitle{font-family:'Noto Nastaliq Urdu',serif;font-size:1rem;color:var(--gold-border);margin-bottom:18px;}
+.cv-badge{display:inline-block;background:rgba(200,151,42,.25);border:1.5px solid var(--gold-border);border-radius:20px;padding:5px 20px;font-family:'Inter',sans-serif;font-size:.8rem;color:var(--gold-border);direction:ltr;}
+.cv-ornament{font-size:1.6rem;color:var(--gold-border);letter-spacing:10px;opacity:.7;margin-top:16px;}
+.wm-footer{margin-top:16px;font-family:'Inter',sans-serif;font-size:.75rem;color:rgba(255,255,255,.5);direction:ltr;}
+
+/* TOC */
+.toc-box{background:var(--blue-light);border:1.5px solid var(--blue-mid);border-radius:16px;padding:24px 28px;margin-bottom:28px;}
+.toc-title{font-family:'Amiri',serif;font-size:1.5rem;color:var(--green-dark);margin-bottom:14px;text-align:center;}
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px 20px;}
+.toc-item{font-family:'Noto Nastaliq Urdu',serif;font-size:.88rem;color:#1a3a6b;padding:4px 0;border-bottom:1px dashed #b3c9f8;}
+.toc-num{font-family:'Inter',sans-serif;font-size:.8rem;color:var(--gold);font-weight:700;margin-left:6px;direction:ltr;}
+
+/* LESSON BOX */
+.lesson{background:#fff;border:1.5px solid var(--border);border-radius:18px;margin-bottom:28px;overflow:hidden;box-shadow:0 3px 16px rgba(37,99,235,.08);}
+.lesson-header{background:linear-gradient(135deg,var(--green-dark),var(--green));color:#fff;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.lh-blue{background:linear-gradient(135deg,#1e40af,var(--blue));}
+.lh-gold{background:linear-gradient(135deg,#7a5210,var(--gold));}
+.lh-teal{background:linear-gradient(135deg,#0f766e,#0d9488);}
+.lh-purple{background:linear-gradient(135deg,#5b21b6,#7c3aed);}
+.lh-rose{background:linear-gradient(135deg,#9f1239,#e11d48);}
+.lesson-num-badge{background:rgba(255,255,255,.2);border:1.5px solid rgba(255,255,255,.4);border-radius:10px;padding:3px 14px;font-family:'Inter',sans-serif;font-size:.78rem;direction:ltr;white-space:nowrap;}
+.lesson-title-ar{font-family:'Amiri',serif;font-size:1.5rem;}
+.lesson-title-ur{font-family:'Noto Nastaliq Urdu',serif;font-size:.9rem;opacity:.85;}
+.lesson-body{padding:22px;}
+
+/* RULE BOX */
+.rule-box{background:var(--blue-light);border-right:4px solid var(--blue);border-radius:10px;padding:12px 16px;margin-bottom:18px;font-family:'Noto Nastaliq Urdu',serif;font-size:.95rem;line-height:1.9;color:#1a1a2e;}
+.rule-box.gold-rule{background:var(--gold-light);border-right-color:var(--gold);}
+.rule-box.green-rule{background:var(--green-light);border-right-color:var(--green);}
+
+/* LETTER GRIDS */
+.alpha-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:16px;}
+.alpha-grid.cols-6{grid-template-columns:repeat(6,1fr);}
+.alpha-grid.cols-5{grid-template-columns:repeat(5,1fr);}
+.alpha-grid.cols-4{grid-template-columns:repeat(4,1fr);}
+.alpha-grid.cols-3{grid-template-columns:repeat(3,1fr);}
+
+.alpha-cell{background:var(--blue-light);border:1.5px solid var(--blue-mid);border-radius:10px;text-align:center;padding:8px 4px 6px;cursor:default;}
+.alpha-cell.red-cell{background:var(--red-light);border-color:#f0b0b0;}
+.alpha-cell.gold-cell{background:var(--gold-light);border-color:var(--gold-border);}
+.alpha-cell.green-cell{background:var(--green-light);border-color:#a0d0b0;}
+.alpha-cell.blue-cell{background:#eff6ff;border-color:#93c5fd;}
+.alpha-cell.purple-cell{background:#f5f3ff;border-color:#c4b5fd;}
+.alpha-ar{font-family:'Amiri',serif;font-size:1.7rem;color:var(--green-dark);line-height:1.3;}
+.alpha-ar.red-ar{color:var(--red);}
+.alpha-ar.gold-ar{color:var(--gold);}
+.alpha-ar.blue-ar{color:var(--blue);}
+.alpha-ar.purple-ar{color:#6d28d9;}
+.alpha-name{font-family:'Noto Nastaliq Urdu',serif;font-size:.7rem;color:#555;margin-top:2px;}
+
+/* EXAMPLE ROWS */
+.ex-row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center;justify-content:flex-end;}
+.ex-cell{background:var(--blue-light);border:1.5px solid var(--blue-mid);border-radius:10px;padding:8px 14px;text-align:center;min-width:60px;}
+.ex-cell.red-ex{background:var(--red-light);border-color:#f0b0b0;}
+.ex-cell.gold-ex{background:var(--gold-light);border-color:var(--gold-border);}
+.ex-cell.green-ex{background:var(--green-light);border-color:#a0d0b0;}
+.ex-ar{font-family:'Amiri',serif;font-size:1.6rem;color:var(--green-dark);line-height:1.4;}
+.ex-ar.red-ar{color:var(--red);}
+.ex-ar.gold-ar{color:var(--gold);}
+.ex-label{font-family:'Noto Nastaliq Urdu',serif;font-size:.72rem;color:#666;margin-top:2px;}
+
+/* HARAKAAT TABLE */
+.harak-table{width:100%;border-collapse:separate;border-spacing:0 8px;margin:12px 0;}
+.harak-table th{background:var(--green-dark);color:#fff;padding:10px 16px;font-family:'Noto Nastaliq Urdu',serif;font-size:.88rem;font-weight:400;}
+.harak-table td{background:var(--blue-light);border:1.5px solid var(--blue-mid);padding:10px 14px;text-align:center;}
+.harak-table td.ar-td{font-family:'Amiri',serif;font-size:1.8rem;color:var(--green-dark);line-height:1.4;}
+.harak-table td.ur-td{font-family:'Noto Nastaliq Urdu',serif;font-size:.85rem;color:#1a1a2e;}
+.harak-table tr:hover td{background:#e0effd;}
+
+/* NOON-SAKIN TABLE */
+.ns-table{width:100%;border-collapse:collapse;margin:14px 0;border-radius:12px;overflow:hidden;}
+.ns-table th{background:var(--blue);color:#fff;padding:10px 14px;font-family:'Noto Nastaliq Urdu',serif;font-size:.9rem;font-weight:400;text-align:center;}
+.ns-table td{padding:10px 14px;border-bottom:1px solid var(--border);font-family:'Noto Nastaliq Urdu',serif;font-size:.85rem;text-align:center;}
+.ns-table td.ar-cell{font-family:'Amiri',serif;font-size:1.5rem;color:var(--green-dark);}
+.ns-table tr:nth-child(even) td{background:#f0f7ff;}
+.ns-table tr:hover td{background:var(--blue-light);}
+.rule-color{display:inline-block;width:14px;height:14px;border-radius:4px;vertical-align:middle;margin-left:6px;}
+
+/* MAKHRAJ SVG */
+.makhraj-section{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:24px;margin-bottom:28px;}
+.makhraj-title{font-family:'Amiri',serif;font-size:1.6rem;color:var(--green-dark);text-align:center;margin-bottom:18px;}
+.makhraj-groups{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:18px;}
+.makhraj-card{background:var(--blue-light);border:1.5px solid var(--blue-mid);border-radius:12px;padding:14px 18px;}
+.mk-title{font-family:'Noto Nastaliq Urdu',serif;font-size:.9rem;color:var(--green-dark);font-weight:700;margin-bottom:6px;}
+.mk-letters{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-dark);letter-spacing:8px;text-align:center;margin:8px 0;}
+.mk-desc{font-family:'Noto Nastaliq Urdu',serif;font-size:.8rem;color:#555;margin-top:4px;}
+
+/* WAQF TABLE */
+.waqf-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+.waqf-card{background:var(--blue-light);border:1.5px solid var(--blue-mid);border-radius:12px;padding:12px 16px;display:flex;align-items:center;gap:14px;}
+.waqf-sign{font-family:'Amiri',serif;font-size:2rem;color:var(--green-dark);min-width:44px;text-align:center;}
+.waqf-info .waqf-name{font-family:'Noto Nastaliq Urdu',serif;font-size:.9rem;color:var(--green-dark);font-weight:700;}
+.waqf-info .waqf-desc{font-family:'Noto Nastaliq Urdu',serif;font-size:.78rem;color:#555;margin-top:3px;}
+
+/* SURAH SECTION */
+.surah-box{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:20px 24px;margin-bottom:20px;box-shadow:0 2px 10px rgba(37,99,235,.06);}
+.surah-name{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-dark);text-align:center;margin-bottom:6px;}
+.surah-en{font-family:'Inter',sans-serif;font-size:.8rem;color:var(--gold);text-align:center;direction:ltr;margin-bottom:14px;}
+.surah-text{font-family:'Amiri',serif;font-size:1.55rem;color:#1a1a2e;line-height:2.4;text-align:center;}
+
+/* PRONUNCIATION DIAGRAM */
+.pronunc-section{background:#fff;border:1.5px solid var(--border);border-radius:18px;padding:24px;margin-bottom:28px;}
+.diagram-container{display:flex;justify-content:center;margin:16px 0;}
+.diagram-caption{font-family:'Noto Nastaliq Urdu',serif;font-size:.85rem;color:#555;text-align:center;margin-top:8px;}
+
+/* FOOTER */
+.footer{text-align:center;padding:28px 0;border-top:2px solid var(--border);margin-top:20px;}
+.footer-ar{font-family:'Amiri',serif;font-size:1.3rem;color:var(--green-dark);margin-bottom:6px;}
+.footer-ur{font-family:'Noto Nastaliq Urdu',serif;font-size:.88rem;color:#555;}
+.watermark{font-family:'Inter',sans-serif;font-size:.75rem;color:#aaa;margin-top:12px;direction:ltr;}
+
+/* SECTION DIVIDER */
+.section-title{text-align:center;margin:28px 0 18px;position:relative;}
+.section-title h3{font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-dark);display:inline-block;background:var(--cream);padding:0 14px;position:relative;z-index:1;}
+.section-title::before{content:'';position:absolute;top:50%;left:0;right:0;height:1.5px;background:linear-gradient(to right,transparent,var(--border),transparent);z-index:0;}
+
+@media print{
+  body{background:#fff;}
+  .page{padding:0;}
+  .lesson{box-shadow:none;border-color:#ccc;}
+  @page{margin:15mm;}
+}
+@media(max-width:600px){
+  .alpha-grid{grid-template-columns:repeat(4,1fr);}
+  .toc-grid{grid-template-columns:1fr;}
+  .makhraj-groups{grid-template-columns:1fr;}
+  .waqf-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar">
+  <span class="top-bar-title">Al-Falah Islamic Academy — نورانی قاعدہ (اردو)</span>
+  <div style="display:flex;gap:8px;align-items:center;">
+    <a href="Al-Falah-Noorani-Qaida-Urdu.html" target="_blank" class="view-btn" style="direction:ltr;">👁 View Online</a>
+    <a href="Al-Falah-Noorani-Qaida-Urdu.pdf" download="Al-Falah-Noorani-Qaida-Urdu.pdf" class="dl-btn">⬇ Download PDF</a>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cv-bismillah">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+  <div class="cv-academy-ur">الفلاح اسلامک اکیڈمی</div>
+  <div class="cv-academy-en">Al-Falah Islamic Academy</div>
+  <div class="cv-divider"></div>
+  <div class="cv-title">نُوْرَانِی قَاعِدَہ</div>
+  <div class="cv-subtitle">رنگین تجویدی — اردو تشریح کے ساتھ</div>
+  <div class="cv-badge">Complete Colored Tajweed Edition — Urdu</div>
+  <div class="cv-ornament">✦ ✦ ✦</div>
+  <div class="wm-footer">© Al-Falah Islamic Academy · alfalah-academy.github.io · Free for all Muslims</div>
+</div>
+
+<!-- TOC -->
+<div class="toc-box">
+  <div class="toc-title">فہرست اسباق</div>
+  <div class="toc-grid">
+    <div class="toc-item"><span class="toc-num">۱</span> حروف تہجی</div>
+    <div class="toc-item"><span class="toc-num">۲</span> حروف مرکبہ</div>
+    <div class="toc-item"><span class="toc-num">۳</span> حرکات (زبر، زیر، پیش)</div>
+    <div class="toc-item"><span class="toc-num">۴</span> تنوین</div>
+    <div class="toc-item"><span class="toc-num">۵</span> حروف مدہ — لمبی آوازیں</div>
+    <div class="toc-item"><span class="toc-num">۶</span> جزم / سکون</div>
+    <div class="toc-item"><span class="toc-num">۷</span> تشدید / شدہ</div>
+    <div class="toc-item"><span class="toc-num">۸</span> حروف لین</div>
+    <div class="toc-item"><span class="toc-num">۹</span> قلقلہ</div>
+    <div class="toc-item"><span class="toc-num">۱۰</span> نون ساکن و تنوین</div>
+    <div class="toc-item"><span class="toc-num">۱۱</span> میم ساکن</div>
+    <div class="toc-item"><span class="toc-num">۱۲</span> علامات وقف</div>
+    <div class="toc-item"><span class="toc-num">۱۳</span> مخارج الحروف</div>
+    <div class="toc-item"><span class="toc-num">۱۴</span> مشق — چھوٹی سورتیں</div>
+  </div>
+</div>
+
+<!-- ── LESSON 1: ARABIC ALPHABET ── -->
+<div class="lesson">
+  <div class="lesson-header">
+    <div><div class="lesson-title-ar">حروف تہجی</div><div class="lesson-title-ur">عربی حروف ابجد</div></div>
+    <div class="lesson-num-badge">سبق ۱</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">عربی میں <strong>۲۹ حروف</strong> ہیں۔ ہر حرف کی اپنی آواز اور مخرج ہے۔ رنگ کے مطابق: <span style="color:var(--green-dark);font-weight:700">سبز = عام حروف</span> · <span style="color:var(--red);font-weight:700">لال = قلقلہ حروف</span> · <span style="color:var(--gold);font-weight:700">سنہری = مدہ حروف</span></div>
+
+    <div class="alpha-grid">
+      <div class="alpha-cell"><div class="alpha-ar">ا</div><div class="alpha-name">الف</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ب</div><div class="alpha-name">بے</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ت</div><div class="alpha-name">تے</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ث</div><div class="alpha-name">ثے</div></div>
+      <div class="alpha-cell red-cell"><div class="alpha-ar red-ar">ج</div><div class="alpha-name">جیم</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ح</div><div class="alpha-name">حے</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">خ</div><div class="alpha-name">خے</div></div>
+
+      <div class="alpha-cell"><div class="alpha-ar">د</div><div class="alpha-name">دال</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ذ</div><div class="alpha-name">ذال</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ر</div><div class="alpha-name">رے</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ز</div><div class="alpha-name">زاء</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">س</div><div class="alpha-name">سین</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ش</div><div class="alpha-name">شین</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ص</div><div class="alpha-name">صاد</div></div>
+
+      <div class="alpha-cell"><div class="alpha-ar">ض</div><div class="alpha-name">ضاد</div></div>
+      <div class="alpha-cell red-cell"><div class="alpha-ar red-ar">ط</div><div class="alpha-name">طوء</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ظ</div><div class="alpha-name">ظوء</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ع</div><div class="alpha-name">عین</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">غ</div><div class="alpha-name">غین</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ف</div><div class="alpha-name">فے</div></div>
+      <div class="alpha-cell red-cell"><div class="alpha-ar red-ar">ق</div><div class="alpha-name">قاف</div></div>
+
+      <div class="alpha-cell"><div class="alpha-ar">ك</div><div class="alpha-name">کاف</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ل</div><div class="alpha-name">لام</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">م</div><div class="alpha-name">میم</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ن</div><div class="alpha-name">نون</div></div>
+      <div class="alpha-cell gold-cell"><div class="alpha-ar gold-ar">و</div><div class="alpha-name">واو</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">ه</div><div class="alpha-name">ہے</div></div>
+      <div class="alpha-cell gold-cell"><div class="alpha-ar gold-ar">ي</div><div class="alpha-name">یے</div></div>
+    </div>
+    <div class="rule-box green-rule" style="margin-top:10px;">قلقلہ حروف (لال رنگ): <span style="font-family:'Amiri',serif;font-size:1.3rem;color:var(--red);letter-spacing:8px;"> ق ط ب ج د</span> — ان کو ادا کرتے وقت آواز میں ہلکی گونج آتی ہے۔</div>
+  </div>
+</div>
+
+<!-- ── LESSON 2: COMPOUND LETTERS ── -->
+<div class="lesson">
+  <div class="lesson-header lh-blue">
+    <div><div class="lesson-title-ar">حروف مرکبہ</div><div class="lesson-title-ur">ملے ہوئے حروف</div></div>
+    <div class="lesson-num-badge">سبق ۲</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">جب دو یا زیادہ حروف مل کر لکھے جاتے ہیں تو ان کی شکل بدل جاتی ہے۔ ذیل میں اہم مرکب حروف دیے گئے ہیں:</div>
+    <div class="alpha-grid cols-5">
+      <div class="alpha-cell"><div class="alpha-ar">لا</div><div class="alpha-name">لا (لام + الف)</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">لب</div><div class="alpha-name">لام + بے</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">لت</div><div class="alpha-name">لام + تے</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">لن</div><div class="alpha-name">لام + نون</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">لم</div><div class="alpha-name">لام + میم</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">بت</div><div class="alpha-name">بے + تے</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">تب</div><div class="alpha-name">تے + بے</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">نب</div><div class="alpha-name">نون + بے</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">حج</div><div class="alpha-name">حے + جیم</div></div>
+      <div class="alpha-cell"><div class="alpha-ar">خش</div><div class="alpha-name">خے + شین</div></div>
+    </div>
+    <div class="rule-box gold-rule">یاد رہے: حروف کی شکل مختلف ہوتی ہے جب وہ لفظ کے شروع میں، درمیان میں یا آخر میں ہوں۔ مثلاً: <span style="font-family:'Amiri',serif;font-size:1.3rem;"> ب — تب — کتب</span></div>
+  </div>
+</div>
+
+<!-- ── LESSON 3: HARAKAAT ── -->
+<div class="lesson">
+  <div class="lesson-header lh-gold">
+    <div><div class="lesson-title-ar">حَرَکَات</div><div class="lesson-title-ur">زبر، زیر، پیش</div></div>
+    <div class="lesson-num-badge">سبق ۳</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box gold-rule">حرکات تین ہیں: <strong>زبر (فتحہ)</strong>، <strong>زیر (کسرہ)</strong>، <strong>پیش (ضمہ)</strong>۔ یہ حروف پر لگنے والے اعراب ہیں جو مختصر آواز بناتے ہیں۔</div>
+    <table class="harak-table">
+      <tr>
+        <th>اعراب</th><th>نام</th><th>آواز</th><th>مثال — بے</th><th>مثال — تے</th><th>مثال — نون</th>
+      </tr>
+      <tr>
+        <td class="ar-td" style="color:var(--green-dark);">بَ</td>
+        <td class="ur-td">زبر / فتحہ</td>
+        <td class="ur-td">مختصر "اَ"</td>
+        <td class="ar-td">بَ</td><td class="ar-td">تَ</td><td class="ar-td">نَ</td>
+      </tr>
+      <tr>
+        <td class="ar-td" style="color:var(--red);">بِ</td>
+        <td class="ur-td">زیر / کسرہ</td>
+        <td class="ur-td">مختصر "اِ"</td>
+        <td class="ar-td" style="color:var(--red);">بِ</td><td class="ar-td" style="color:var(--red);">تِ</td><td class="ar-td" style="color:var(--red);">نِ</td>
+      </tr>
+      <tr>
+        <td class="ar-td" style="color:var(--blue);">بُ</td>
+        <td class="ur-td">پیش / ضمہ</td>
+        <td class="ur-td">مختصر "اُ"</td>
+        <td class="ar-td" style="color:var(--blue);">بُ</td><td class="ar-td" style="color:var(--blue);">تُ</td><td class="ar-td" style="color:var(--blue);">نُ</td>
+      </tr>
+    </table>
+    <div class="section-title"><h3>مشق</h3></div>
+    <div class="ex-row">
+      <div class="ex-cell"><div class="ex-ar">كَتَبَ</div><div class="ex-label">کتب — لکھا</div></div>
+      <div class="ex-cell red-ex"><div class="ex-ar" style="color:var(--red);">رَحِمَ</div><div class="ex-label">رحم — مہربان ہوا</div></div>
+      <div class="ex-cell gold-ex"><div class="ex-ar" style="color:var(--gold);">نَصَرَ</div><div class="ex-label">نصر — مدد کی</div></div>
+      <div class="ex-cell"><div class="ex-ar">ذَهَبَ</div><div class="ex-label">گیا</div></div>
+      <div class="ex-cell red-ex"><div class="ex-ar" style="color:var(--red);">عَلِمَ</div><div class="ex-label">جانا</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LESSON 4: TANWEEN ── -->
+<div class="lesson">
+  <div class="lesson-header lh-teal">
+    <div><div class="lesson-title-ar">تَنْوِيْن</div><div class="lesson-title-ur">دوہری حرکات</div></div>
+    <div class="lesson-num-badge">سبق ۴</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">تنوین میں حرکت کو دو بار لکھا جاتا ہے اور اس کی آواز کے آخر میں ہلکی "ن" کی آواز آتی ہے۔</div>
+    <table class="harak-table">
+      <tr><th>علامت</th><th>نام</th><th>آواز</th><th>مثال</th></tr>
+      <tr>
+        <td class="ar-td">بً</td>
+        <td class="ur-td">تنوین فتح (دوہری زبر)</td>
+        <td class="ur-td">"اَن" کی آواز</td>
+        <td class="ar-td">كِتَابًا · رَجُلًا</td>
+      </tr>
+      <tr>
+        <td class="ar-td" style="color:var(--red);">بٍ</td>
+        <td class="ur-td">تنوین کسر (دوہری زیر)</td>
+        <td class="ur-td">"اِن" کی آواز</td>
+        <td class="ar-td" style="color:var(--red);">رَحِيْمٍ · عَلِيْمٍ</td>
+      </tr>
+      <tr>
+        <td class="ar-td" style="color:var(--blue);">بٌ</td>
+        <td class="ur-td">تنوین ضم (دوہری پیش)</td>
+        <td class="ur-td">"اُن" کی آواز</td>
+        <td class="ar-td" style="color:var(--blue);">مُؤْمِنٌ · كَافِرٌ</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ── LESSON 5: MADD ── -->
+<div class="lesson">
+  <div class="lesson-header" style="background:linear-gradient(135deg,#065f46,#059669);">
+    <div><div class="lesson-title-ar">حُرُوْفُ الْمَدِّ</div><div class="lesson-title-ur">لمبی آوازیں</div></div>
+    <div class="lesson-num-badge">سبق ۵</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box green-rule">مدہ کے تین حروف ہیں: <span style="font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-dark);">ا · و · ي</span> — یہ حروف آواز کو لمبا کرتے ہیں۔</div>
+    <div class="alpha-grid cols-3">
+      <div class="alpha-cell gold-cell" style="padding:16px 8px;">
+        <div class="alpha-ar gold-ar" style="font-size:2.2rem;">آ</div>
+        <div class="alpha-name" style="font-size:.8rem;">الف مدہ — "اا" لمبا الف</div>
+        <div style="font-family:'Amiri',serif;font-size:1.3rem;color:var(--green-dark);margin-top:8px;">كَانَ · قَالَ · جَاءَ</div>
+      </div>
+      <div class="alpha-cell gold-cell" style="padding:16px 8px;">
+        <div class="alpha-ar gold-ar" style="font-size:2.2rem;">وْ</div>
+        <div class="alpha-name" style="font-size:.8rem;">واو مدہ — "او" لمبا واو</div>
+        <div style="font-family:'Amiri',serif;font-size:1.3rem;color:var(--green-dark);margin-top:8px;">يَقُوْلُ · نُوْحٌ · رَسُوْلٌ</div>
+      </div>
+      <div class="alpha-cell gold-cell" style="padding:16px 8px;">
+        <div class="alpha-ar gold-ar" style="font-size:2.2rem;">يْ</div>
+        <div class="alpha-name" style="font-size:.8rem;">یے مدہ — "ای" لمبی یے</div>
+        <div style="font-family:'Amiri',serif;font-size:1.3rem;color:var(--green-dark);margin-top:8px;">عَلِيْمٌ · رَحِيْمٌ · كَرِيْمٌ</div>
+      </div>
+    </div>
+    <div class="rule-box gold-rule" style="margin-top:14px;">مدہ کی مقدار: عام مدہ = ۲ حرکت · مدِ لازم = ۶ حرکت · مدِ عارض = ۲، ۴، یا ۶ حرکت</div>
+  </div>
+</div>
+
+<!-- ── LESSON 6: SUKOON ── -->
+<div class="lesson">
+  <div class="lesson-header lh-purple">
+    <div><div class="lesson-title-ar">السُّكُوْن / الجَزْم</div><div class="lesson-title-ur">ساکن حرف</div></div>
+    <div class="lesson-num-badge">سبق ۶</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">جزم (ْ) حرف کے اوپر لگتی ہے۔ جس حرف پر جزم ہو اس کی اپنی کوئی آواز نہیں ہوتی، وہ پچھلے حرف سے مل جاتا ہے۔</div>
+    <div class="ex-row">
+      <div class="ex-cell"><div class="ex-ar">كْتُبْ</div><div class="ex-label">جزم کی مثال</div></div>
+      <div class="ex-cell green-ex"><div class="ex-ar">يَكْتُبُ</div><div class="ex-label">لکھتا ہے</div></div>
+      <div class="ex-cell gold-ex"><div class="ex-ar">مَسْجِدٌ</div><div class="ex-label">مسجد</div></div>
+      <div class="ex-cell"><div class="ex-ar">يَعْلَمُ</div><div class="ex-label">جانتا ہے</div></div>
+      <div class="ex-cell red-ex"><div class="ex-ar" style="color:var(--red);">مُسْلِمٌ</div><div class="ex-label">مسلمان</div></div>
+      <div class="ex-cell"><div class="ex-ar">خَلَقَ</div><div class="ex-label">پیدا کیا</div></div>
+    </div>
+    <div class="rule-box green-rule" style="margin-top:10px;">یاد رہے: جزم والا حرف پڑھتے وقت آواز اچانک بند ہو جاتی ہے — اسے "وقف" نہیں کہتے جب تک وقف کی علامت نہ ہو۔</div>
+  </div>
+</div>
+
+<!-- ── LESSON 7: TASHDEED ── -->
+<div class="lesson">
+  <div class="lesson-header lh-rose">
+    <div><div class="lesson-title-ar">التَّشْدِيْد</div><div class="lesson-title-ur">شدّہ / مشدد حرف</div></div>
+    <div class="lesson-num-badge">سبق ۷</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">تشدید (ّ) جب کسی حرف پر لگے تو وہ حرف دوہرا پڑھا جاتا ہے۔ پہلا ساکن، دوسرا متحرک۔</div>
+    <div class="ex-row">
+      <div class="ex-cell red-ex"><div class="ex-ar" style="color:var(--red);">رَبَّ</div><div class="ex-label">رَبَّ = رَبْ + بَ</div></div>
+      <div class="ex-cell"><div class="ex-ar">إِنَّ</div><div class="ex-label">إِنَّ = إِنْ + نَ</div></div>
+      <div class="ex-cell gold-ex"><div class="ex-ar" style="color:var(--gold);">اللّٰهُ</div><div class="ex-label">اللّٰه — لام مشدد</div></div>
+      <div class="ex-cell"><div class="ex-ar">الصَّلَاةُ</div><div class="ex-label">نماز</div></div>
+      <div class="ex-cell green-ex"><div class="ex-ar">مَكَّةُ</div><div class="ex-label">مکہ مکرمہ</div></div>
+    </div>
+    <div class="rule-box gold-rule" style="margin-top:10px;">تشدید کی آواز کو پوری طرح ادا کریں — جلدی نہ کریں۔ ہر مشدد حرف پر ایک سیکنڈ رکیں۔</div>
+  </div>
+</div>
+
+<!-- ── LESSON 8: LEEN ── -->
+<div class="lesson">
+  <div class="lesson-header" style="background:linear-gradient(135deg,#1e3a5f,#2563eb);">
+    <div><div class="lesson-title-ar">حُرُوْفُ اللِّيْن</div><div class="lesson-title-ur">حروف لین — نرم حروف</div></div>
+    <div class="lesson-num-badge">سبق ۸</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">حروف لین دو ہیں: <span style="font-family:'Amiri',serif;font-size:1.4rem;color:var(--green-dark);">وْ · يْ</span> — جب ان پر جزم ہو اور ان سے پہلے والے حرف پر زبر (فتحہ) ہو تو یہ "لین" کہلاتے ہیں۔</div>
+    <div class="alpha-grid cols-4">
+      <div class="alpha-cell blue-cell"><div class="alpha-ar blue-ar">خَوْفٌ</div><div class="alpha-name">خَوْف — ڈر (واو لین)</div></div>
+      <div class="alpha-cell blue-cell"><div class="alpha-ar blue-ar">بَيْتٌ</div><div class="alpha-name">بَيْت — گھر (یے لین)</div></div>
+      <div class="alpha-cell blue-cell"><div class="alpha-ar blue-ar">قَوْلٌ</div><div class="alpha-name">قَوْل — بات</div></div>
+      <div class="alpha-cell blue-cell"><div class="alpha-ar blue-ar">عَيْنٌ</div><div class="alpha-name">عَيْن — آنکھ</div></div>
+    </div>
+    <div class="rule-box" style="margin-top:10px;">لین حروف کی آواز نرم اور آسان ہوتی ہے — اس لیے انہیں "نرم" حروف کہتے ہیں۔</div>
+  </div>
+</div>
+
+<!-- ── LESSON 9: QALQALAH ── -->
+<div class="lesson">
+  <div class="lesson-header" style="background:linear-gradient(135deg,#7f1d1d,#dc2626);">
+    <div><div class="lesson-title-ar">الْقَلْقَلَة</div><div class="lesson-title-ur">قلقلہ — گنگناہٹ</div></div>
+    <div class="lesson-num-badge">سبق ۹</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box" style="background:var(--red-light);border-right-color:var(--red);">قلقلہ کے حروف پانچ ہیں: <span style="font-family:'Amiri',serif;font-size:1.6rem;color:var(--red);font-weight:700;letter-spacing:10px;">ق ط ب ج د</span> — جب یہ ساکن ہوں (جزم کے ساتھ) تو آواز میں ہلکا ارتعاش (گونج) آتی ہے۔</div>
+    <div class="alpha-grid cols-5">
+      <div class="alpha-cell red-cell"><div class="alpha-ar red-ar" style="font-size:2rem;">قْ</div><div class="alpha-name">قاف ساکن</div></div>
+      <div class="alpha-cell red-cell"><div class="alpha-ar red-ar" style="font-size:2rem;">طْ</div><div class="alpha-name">طوء ساکن</div></div>
+      <div class="alpha-cell red-cell"><div class="alpha-ar red-ar" style="font-size:2rem;">بْ</div><div class="alpha-name">بے ساکن</div></div>
+      <div class="alpha-cell red-cell"><div class="alpha-ar red-ar" style="font-size:2rem;">جْ</div><div class="alpha-name">جیم ساکن</div></div>
+      <div class="alpha-cell red-cell"><div class="alpha-ar red-ar" style="font-size:2rem;">دْ</div><div class="alpha-name">دال ساکن</div></div>
+    </div>
+    <div class="section-title"><h3>مثالیں</h3></div>
+    <div class="ex-row">
+      <div class="ex-cell red-ex"><div class="ex-ar red-ar">يَجْعَلُ</div><div class="ex-label">جیم ساکن</div></div>
+      <div class="ex-cell red-ex"><div class="ex-ar red-ar">يَقْطَعُ</div><div class="ex-label">قاف ساکن</div></div>
+      <div class="ex-cell red-ex"><div class="ex-ar red-ar">وَيْلٌ</div><div class="ex-label">ویل میں لین</div></div>
+      <div class="ex-cell red-ex"><div class="ex-ar red-ar">اقْرَأْ</div><div class="ex-label">قاف قلقلہ</div></div>
+      <div class="ex-cell red-ex"><div class="ex-ar red-ar">يَطْبَعُ</div><div class="ex-label">طے ساکن</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LESSON 10: NOON SAKIN ── -->
+<div class="lesson">
+  <div class="lesson-header lh-blue">
+    <div><div class="lesson-title-ar">النُّوْن السَّاكِن وَالتَّنْوِيْن</div><div class="lesson-title-ur">نون ساکن اور تنوین کے احکام</div></div>
+    <div class="lesson-num-badge">سبق ۱۰</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">نون ساکن (نْ) یا تنوین کے بعد آنے والے حرف پر چار احکام لاگو ہوتے ہیں:</div>
+    <table class="ns-table">
+      <tr>
+        <th>حکم</th><th>تعریف</th><th>حروف</th><th>مثال</th>
+      </tr>
+      <tr>
+        <td class="ar-cell" style="color:var(--green-dark);">اِظْهَار</td>
+        <td><strong>اظہار</strong> — نون کو واضح پڑھنا</td>
+        <td class="ar-cell" style="font-size:1.1rem;">ء ه ع غ ح خ</td>
+        <td class="ar-cell" style="font-size:1.1rem;">مِنْ عِلْمٍ · عَذَابٌ أَلِيْمٌ</td>
+      </tr>
+      <tr>
+        <td class="ar-cell" style="color:var(--blue);">اِدْغَام</td>
+        <td><strong>ادغام</strong> — نون کو اگلے میں ملانا</td>
+        <td class="ar-cell" style="font-size:1.1rem;">ي ن م و ل ر</td>
+        <td class="ar-cell" style="font-size:1.1rem;">مِنْ رَبِّهِمْ · مَنْ يَقُوْلُ</td>
+      </tr>
+      <tr>
+        <td class="ar-cell" style="color:var(--red);">اِقْلَاب</td>
+        <td><strong>اقلاب</strong> — نون کو میم میں بدلنا</td>
+        <td class="ar-cell" style="font-size:1.1rem;">ب</td>
+        <td class="ar-cell" style="font-size:1.1rem;">مِنْ بَعْدِ · أَنْبِئُوْنِي</td>
+      </tr>
+      <tr>
+        <td class="ar-cell" style="color:var(--gold);">اِخْفَاء</td>
+        <td><strong>اخفاء</strong> — نون کو چھپانا (غنہ کے ساتھ)</td>
+        <td class="ar-cell" style="font-size:.9rem;">ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك</td>
+        <td class="ar-cell" style="font-size:1.1rem;">مِنْ دُوْنِ · كُنْتُمْ</td>
+      </tr>
+    </table>
+    <div class="rule-box gold-rule">غنّہ: ادغام اور اخفاء میں "غنہ" (ناک سے گزرنے والی آواز) ضروری ہے — اس کی مقدار ۲ حرکت ہے۔</div>
+  </div>
+</div>
+
+<!-- ── LESSON 11: MEEM SAKIN ── -->
+<div class="lesson">
+  <div class="lesson-header lh-teal">
+    <div><div class="lesson-title-ar">الْمِيْمُ السَّاكِن</div><div class="lesson-title-ur">میم ساکن کے احکام</div></div>
+    <div class="lesson-num-badge">سبق ۱۱</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">میم ساکن (مْ) پر تین احکام لاگو ہوتے ہیں:</div>
+    <table class="ns-table">
+      <tr><th>حکم</th><th>حرف</th><th>تعریف</th><th>مثال</th></tr>
+      <tr>
+        <td class="ar-cell" style="color:var(--red);">اِدْغَام شَفَوِي</td>
+        <td class="ar-cell" style="font-size:1.4rem;">م</td>
+        <td>میم کو میم میں ملانا (غنہ کے ساتھ)</td>
+        <td class="ar-cell">لَهُمْ مَا</td>
+      </tr>
+      <tr>
+        <td class="ar-cell" style="color:var(--gold);">اِخْفَاء شَفَوِي</td>
+        <td class="ar-cell" style="font-size:1.4rem;">ب</td>
+        <td>میم کو "ب" سے پہلے چھپانا (غنہ کے ساتھ)</td>
+        <td class="ar-cell">تَرْمِيْهِمْ بِحِجَارَةٍ</td>
+      </tr>
+      <tr>
+        <td class="ar-cell" style="color:var(--green-dark);">اِظْهَار شَفَوِي</td>
+        <td class="ar-cell" style="font-size:.9rem;">باقی تمام حروف</td>
+        <td>میم کو واضح پڑھنا</td>
+        <td class="ar-cell">عَلَيْهِمْ غَيْرِ</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+<!-- ── LESSON 12: WAQF SIGNS ── -->
+<div class="lesson">
+  <div class="lesson-header lh-gold">
+    <div><div class="lesson-title-ar">عَلَامَاتُ الْوَقْف</div><div class="lesson-title-ur">وقف کی علامات</div></div>
+    <div class="lesson-num-badge">سبق ۱۲</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box gold-rule">وقف کا مطلب ہے تلاوت کے دوران رکنا۔ قرآن میں مختلف علامات ہیں جو بتاتی ہیں کہ کہاں رکنا ہے، کہاں نہیں، اور کہاں اختیار ہے۔</div>
+    <div class="waqf-grid">
+      <div class="waqf-card"><div class="waqf-sign">م</div><div class="waqf-info"><div class="waqf-name">وقف لازم — رکنا ضروری</div><div class="waqf-desc">یہاں رکنا ضروری ہے، نہ رکنے سے معنی بدل جاتے ہیں</div></div></div>
+      <div class="waqf-card"><div class="waqf-sign">لا</div><div class="waqf-info"><div class="waqf-name">وقف ممنوع — رکنا منع</div><div class="waqf-desc">یہاں رکنا جائز نہیں، معنی متأثر ہوتا ہے</div></div></div>
+      <div class="waqf-card"><div class="waqf-sign">ج</div><div class="waqf-info"><div class="waqf-name">وقف جائز — رکنا جائز</div><div class="waqf-desc">یہاں رکنا جائز ہے مگر جاری رکھنا بہتر</div></div></div>
+      <div class="waqf-card"><div class="waqf-sign">ز</div><div class="waqf-info"><div class="waqf-name">وقف مجوّز — رکنا بہتر</div><div class="waqf-desc">یہاں رکنا زیادہ مناسب ہے</div></div></div>
+      <div class="waqf-card"><div class="waqf-sign">ص</div><div class="waqf-info"><div class="waqf-name">وقف مرخص — مختصر سانس</div><div class="waqf-desc">لمبی آیت میں سانس کے لیے رکنا جائز</div></div></div>
+      <div class="waqf-card"><div class="waqf-sign">قلی</div><div class="waqf-info"><div class="waqf-name">قلیٰ — رکنا بہتر</div><div class="waqf-desc">یہاں رکنا ملانے سے بہتر ہے</div></div></div>
+      <div class="waqf-card"><div class="waqf-sign">∴</div><div class="waqf-info"><div class="waqf-name">وقف معانقہ — دو میں سے ایک پر رکیں</div><div class="waqf-desc">دو جگہوں میں سے ایک پر رکنا ضروری</div></div></div>
+      <div class="waqf-card"><div class="waqf-sign">﴾﴿</div><div class="waqf-info"><div class="waqf-name">ختم آیت — آیت کا اختتام</div><div class="waqf-desc">آیت کے آخر میں رکنا مستحب ہے</div></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── LESSON 13: MAKHRAJ ── -->
+<div class="lesson">
+  <div class="lesson-header lh-blue">
+    <div><div class="lesson-title-ar">مَخَارِجُ الْحُرُوْف</div><div class="lesson-title-ur">حروف کے ادائیگی مقامات</div></div>
+    <div class="lesson-num-badge">سبق ۱۳</div>
+  </div>
+  <div class="lesson-body">
+    <div class="rule-box">مخرج وہ جگہ ہے جہاں سے حرف کی آواز نکلتی ہے۔ عربی حروف کے ۱۷ مخارج ہیں جو پانچ مقامات میں تقسیم ہیں۔</div>
+
+    <!-- SVG MOUTH DIAGRAM -->
+    <div class="pronunc-section" style="border:none;padding:0;box-shadow:none;">
+      <div class="diagram-container">
+        <svg viewBox="0 0 520 380" width="100%" max-width="520" xmlns="http://www.w3.org/2000/svg" style="max-width:520px;">
+          <!-- Background -->
+          <rect width="520" height="380" rx="16" fill="#f0f8ff"/>
+
+          <!-- Head outline (side profile) -->
+          <ellipse cx="220" cy="160" rx="140" ry="150" fill="#ffe8d6" stroke="#c8972a" stroke-width="2"/>
+          <!-- Skull top -->
+          <path d="M100 120 Q140 30 220 40 Q300 30 340 120" fill="#ffd5b8" stroke="#c8972a" stroke-width="1.5"/>
+          <!-- Face profile -->
+          <path d="M100 120 Q90 160 100 200 Q110 240 130 260 Q160 290 180 300" fill="none" stroke="#c8972a" stroke-width="1.5"/>
+          <!-- Nose -->
+          <path d="M130 180 Q120 195 135 205" fill="#ffc4a0" stroke="#c8972a" stroke-width="1.5"/>
+          <!-- Mouth cavity -->
+          <path d="M140 250 Q180 280 220 275 Q260 270 300 250 Q320 240 330 220 Q340 200 330 180 Q320 160 300 155 Q280 150 260 155" fill="#fff0e8" stroke="#c8972a" stroke-width="1.5"/>
+          <!-- Tongue -->
+          <path d="M150 260 Q185 245 220 240 Q250 238 270 250 Q285 258 280 268 Q270 280 240 278 Q200 278 170 270 Z" fill="#e8a090" stroke="#b05040" stroke-width="1"/>
+          <!-- Tongue tip -->
+          <ellipse cx="160" cy="262" rx="18" ry="10" fill="#e09080"/>
+          <!-- Tongue back -->
+          <ellipse cx="270" cy="258" rx="22" ry="12" fill="#d08070"/>
+          <!-- Throat -->
+          <path d="M300 220 Q340 220 360 240 Q380 260 375 300 Q370 330 360 360" fill="#ffe0d0" stroke="#c8972a" stroke-width="1.5"/>
+          <!-- Nasal cavity -->
+          <path d="M135 180 Q155 160 185 155 Q215 150 220 160 Q215 170 185 170 Q165 172 150 185" fill="#e8d0f8" stroke="#8060c0" stroke-width="1"/>
+          <!-- Teeth upper -->
+          <rect x="190" y="228" width="100" height="10" rx="3" fill="#fff" stroke="#aaa" stroke-width="1"/>
+          <!-- Teeth lower -->
+          <rect x="190" y="262" width="80" height="9" rx="3" fill="#fff" stroke="#aaa" stroke-width="1"/>
+          <!-- Lips -->
+          <path d="M170 250 Q200 242 240 242 Q270 242 300 250 Q290 255 240 258 Q200 258 170 250Z" fill="#e07060" stroke="#c05040" stroke-width="1"/>
+          <!-- Uvula -->
+          <ellipse cx="330" cy="185" rx="10" ry="14" fill="#d06050" stroke="#a04030" stroke-width="1"/>
+          <!-- Labels with arrows -->
+          <!-- Lips label -->
+          <line x1="175" y1="250" x2="60" y2="220" stroke="#1a6b3a" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="55" y="215" font-size="11" fill="#1a6b3a" text-anchor="end" font-family="Inter">Lips (شفاه)</text>
+          <text x="55" y="228" font-size="10" fill="#555" text-anchor="end" font-family="Amiri">ب م و ف</text>
+          <!-- Tongue tip -->
+          <line x1="160" y1="255" x2="55" y2="270" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="50" y="265" font-size="11" fill="#2563eb" text-anchor="end" font-family="Inter">Tongue tip (طرف)</text>
+          <text x="50" y="278" font-size="10" fill="#555" text-anchor="end" font-family="Amiri">ت د ط ن ل ر</text>
+          <!-- Tongue middle -->
+          <line x1="220" y1="242" x2="80" y2="320" stroke="#c8972a" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="75" y="315" font-size="11" fill="#c8972a" text-anchor="end" font-family="Inter">Tongue mid (وسط)</text>
+          <text x="75" y="328" font-size="10" fill="#555" text-anchor="end" font-family="Amiri">ج ش ي</text>
+          <!-- Tongue back -->
+          <line x1="270" y1="258" x2="420" y2="340" stroke="#6d28d9" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="425" y="335" font-size="11" fill="#6d28d9" text-anchor="start" font-family="Inter">Tongue back (قصی)</text>
+          <text x="425" y="348" font-size="10" fill="#555" text-anchor="start" font-family="Amiri">ق ك خ غ</text>
+          <!-- Throat label -->
+          <line x1="355" y1="270" x2="455" y2="270" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="460" y="265" font-size="11" fill="#dc2626" text-anchor="start" font-family="Inter">Throat (حلق)</text>
+          <text x="460" y="278" font-size="10" fill="#555" text-anchor="start" font-family="Amiri">ء ه ع غ ح خ</text>
+          <!-- Nasal label -->
+          <line x1="185" y1="165" x2="430" y2="130" stroke="#7c3aed" stroke-width="1.5" stroke-dasharray="4,3"/>
+          <text x="435" y="125" font-size="11" fill="#7c3aed" text-anchor="start" font-family="Inter">Nasal (خيشوم)</text>
+          <text x="435" y="138" font-size="10" fill="#555" text-anchor="start" font-family="Amiri">غنّه — ن م</text>
+          <!-- Al-Falah watermark -->
+          <text x="260" y="370" font-size="10" fill="#aaa" text-anchor="middle" font-family="Inter">Al-Falah Islamic Academy — Makhraj Diagram</text>
+        </svg>
+      </div>
+      <div class="diagram-caption">مخارج الحروف — ہونٹ، زبان، حلق اور خیشوم سے نکلنے والے حروف</div>
+    </div>
+
+    <div class="makhraj-groups">
+      <div class="makhraj-card">
+        <div class="mk-title">🟢 جوف (خالی جگہ)</div>
+        <div class="mk-letters">ا · و · ي</div>
+        <div class="mk-desc">یہ حروف منہ کی خالی جگہ سے نکلتے ہیں — مدہ کے حروف</div>
+      </div>
+      <div class="makhraj-card" style="background:var(--red-light);border-color:#f0b0b0;">
+        <div class="mk-title">🔴 حلق (گلا)</div>
+        <div class="mk-letters" style="color:var(--red);">ء ه · ع غ · ح خ</div>
+        <div class="mk-desc">گلے کے نچلے، درمیانی اور اوپری حصے سے نکلنے والے حروف</div>
+      </div>
+      <div class="makhraj-card" style="background:var(--gold-light);border-color:var(--gold-border);">
+        <div class="mk-title">🟡 لسان (زبان)</div>
+        <div class="mk-letters" style="color:var(--gold);">ق ك · ج ش ي · ض · ل · ن · ر · ط د ت · ص ز س · ظ ذ ث</div>
+        <div class="mk-desc">زبان کے مختلف حصوں سے نکلنے والے حروف — ۱۰ مخارج</div>
+      </div>
+      <div class="makhraj-card" style="background:#f5f3ff;border-color:#c4b5fd;">
+        <div class="mk-title">🟣 شفتان (ہونٹ)</div>
+        <div class="mk-letters" style="color:#6d28d9;">ف · و · ب م</div>
+        <div class="mk-desc">ہونٹوں سے نکلنے والے حروف — ۲ مخارج</div>
+      </div>
+      <div class="makhraj-card" style="background:#fdf4ff;border-color:#e879f9;" >
+        <div class="mk-title">🩷 خیشوم (ناک)</div>
+        <div class="mk-letters" style="color:#a21caf;">غنّہ</div>
+        <div class="mk-desc">غنہ کی آواز ناک کی طرف سے گزرتی ہے — نون و میم مشدد</div>
+      </div>
+      <div class="makhraj-card" style="background:#eff6ff;border-color:#93c5fd;">
+        <div class="mk-title">🔵 اہم یاد دہانی</div>
+        <div class="mk-letters" style="color:var(--blue);font-size:.9rem;">مخرج = آواز کا مقام</div>
+        <div class="mk-desc">صحیح تلاوت کے لیے ہر حرف کو اس کے صحیح مخرج سے ادا کریں</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SHORT SURAHS ── -->
+<div class="section-title"><h3>مشق — چھوٹی سورتیں</h3></div>
+
+<div class="surah-box">
+  <div class="surah-name">سورة الفاتحة</div>
+  <div class="surah-en">Al-Fatihah · The Opening · 7 Ayahs</div>
+  <div class="surah-text">
+    بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ ﴿١﴾<br>
+    اَلْحَمْدُ لِلّٰهِ رَبِّ الْعَالَمِيْنَ ﴿٢﴾<br>
+    الرَّحْمٰنِ الرَّحِيْمِ ﴿٣﴾<br>
+    مَالِكِ يَوْمِ الدِّيْنِ ﴿٤﴾<br>
+    إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِيْنُ ﴿٥﴾<br>
+    اِهْدِنَا الصِّرَاطَ الْمُسْتَقِيْمَ ﴿٦﴾<br>
+    صِرَاطَ الَّذِيْنَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ الْمَغْضُوْبِ عَلَيْهِمْ وَلَا الضَّالِّيْنَ ﴿٧﴾
+  </div>
+</div>
+
+<div class="surah-box">
+  <div class="surah-name">سورة الإخلاص</div>
+  <div class="surah-en">Al-Ikhlas · Sincerity · 4 Ayahs</div>
+  <div class="surah-text">
+    بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ<br>
+    قُلْ هُوَ اللّٰهُ أَحَدٌ ﴿١﴾ اَللّٰهُ الصَّمَدُ ﴿٢﴾<br>
+    لَمْ يَلِدْ وَلَمْ يُوْلَدْ ﴿٣﴾ وَلَمْ يَكُنْ لَّهُ كُفُوًا أَحَدٌ ﴿٤﴾
+  </div>
+</div>
+
+<div class="surah-box">
+  <div class="surah-name">سورة الفلق</div>
+  <div class="surah-en">Al-Falaq · The Daybreak · 5 Ayahs</div>
+  <div class="surah-text">
+    بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ<br>
+    قُلْ أَعُوْذُ بِرَبِّ الْفَلَقِ ﴿١﴾ مِنْ شَرِّ مَا خَلَقَ ﴿٢﴾<br>
+    وَمِنْ شَرِّ غَاسِقٍ إِذَا وَقَبَ ﴿٣﴾ وَمِنْ شَرِّ النَّفَّاثَاتِ فِي الْعُقَدِ ﴿٤﴾<br>
+    وَمِنْ شَرِّ حَاسِدٍ إِذَا حَسَدَ ﴿٥﴾
+  </div>
+</div>
+
+<div class="surah-box">
+  <div class="surah-name">سورة الناس</div>
+  <div class="surah-en">An-Nas · Mankind · 6 Ayahs</div>
+  <div class="surah-text">
+    بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ<br>
+    قُلْ أَعُوْذُ بِرَبِّ النَّاسِ ﴿١﴾ مَلِكِ النَّاسِ ﴿٢﴾ إِلٰهِ النَّاسِ ﴿٣﴾<br>
+    مِنْ شَرِّ الْوَسْوَاسِ الْخَنَّاسِ ﴿٤﴾<br>
+    الَّذِيْ يُوَسْوِسُ فِيْ صُدُوْرِ النَّاسِ ﴿٥﴾ مِنَ الْجِنَّةِ وَالنَّاسِ ﴿٦﴾
+  </div>
+</div>
+
+<div class="surah-box">
+  <div class="surah-name">سورة الكوثر</div>
+  <div class="surah-en">Al-Kawthar · Abundance · 3 Ayahs</div>
+  <div class="surah-text">
+    بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ<br>
+    إِنَّا أَعْطَيْنَاكَ الْكَوْثَرَ ﴿١﴾ فَصَلِّ لِرَبِّكَ وَانْحَرْ ﴿٢﴾ إِنَّ شَانِئَكَ هُوَ الأَبْتَرُ ﴿٣﴾
+  </div>
+</div>
+
+<div class="surah-box">
+  <div class="surah-name">سورة العصر</div>
+  <div class="surah-en">Al-Asr · The Time · 3 Ayahs</div>
+  <div class="surah-text">
+    بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ<br>
+    وَالْعَصْرِ ﴿١﴾ إِنَّ الإِنْسَانَ لَفِيْ خُسْرٍ ﴿٢﴾<br>
+    إِلَّا الَّذِيْنَ آمَنُوْا وَعَمِلُوا الصَّالِحَاتِ وَتَوَاصَوْا بِالْحَقِّ وَتَوَاصَوْا بِالصَّبْرِ ﴿٣﴾
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div class="footer-ar">الفلاح اسلامک اکیڈمی</div>
+  <div class="footer-ur">یہ قاعدہ تمام مسلمانوں کے لیے مفت ہے — اپنے خاندان اور طالب علموں میں تقسیم کریں</div>
+  <div class="watermark">© Al-Falah Islamic Academy · https://raeesmalik89-oss.github.io/al-falah-academy/ · Free for all Muslims · May Allah accept it from us — آمین</div>
+</div>
+
+</div><!-- end .page -->
+</body>
+</html>
