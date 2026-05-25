@@ -10,7 +10,10 @@
   <meta property="og:description" content="Learn Quran and Hadith from certified scholars. Live 1-on-1 classes, flexible schedule." />
   <meta property="og:type" content="website" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕌</text></svg>" />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" /></noscript>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -2132,26 +2135,26 @@ function switchDars(type, btn) {
 // ══════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function () {
 
-  // 1. Prayer Times (Azan section)
+  // Above-fold / near-fold — load immediately
   loadAzan();
-
-  // 2. Hadith of the Day
   currentHadithIdx = getTodayHadithIndex();
   renderHadith(currentHadithIdx);
-
-  // 3. Ayah of the Day
   currentAyahNum = getTodayAyahNumber();
   loadAyah(currentAyahNum);
 
-  // 4. Free Books Library
-  loadBooks();
+  // Below-fold — defer until section scrolls within 300 px of the viewport
+  function lazyInit(sectionId, fn) {
+    const el = document.getElementById(sectionId);
+    if (!el) { fn(); return; }
+    const obs = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) { obs.disconnect(); fn(); }
+    }, { rootMargin: '300px' });
+    obs.observe(el);
+  }
 
-  // 5. Dars Videos
-  renderDars('quran');
-  renderDars('hadith');
-
-  // 6. Quran Listening Player
-  initQuranPlayer();
+  lazyInit('books',        loadBooks);
+  lazyInit('dars',         () => { renderDars('quran'); renderDars('hadith'); });
+  lazyInit('quran-listen', initQuranPlayer);
 
 });
 </script>
