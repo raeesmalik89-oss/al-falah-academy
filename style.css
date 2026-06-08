@@ -40,7 +40,7 @@ img { max-width: 100%; }
 }
 .logo { display: flex; align-items: center; gap: 10px; }
 .logo-crescent { font-size: 26px; color: var(--gold); }
-.logo-text { font-size: 22px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+.logo-text { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.5px; white-space: nowrap; }
 .logo-sub { color: var(--gold); font-weight: 400; }
 .nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; flex-wrap: nowrap; }
 .nav-links a { color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 500; padding: 7px 10px; border-radius: 8px; transition: all 0.2s; white-space: nowrap; }
