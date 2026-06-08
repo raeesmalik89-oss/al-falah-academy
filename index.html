@@ -939,8 +939,6 @@
 
     <!-- QUICK FORM (inline) -->
     <div class="enroll-layout">
-
-    <div class="enroll-layout">
       <div class="enroll-form-card">
 
         <div id="enrollSuccess" style="display:none" class="enroll-success">
@@ -1202,8 +1200,7 @@ function submitEnroll(e) {
 
 // ── TOGGLE MOBILE MENU ───────────────────────────────────────────────
 function toggleMenu() {
-  const m = document.getElementById('mobileMenu');
-  m.style.display = m.style.display === 'flex' ? 'none' : 'flex';
+  document.getElementById('mobileMenu').classList.toggle('open');
 }
 
 // ── TOAST NOTIFICATION ───────────────────────────────────────────────
@@ -1714,50 +1711,32 @@ function rotateNeedle(angle) {
 }
 
 function findQibla() {
-  const btn        = document.getElementById('qiblaBtn');
-  const statusText = document.getElementById('qiblaStatusText');
-  const details    = document.getElementById('qiblaDetails');
-  const degBadge   = document.getElementById('qiblaDegree');
-
-  btn.textContent  = '📡 Detecting location…';
-  btn.disabled     = true;
+  const result = document.getElementById('qiblaResult');
+  const btn    = document.querySelector('[onclick="findQibla()"]');
+  if (btn) { btn.textContent = '📡 Detecting location…'; btn.disabled = true; }
+  if (result) result.textContent = '';
 
   if (!navigator.geolocation) {
-    statusText.innerHTML = '<strong>Not supported</strong><br><span>Your browser does not support geolocation.</span>';
-    btn.textContent = '🕋 Find My Qibla Direction'; btn.disabled = false;
+    if (result) result.textContent = '⚠️ Geolocation not supported by your browser.';
+    if (btn) { btn.textContent = 'Find My Qibla'; btn.disabled = false; }
     return;
   }
 
   navigator.geolocation.getCurrentPosition(pos => {
     const lat = pos.coords.latitude;
     const lon = pos.coords.longitude;
-
-    qiblaBearing = calcQiblaBearing(lat, lon);
-    const dist   = calcDistance(lat, lon);
-    const dir    = bearingToCompass(qiblaBearing);
-
-    // Update display
-    document.getElementById('qdLocation').textContent = `${lat.toFixed(4)}°N, ${lon.toFixed(4)}°E`;
-    document.getElementById('qdBearing').textContent  = `${Math.round(qiblaBearing)}° ${dir}`;
-    document.getElementById('qdDistance').textContent = `${dist.toLocaleString()} km`;
-    degBadge.textContent = `${Math.round(qiblaBearing)}° ${dir}`;
-
-    statusText.innerHTML = `<strong>Qibla Found ✅</strong><br><span>Face <strong>${Math.round(qiblaBearing)}° ${dir}</strong> for the direction of Kaaba</span>`;
-    details.style.display = 'block';
-    btn.textContent = '🔄 Recalculate';
-    btn.disabled    = false;
-
-    // Rotate needle
-    rotateNeedle(qiblaBearing);
-
-    // Try device compass on mobile
+    qiblaBearing  = calcQiblaBearing(lat, lon);
+    const dist    = calcDistance(lat, lon);
+    const dir     = bearingToCompass(qiblaBearing);
+    if (result) result.innerHTML =
+      `🕋 Face <strong>${Math.round(qiblaBearing)}° ${dir}</strong> · ${dist.toLocaleString()} km from Makkah`;
+    if (btn) { btn.textContent = '🔄 Recalculate'; btn.disabled = false; }
     startDeviceCompass();
-
   }, err => {
-    const msgs = { 1:'Location access denied. Please allow location in your browser settings.',
+    const msgs = { 1:'Location access denied — please allow location in browser settings.',
                    2:'Location unavailable. Try again.', 3:'Request timed out. Try again.' };
-    statusText.innerHTML = `<strong>⚠️ Error</strong><br><span>${msgs[err.code] || 'Could not get location.'}</span>`;
-    btn.textContent = '🕋 Try Again'; btn.disabled = false;
+    if (result) result.textContent = '⚠️ ' + (msgs[err.code] || 'Could not get location.');
+    if (btn) { btn.textContent = 'Find My Qibla'; btn.disabled = false; }
   }, { timeout: 10000, enableHighAccuracy: true });
 }
 
@@ -2086,7 +2065,7 @@ function renderDars(type) {
 
   if (!videos.length) { panel.innerHTML = '<p style="color:#888;text-align:center;padding:40px">No videos yet</p>'; return; }
 
-  panel.innerHTML = videos.map(v => `
+  panel.innerHTML = `<div class="dars-grid">${videos.map(v => `
     <div class="dars-card ${v.youtube ? '' : 'dars-coming-soon'}">
       <div class="dars-thumb ${v.youtube ? '' : 'dars-thumb-placeholder'}">
         ${v.youtube
@@ -2107,7 +2086,7 @@ function renderDars(type) {
           : `<button class="dars-watch-btn dars-watch-soon" disabled>🔔 Coming Soon</button>`}
       </div>
     </div>
-  `).join('');
+  `).join('')}</div>`;
 }
 
 function openDarsModal(ytId, title) {
@@ -2134,6 +2113,12 @@ function switchDars(type, btn) {
 // PAGE INIT — runs once DOM is ready
 // ══════════════════════════════════════════════════════════
 document.addEventListener('DOMContentLoaded', function () {
+
+  // Navbar scroll shadow
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 10);
+  });
 
   // Above-fold / near-fold — load immediately
   loadAzan();
