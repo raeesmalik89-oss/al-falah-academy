@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Portal · Al-Falah Islamic Academy</title>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#1a4030;--gm:#1a6b3a;--gold:#c9a84c;--gold-lt:#fdf6e3;--bg:#f5f7f4;--card:#fff;--text:#1a1a1a;--muted:#666}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* NAV */
+.nav{background:linear-gradient(135deg,#0d2818,#1a4030);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px;color:#fff}
+.nav-logo span{font-size:22px}
+.nav-title{font-size:15px;font-weight:700;color:#fff}
+.nav-title small{display:block;font-size:11px;font-weight:400;color:rgba(255,255,255,.6)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-name{font-size:13px;font-weight:600;color:rgba(255,255,255,.85)}
+.nav-logout{font-size:12px;font-weight:600;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:inherit;transition:background .2s}
+.nav-logout:hover{background:rgba(255,255,255,.22)}
+
+/* LAYOUT */
+.main{max-width:1100px;margin:0 auto;padding:28px 20px}
+
+/* WELCOME */
+.welcome{background:linear-gradient(135deg,#1a4030,#1a6b3a);border-radius:20px;padding:28px 32px;color:#fff;margin-bottom:24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.welcome-text h2{font-size:22px;font-weight:800;margin-bottom:4px}
+.welcome-text p{font-size:14px;color:rgba(255,255,255,.75)}
+.welcome-ayah{font-family:'Amiri',serif;font-size:18px;color:var(--gold);direction:rtl;text-align:right}
+.welcome-ayah small{display:block;font-family:'Inter',sans-serif;font-size:11px;color:rgba(255,255,255,.5);direction:ltr;text-align:right;margin-top:4px}
+
+/* STATS ROW */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px;margin-bottom:24px}
+.stat{background:var(--card);border-radius:16px;padding:20px;border:1px solid #e8e8e0;text-align:center}
+.stat-icon{font-size:28px;margin-bottom:8px}
+.stat-val{font-size:22px;font-weight:800;color:var(--g)}
+.stat-label{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* GRID */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:24px}
+@media(max-width:700px){.grid{grid-template-columns:1fr}}
+
+/* CARD */
+.card{background:var(--card);border-radius:18px;padding:24px;border:1px solid #e8e8e0}
+.card-title{font-size:14px;font-weight:700;color:var(--g);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title span{font-size:18px}
+
+/* ENROLLMENT */
+.enroll-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0ea}
+.enroll-row:last-child{border-bottom:none}
+.enroll-key{font-size:12px;color:var(--muted);font-weight:500}
+.enroll-val{font-size:13px;font-weight:600;color:var(--text)}
+.badge{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:20px}
+.badge-gold{background:var(--gold-lt);color:#b8860b;border:1px solid #e8d9a0}
+.badge-green{background:#f0f9f4;color:#15803d;border:1px solid #bbf7d0}
+.badge-red{background:#fef2f2;color:#dc2626;border:1px solid #fecaca}
+.badge-yellow{background:#fffbeb;color:#d97706;border:1px solid #fde68a}
+
+/* HIFZ TRACKER */
+.hifz-card{margin-bottom:24px}
+.hifz-progress-bar{height:8px;background:#e8e8e0;border-radius:4px;margin:12px 0 16px;overflow:hidden}
+.hifz-fill{height:100%;background:linear-gradient(90deg,#1a6b3a,#c9a84c);border-radius:4px;transition:width .6s ease}
+.hifz-label{font-size:13px;color:var(--muted);margin-bottom:12px}
+.hifz-label strong{color:var(--g)}
+.surah-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:4px}
+.surah-cell{
+  aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;cursor:default;transition:transform .15s;
+  background:#f0f0ea;color:#999;border:1px solid #e0e0d8;
+}
+.surah-cell.done{background:linear-gradient(135deg,#1a6b3a,#2d9e55);color:#fff;border-color:#1a6b3a}
+.surah-cell:hover{transform:scale(1.15)}
+.hifz-legend{display:flex;gap:16px;margin-top:10px;font-size:12px;color:var(--muted);align-items:center}
+.hifz-legend span{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:middle}
+
+/* ATTENDANCE */
+.att-row{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f5f5f0;font-size:13px}
+.att-row:last-child{border-bottom:none}
+.att-date{color:var(--muted)}
+.att-present{color:#15803d;font-weight:600}
+.att-absent{color:#dc2626;font-weight:600}
+.att-lesson{color:#555;font-size:12px;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.att-empty{text-align:center;color:var(--muted);font-size:13px;padding:20px 0}
+
+/* ANNOUNCEMENTS */
+.ann-item{padding:12px 0;border-bottom:1px solid #f5f5f0}
+.ann-item:last-child{border-bottom:none}
+.ann-title{font-size:14px;font-weight:600;color:var(--text);margin-bottom:4px}
+.ann-body{font-size:13px;color:var(--muted);line-height:1.5}
+.ann-date{font-size:11px;color:#bbb;margin-top:6px}
+.ann-empty{text-align:center;color:var(--muted);font-size:13px;padding:20px 0}
+
+/* PAYMENT */
+.pay-amount{font-size:32px;font-weight:800;color:var(--g);margin:8px 0}
+.pay-month{font-size:13px;color:var(--muted)}
+.pay-methods{margin-top:16px;padding-top:16px;border-top:1px solid #f0f0ea}
+.pay-methods p{font-size:12px;color:var(--muted);margin-bottom:10px;font-weight:600}
+.pay-method{display:flex;align-items:center;gap:8px;font-size:13px;padding:6px 0;color:#444}
+.pay-method span{font-size:18px}
+.whatsapp-btn{display:inline-flex;align-items:center;gap:8px;background:#25D366;color:#fff;font-size:13px;font-weight:700;padding:10px 18px;border-radius:10px;margin-top:14px;text-decoration:none;transition:opacity .2s}
+.whatsapp-btn:hover{opacity:.9}
+
+/* LOADING */
+.loading-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;background:var(--bg);flex-direction:column;gap:16px}
+.loading-screen .spin{width:40px;height:40px;border:3px solid #e0e0e0;border-top-color:#1a6b3a;border-radius:50%;animation:sp .8s linear infinite}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loading-screen p{color:var(--muted);font-size:14px}
+</style>
+</head>
+<body>
+
+<div class="loading-screen" id="loadingScreen">
+  <div class="spin"></div>
+  <p>Loading your portal…</p>
+</div>
+
+<div id="appShell" style="display:none">
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">
+    <span>🕌</span>
+    <div class="nav-title">Al-Falah Academy<small>Student Portal</small></div>
+  </div>
+  <div class="nav-right">
+    <span class="nav-name" id="navName"></span>
+    <button class="nav-logout" onclick="logout()">Logout</button>
+  </div>
+</nav>
+
+<div class="main">
+
+  <!-- WELCOME -->
+  <div class="welcome">
+    <div class="welcome-text">
+      <h2 id="welcomeName">Assalamu Alaikum!</h2>
+      <p id="welcomeSub">Welcome back to Al-Falah Islamic Academy</p>
+    </div>
+    <div class="welcome-ayah">
+      اقْرَأْ بِاسْمِ رَبِّكَ
+      <small>Read in the name of your Lord — Surah Al-Alaq 96:1</small>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats">
+    <div class="stat">
+      <div class="stat-icon">📖</div>
+      <div class="stat-val" id="statSurahs">0</div>
+      <div class="stat-label">Surahs Memorized</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">✅</div>
+      <div class="stat-val" id="statAtt">0</div>
+      <div class="stat-label">Classes Attended</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">📅</div>
+      <div class="stat-val" id="statDays">0</div>
+      <div class="stat-label">Days Enrolled</div>
+    </div>
+    <div class="stat">
+      <div class="stat-icon">🏆</div>
+      <div class="stat-val" id="statPct">0%</div>
+      <div class="stat-label">Quran Progress</div>
+    </div>
+  </div>
+
+  <!-- QURAN HIFZ TRACKER (full width) -->
+  <div class="card hifz-card">
+    <div class="card-title"><span>📗</span> Quran Hifz Progress — All 114 Surahs</div>
+    <div class="hifz-label">Memorized <strong id="hifzCount">0</strong> of <strong>114</strong> Surahs</div>
+    <div class="hifz-progress-bar"><div class="hifz-fill" id="hifzFill" style="width:0%"></div></div>
+    <div class="surah-grid" id="surahGrid"></div>
+    <div class="hifz-legend">
+      <div><span style="background:linear-gradient(135deg,#1a6b3a,#2d9e55)"></span> Memorized</div>
+      <div><span style="background:#f0f0ea;border:1px solid #e0e0d8"></span> Pending</div>
+    </div>
+  </div>
+
+  <!-- ROW: Enrollment + Payment -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title"><span>🎓</span> My Enrollment</div>
+      <div class="enroll-row"><span class="enroll-key">Course</span><span class="enroll-val" id="eCourse">—</span></div>
+      <div class="enroll-row"><span class="enroll-key">Teacher</span><span class="enroll-val">Dr. Muhammad Naeem</span></div>
+      <div class="enroll-row"><span class="enroll-key">Status</span><span class="enroll-val"><span class="badge badge-green">Active</span></span></div>
+      <div class="enroll-row"><span class="enroll-key">Phone / WhatsApp</span><span class="enroll-val" id="ePhone">—</span></div>
+      <div class="enroll-row"><span class="enroll-key">Enrolled Since</span><span class="enroll-val" id="eSince">—</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>💳</span> Monthly Fee</div>
+      <div class="pay-amount" id="payAmount">PKR 2,000</div>
+      <div class="pay-month" id="payMonth"></div>
+      <div id="payBadge" style="margin-top:8px"></div>
+      <div class="pay-methods">
+        <p>Pay via:</p>
+        <div class="pay-method"><span>📱</span> Easypaisa: <strong>0300-1234567</strong></div>
+        <div class="pay-method"><span>📱</span> JazzCash: <strong>0300-1234567</strong></div>
+        <div class="pay-method"><span>🏦</span> Bank: Al-Falah Bank · AC# 1234-5678</div>
+      </div>
+      <a class="whatsapp-btn" href="https://wa.me/923001234567?text=Assalamu+Alaikum+Dr+Naeem,+I+want+to+confirm+my+fee+payment" target="_blank">
+        <span>💬</span> Confirm via WhatsApp
+      </a>
+    </div>
+  </div>
+
+  <!-- ROW: Attendance + Announcements -->
+  <div class="grid">
+    <div class="card">
+      <div class="card-title"><span>📋</span> Attendance History</div>
+      <div id="attList"><div class="att-empty">No records yet</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title"><span>📢</span> Announcements</div>
+      <div id="annList"><div class="ann-empty">No announcements yet</div></div>
+    </div>
+  </div>
+
+  <!-- Teacher Notes -->
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-title"><span>📝</span> Teacher's Notes</div>
+    <p id="teacherNotes" style="font-size:14px;color:#555;line-height:1.7;font-style:italic">No notes from teacher yet.</p>
+  </div>
+
+</div><!-- .main -->
+</div><!-- #appShell -->
+
+<script src="firebase-config.js"></script>
+<script>
+const SURAHS = [
+  'Al-Fatihah','Al-Baqarah','Aal-Imran','An-Nisa','Al-Maidah','Al-Anam','Al-Araf','Al-Anfal','At-Tawbah','Yunus',
+  'Hud','Yusuf','Ar-Ra\'d','Ibrahim','Al-Hijr','An-Nahl','Al-Isra','Al-Kahf','Maryam','Ta-Ha',
+  'Al-Anbiya','Al-Hajj','Al-Muminun','An-Nur','Al-Furqan','Ash-Shu\'ara','An-Naml','Al-Qasas','Al-Ankabut','Ar-Rum',
+  'Luqman','As-Sajdah','Al-Ahzab','Saba','Fatir','Ya-Sin','As-Saffat','Sad','Az-Zumar','Ghafir',
+  'Fussilat','Ash-Shura','Az-Zukhruf','Ad-Dukhan','Al-Jathiyah','Al-Ahqaf','Muhammad','Al-Fath','Al-Hujurat','Qaf',
+  'Adh-Dhariyat','At-Tur','An-Najm','Al-Qamar','Ar-Rahman','Al-Waqi\'ah','Al-Hadid','Al-Mujadila','Al-Hashr','Al-Mumtahanah',
+  'As-Saf','Al-Jumu\'ah','Al-Munafiqun','At-Taghabun','At-Talaq','At-Tahrim','Al-Mulk','Al-Qalam','Al-Haqqah','Al-Ma\'arij',
+  'Nuh','Al-Jinn','Al-Muzzammil','Al-Muddaththir','Al-Qiyamah','Al-Insan','Al-Mursalat','An-Naba','An-Nazi\'at','Abasa',
+  'At-Takwir','Al-Infitar','Al-Mutaffifin','Al-Inshiqaq','Al-Buruj','At-Tariq','Al-Ala','Al-Ghashiyah','Al-Fajr','Al-Balad',
+  'Ash-Shams','Al-Layl','Ad-Duha','Ash-Sharh','At-Tin','Al-Alaq','Al-Qadr','Al-Bayyinah','Az-Zalzalah','Al-Adiyat',
+  'Al-Qari\'ah','At-Takathur','Al-Asr','Al-Humazah','Al-Fil','Quraysh','Al-Ma\'un','Al-Kawthar','Al-Kafirun','An-Nasr',
+  'Al-Masad','Al-Ikhlas','Al-Falaq','An-Nas'
+];
+
+function fmtDate(ts) {
+  if (!ts) return '—';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('en-PK', {day:'numeric',month:'short',year:'numeric'});
+}
+
+function renderSurahGrid(memorized) {
+  const grid = document.getElementById('surahGrid');
+  const set  = new Set(memorized);
+  grid.innerHTML = SURAHS.map((name, i) => {
+    const num = i + 1;
+    const done = set.has(num);
+    return `<div class="surah-cell ${done?'done':''}" title="${num}. ${name}">${num}</div>`;
+  }).join('');
+}
+
+function updateStats(memorized, attCount, createdAt) {
+  const pct = Math.round((memorized.length / 114) * 100);
+  document.getElementById('statSurahs').textContent = memorized.length;
+  document.getElementById('statAtt').textContent = attCount;
+  document.getElementById('statPct').textContent = pct + '%';
+  document.getElementById('hifzCount').textContent = memorized.length;
+  document.getElementById('hifzFill').style.width = pct + '%';
+  if (createdAt) {
+    const days = Math.floor((Date.now() - createdAt.toDate().getTime()) / 86400000);
+    document.getElementById('statDays').textContent = days;
+  }
+}
+
+function renderAttendance(records) {
+  const el = document.getElementById('attList');
+  if (!records.length) { el.innerHTML = '<div class="att-empty">No attendance records yet</div>'; return; }
+  el.innerHTML = records.slice(0,10).map(r => `
+    <div class="att-row">
+      <span class="att-date">${fmtDate(r.date)}</span>
+      <span class="att-lesson">${r.lesson||'Class'}</span>
+      <span class="${r.present?'att-present':'att-absent'}">${r.present?'✓ Present':'✗ Absent'}</span>
+    </div>`).join('');
+}
+
+function renderAnnouncements(list) {
+  const el = document.getElementById('annList');
+  if (!list.length) { el.innerHTML = '<div class="ann-empty">No announcements yet</div>'; return; }
+  el.innerHTML = list.slice(0,5).map(a => `
+    <div class="ann-item">
+      <div class="ann-title">${a.title}</div>
+      <div class="ann-body">${a.body}</div>
+      <div class="ann-date">${fmtDate(a.date)} · ${a.teacherName||'Dr. Naeem'}</div>
+    </div>`).join('');
+}
+
+auth.onAuthStateChanged(async user => {
+  if (!user) { window.location.href = 'login.html'; return; }
+
+  const [userDoc, progressDoc, attSnap, annSnap] = await Promise.all([
+    db.collection('users').doc(user.uid).get(),
+    db.collection('progress').doc(user.uid).get(),
+    db.collection('attendance').doc(user.uid).collection('records').orderBy('date','desc').limit(10).get(),
+    db.collection('announcements').orderBy('date','desc').limit(5).get()
+  ]);
+
+  if (!userDoc.exists || userDoc.data().role === 'teacher') { window.location.href = 'teacher-dashboard.html'; return; }
+
+  const u = userDoc.data();
+  const prog = progressDoc.exists ? progressDoc.data() : { surahs: [], notes: '' };
+  const attRecords = attSnap.docs.map(d => d.data());
+  const anns = annSnap.docs.map(d => d.data());
+  const presentCount = attRecords.filter(r => r.present).length;
+
+  // Populate UI
+  document.getElementById('navName').textContent = u.name;
+  document.getElementById('welcomeName').textContent = `Assalamu Alaikum, ${u.name.split(' ')[0]}!`;
+  document.getElementById('welcomeSub').textContent = `Continue your journey in ${u.course || 'Islamic Studies'}`;
+  document.getElementById('eCourse').textContent = u.course || 'Quran Hifz';
+  document.getElementById('ePhone').textContent = u.phone || 'Not set';
+  document.getElementById('eSince').textContent = fmtDate(u.createdAt);
+  document.getElementById('payAmount').textContent = `PKR ${(u.monthlyFee||2000).toLocaleString()}`;
+  document.getElementById('payMonth').textContent = new Date().toLocaleDateString('en-PK',{month:'long',year:'numeric'});
+  const ps = u.paymentStatus || 'pending';
+  document.getElementById('payBadge').innerHTML = `<span class="badge ${ps==='paid'?'badge-green':ps==='overdue'?'badge-red':'badge-yellow'}">${ps==='paid'?'✓ Paid':ps==='overdue'?'⚠ Overdue':'⏳ Due'}</span>`;
+  document.getElementById('teacherNotes').textContent = prog.notes || 'No notes from teacher yet.';
+
+  renderSurahGrid(prog.surahs || []);
+  updateStats(prog.surahs || [], presentCount, u.createdAt);
+  renderAttendance(attRecords);
+  renderAnnouncements(anns);
+
+  document.getElementById('loadingScreen').style.display = 'none';
+  document.getElementById('appShell').style.display = 'block';
+});
+
+function logout() {
+  auth.signOut().then(() => window.location.href = 'login.html');
+}
+</script>
+</body>
+</html>
