@@ -759,8 +759,10 @@
         <select id="qlReciter" class="ql-select" onchange="qlChangeReciter()">
           <option value="ar.alafasy">Mishary Rashid Alafasy</option>
           <option value="ar.abdurrahmaansudais">Abdul Rahman Al-Sudais</option>
+          <option value="ar.mahermuaiqly">Maher Al-Muaiqly</option>
           <option value="ar.husary">Mahmoud Khalil Al-Husary</option>
           <option value="ar.minshawi">Muhammad Siddiq Al-Minshawi</option>
+          <option value="ar.saoodshuraym">Saood Al-Shuraym</option>
         </select>
       </div>
       <div class="ql-search-wrap">
@@ -1532,15 +1534,7 @@ let qlIsPlaying     = false;
 let qlFilteredList  = [...SURAHS];
 
 function qlAudioUrl(num, reciter) {
-  // Per-reciter CDN mapping — verified working sources
-  const pad = n => String(n).padStart(3, '0');
-  const cdnMap = {
-    'ar.alafasy':            `https://cdn.islamic.network/quran/audio-surah/128/ar.alafasy/${num}.mp3`,
-    'ar.abdurrahmaansudais': `https://cdn.islamic.network/quran/audio-surah/64/ar.abdurrahmaansudais/${num}.mp3`,
-    'ar.husary':             `https://cdn.islamic.network/quran/audio-surah/64/ar.husary/${num}.mp3`,
-    'ar.minshawi':           `https://cdn.islamic.network/quran/audio-surah/64/ar.minshawi/${num}.mp3`,
-  };
-  return cdnMap[reciter] || `https://cdn.islamic.network/quran/audio-surah/64/${reciter}/${num}.mp3`;
+  return `https://cdn.islamic.network/quran/audio-surah/128/${reciter}/${num}.mp3`;
 }
 
 function qlRenderGrid(list) {
@@ -1630,8 +1624,10 @@ function qlUpdatePlayerMeta() {
   const reciterNames = {
     'ar.alafasy':'Mishary Rashid Alafasy',
     'ar.abdurrahmaansudais':'Abdul Rahman Al-Sudais',
+    'ar.mahermuaiqly':'Maher Al-Muaiqly',
     'ar.husary':'Mahmoud Khalil Al-Husary',
-    'ar.minshawi':'Muhammad Siddiq Al-Minshawi'
+    'ar.minshawi':'Muhammad Siddiq Al-Minshawi',
+    'ar.saoodshuraym':'Saood Al-Shuraym'
   };
   document.getElementById('qlPlayerSurah').textContent   = `${s[0]}. ${s[1]} — ${s[2]}`;
   document.getElementById('qlPlayerReciter').textContent = reciterNames[qlCurrentReciter] || qlCurrentReciter;
