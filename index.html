@@ -1534,7 +1534,16 @@ let qlIsPlaying     = false;
 let qlFilteredList  = [...SURAHS];
 
 function qlAudioUrl(num, reciter) {
-  return `https://cdn.islamic.network/quran/audio-surah/128/${reciter}/${num}.mp3`;
+  const pad = n => String(n).padStart(3, '0');
+  const mp3quran = {
+    'ar.alafasy':            `https://server8.mp3quran.net/afs/${pad(num)}.mp3`,
+    'ar.abdurrahmaansudais': `https://server11.mp3quran.net/sds/${pad(num)}.mp3`,
+    'ar.mahermuaiqly':       `https://server12.mp3quran.net/maher/${pad(num)}.mp3`,
+    'ar.husary':             `https://server13.mp3quran.net/husr/${pad(num)}.mp3`,
+    'ar.minshawi':           `https://server10.mp3quran.net/minsh/${pad(num)}.mp3`,
+    'ar.saoodshuraym':       `https://server9.mp3quran.net/shur/${pad(num)}.mp3`,
+  };
+  return mp3quran[reciter] || `https://cdn.islamic.network/quran/audio-surah/128/${reciter}/${num}.mp3`;
 }
 
 function qlRenderGrid(list) {
