@@ -123,13 +123,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <div class="toast" id="toast"></div>
 
 <script src="supabase-config.js"></script>
+<script src="assets/dashboard-shared.js"></script>
 <script>
-const SURAHS=['Al-Fatihah','Al-Baqarah','Aal-Imran','An-Nisa','Al-Maidah','Al-Anam','Al-Araf','Al-Anfal','At-Tawbah','Yunus','Hud','Yusuf','Ar-Ra\'d','Ibrahim','Al-Hijr','An-Nahl','Al-Isra','Al-Kahf','Maryam','Ta-Ha','Al-Anbiya','Al-Hajj','Al-Muminun','An-Nur','Al-Furqan','Ash-Shu\'ara','An-Naml','Al-Qasas','Al-Ankabut','Ar-Rum','Luqman','As-Sajdah','Al-Ahzab','Saba','Fatir','Ya-Sin','As-Saffat','Sad','Az-Zumar','Ghafir','Fussilat','Ash-Shura','Az-Zukhruf','Ad-Dukhan','Al-Jathiyah','Al-Ahqaf','Muhammad','Al-Fath','Al-Hujurat','Qaf','Adh-Dhariyat','At-Tur','An-Najm','Al-Qamar','Ar-Rahman','Al-Waqi\'ah','Al-Hadid','Al-Mujadila','Al-Hashr','Al-Mumtahanah','As-Saf','Al-Jumu\'ah','Al-Munafiqun','At-Taghabun','At-Talaq','At-Tahrim','Al-Mulk','Al-Qalam','Al-Haqqah','Al-Ma\'arij','Nuh','Al-Jinn','Al-Muzzammil','Al-Muddaththir','Al-Qiyamah','Al-Insan','Al-Mursalat','An-Naba','An-Nazi\'at','Abasa','At-Takwir','Al-Infitar','Al-Mutaffifin','Al-Inshiqaq','Al-Buruj','At-Tariq','Al-Ala','Al-Ghashiyah','Al-Fajr','Al-Balad','Ash-Shams','Al-Layl','Ad-Duha','Ash-Sharh','At-Tin','Al-Alaq','Al-Qadr','Al-Bayyinah','Az-Zalzalah','Al-Adiyat','Al-Qari\'ah','At-Takathur','Al-Asr','Al-Humazah','Al-Fil','Quraysh','Al-Ma\'un','Al-Kawthar','Al-Kafirun','An-Nasr','Al-Masad','Al-Ikhlas','Al-Falaq','An-Nas'];
-
 let students=[], selUid=null, tName='Dr. Muhammad Naeem';
-const fmtDate=d=>d?new Date(d).toLocaleDateString('en-PK',{day:'numeric',month:'short',year:'numeric'}):'—';
 const toast=msg=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);};
 const ini=s=>s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+function courseResourceLink(course){
+  const c=(course||'').toLowerCase();
+  if(c.includes('hifz')||c.includes('nazra')||c.includes('qaida'))return'lessons.html#qaida';
+  if(c.includes('dua')||c.includes('azkar'))return'lessons.html#duas';
+  return'lessons.html';
+}
 
 function renderStudents(list){
   const el=document.getElementById('sList');
@@ -156,7 +160,8 @@ async function selStudent(uid){
   document.getElementById('dPanel').innerHTML=`
     <div class="d-hdr">
       <div class="d-av">${ini(u)}</div>
-      <div><div class="d-name">${u.name}</div><div class="d-email">${u.email}</div><div style="font-size:12px;color:var(--g);font-weight:600;margin-top:4px">${u.course||'Quran Hifz'}</div></div>
+      <div style="flex:1"><div class="d-name">${u.name}</div><div class="d-email">${u.email}</div><div style="font-size:12px;color:var(--g);font-weight:600;margin-top:4px">${u.course||'Quran Hifz'}</div></div>
+      <a class="btn-o btn-sm" href="${courseResourceLink(u.course)}" target="_blank" style="text-decoration:none;white-space:nowrap">📚 Resources</a>
     </div>
     <div class="dtabs">
       <button class="dtab active" onclick="tab('hifz',this)">📗 Hifz</button>
@@ -198,7 +203,7 @@ async function saveHifz(uid,btn){
 }
 
 function renderAtt(uid,records){
-  const rows=records.length?records.map(r=>`<div class="att-row"><span style="color:#666">${fmtDate(r.date)}</span><span style="font-size:12px;color:#555">${r.lesson||'Class'}</span><span class="${r.present?'att-p':'att-a'}">${r.present?'✓ Present':'✗ Absent'}</span></div>`).join(''):'<p style="text-align:center;color:#999;padding:16px;font-size:13px">No records yet</p>';
+  const rows=records.length?records.map(renderAttendanceRow).join(''):'<p style="text-align:center;color:#999;padding:16px;font-size:13px">No records yet</p>';
   document.getElementById('dContent').innerHTML=`
     <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:16px">
       <div class="form-row"><label>Date</label><input type="date" id="aDate" value="${new Date().toISOString().split('T')[0]}"></div>
@@ -288,12 +293,9 @@ function updateAvgHifz(){
 }
 
 (async()=>{
-  const {data:{session}}=await _sb.auth.getSession();
-  if(!session){window.location.href='login.html';return;}
-  const uid=session.user.id;
-  const {data:me}=await _sb.from('profiles').select('*').eq('id',uid).single();
-  if(!me||me.role!=='teacher'){window.location.href='student-dashboard.html';return;}
-  tName=me.name||'Dr. Muhammad Naeem';
+  const auth = await requireSession('teacher');
+  if(!auth) return;
+  tName=auth.profile.name||'Dr. Muhammad Naeem';
   document.getElementById('navName').textContent=tName;
   document.getElementById('stDate').textContent=new Date().toLocaleDateString('en-PK',{day:'numeric',month:'short'});
 
@@ -301,10 +303,12 @@ function updateAvgHifz(){
   students=studs||[];
   document.getElementById('stTotal').textContent=students.length;
 
-  // Load progress for avg hifz
+  // Load progress for avg hifz — one batched query instead of one round-trip per student
   if(students.length){
-    const progs=await Promise.all(students.map(s=>_sb.from('progress').select('surahs').eq('id',s.id).single()));
-    progs.forEach(({data},i)=>{students[i].surahs=data?.surahs||[];});
+    const ids=students.map(s=>s.id);
+    const {data:progs}=await _sb.from('progress').select('id,surahs').in('id',ids);
+    const surahsById=new Map((progs||[]).map(p=>[p.id,p.surahs||[]]));
+    students.forEach(s=>{s.surahs=surahsById.get(s.id)||[];});
     updateAvgHifz();
   }
   renderStudents(students);
