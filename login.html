@@ -93,6 +93,7 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
 </div>
 
 <script src="supabase-config.js"></script>
+<script src="assets/dashboard-shared.js"></script>
 <script>
 let role = 'student';
 const TC = 'ALFALAH-TEACHER-2024';
@@ -173,12 +174,7 @@ async function forgotPw() {
 }
 
 // Auto-redirect if already logged in
-(async () => {
-  const { data: { session } } = await _sb.auth.getSession();
-  if (!session) return;
-  const { data: p } = await _sb.from('profiles').select('role').eq('id', session.user.id).single();
-  if (p) window.location.href = p.role==='teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
-})();
+redirectIfLoggedIn();
 </script>
 </body>
 </html>

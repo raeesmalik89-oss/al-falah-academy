@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lessons & Curriculum · Al-Falah Islamic Academy</title>
+<meta name="description" content="Free, structured Quran recitation lessons (Noorani Qaida — 16 lessons) and Duas & Azkar from Al-Falah Islamic Academy." />
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕌</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<style>
+  .lessons-topbar { background: rgba(26,107,58,1); padding: 16px 0; }
+  .lessons-topbar .container { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+  .lessons-topbar .logo { display: flex; align-items: center; gap: 10px; color: #fff; font-weight: 800; font-size: 16px; }
+  .lessons-topbar .logo span.crescent { color: var(--gold); font-size: 20px; }
+  .lessons-topbar .logo span.sub { color: var(--gold); font-weight: 400; }
+  .lessons-topbar a.back { color: rgba(255,255,255,.85); font-size: 13px; font-weight: 600; }
+  .lessons-topbar a.back:hover { color: #fff; }
+
+  .lessons-hero { background: linear-gradient(135deg,#0d2818,#1a4030 60%,#0d2818); color: #fff; padding: 56px 0 44px; text-align: center; }
+  .lessons-hero h1 { font-size: clamp(28px,4vw,42px); font-weight: 800; margin-bottom: 12px; }
+  .lessons-hero p { color: rgba(255,255,255,.8); font-size: 16px; max-width: 620px; margin: 0 auto; }
+
+  .track-section { padding: 56px 0; }
+  .track-header { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 28px; flex-wrap: wrap; }
+  .track-header h2 { font-size: clamp(22px,3vw,28px); font-weight: 800; color: #111; margin-top: 6px; }
+  .track-cta {
+    font-size: 13px; font-weight: 700; color: #fff; background: var(--green);
+    padding: 10px 20px; border-radius: 8px; white-space: nowrap; transition: background .2s;
+  }
+  .track-cta:hover { background: var(--green-dark); }
+
+  .lesson-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 16px; }
+  @media (max-width: 800px) { .lesson-grid { grid-template-columns: 1fr; } }
+  .lesson-card { display: flex; gap: 14px; align-items: flex-start; padding: 20px; }
+  .lesson-num-badge {
+    flex-shrink: 0; width: 36px; height: 36px; border-radius: 10px;
+    background: var(--green-lt); color: var(--green); font-weight: 800; font-size: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .lesson-card h3 { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 3px; }
+  .lesson-card p { font-size: 12.5px; color: var(--text-sm); }
+
+  .azkar-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+  @media (max-width: 900px) { .azkar-grid { grid-template-columns: repeat(2,1fr); } }
+  @media (max-width: 560px) { .azkar-grid { grid-template-columns: 1fr; } }
+  .azkar-card { text-align: center; }
+  .azkar-card .azkar-icon { font-size: 30px; margin-bottom: 10px; }
+  .azkar-card h3 { font-size: 15px; font-weight: 700; color: #111; margin-bottom: 4px; }
+  .azkar-card p { font-size: 12.5px; color: var(--text-sm); margin-bottom: 14px; }
+  .azkar-card a.track-cta { display: inline-block; }
+
+  .lessons-footer { text-align: center; padding: 32px 0 56px; }
+  .lessons-footer a { color: var(--green); font-weight: 700; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="lessons-topbar">
+  <div class="container">
+    <a href="index.html" class="logo"><span class="crescent">☽</span> Al-Falah <span class="sub">Islamic Academy</span></a>
+    <a href="index.html" class="back">← Back to Home</a>
+  </div>
+</div>
+
+<section class="lessons-hero">
+  <div class="container">
+    <h1>📚 Lessons & Curriculum</h1>
+    <p>Real, structured lessons you can study right now, free — start with the Noorani Qaida to learn to read the Quran, or go through the daily Duas & Azkar.</p>
+  </div>
+</section>
+
+<section class="track-section" id="qaida">
+  <div class="container">
+    <div class="track-header">
+      <div>
+        <div class="section-badge">Nazra · Quran Recitation</div>
+        <h2>Noorani Qaida — 16 Lessons</h2>
+      </div>
+      <a href="Al-Falah-Noorani-Qaida.html" target="_blank" class="track-cta">Open Full Booklet →</a>
+    </div>
+    <div class="lesson-grid">
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-1" target="_blank">
+        <div class="lesson-num-badge">1</div>
+        <div><h3>The Arabic Alphabet</h3><p>All 29 individual letters — حُرُوفُ الْهِجَاءِ</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-2" target="_blank">
+        <div class="lesson-num-badge">2</div>
+        <div><h3>Letter Forms</h3><p>How letters change shape — beginning, middle, end</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-3" target="_blank">
+        <div class="lesson-num-badge">3</div>
+        <div><h3>Muqatta'at</h3><p>The detached letters that open certain Surahs</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-4" target="_blank">
+        <div class="lesson-num-badge">4</div>
+        <div><h3>Harakat</h3><p>The short vowel marks — fatha, kasra, damma</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-5" target="_blank">
+        <div class="lesson-num-badge">5</div>
+        <div><h3>Tanween</h3><p>Double vowel endings — دو زبر، دو زیر، دو پیش</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-6" target="_blank">
+        <div class="lesson-num-badge">6</div>
+        <div><h3>Madd & Leen</h3><p>Long vowels and soft-letter sounds</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-7" target="_blank">
+        <div class="lesson-num-badge">7</div>
+        <div><h3>Sukoon</h3><p>The resting mark — a consonant with no vowel</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-8" target="_blank">
+        <div class="lesson-num-badge">8</div>
+        <div><h3>Qalqalah</h3><p>The echoing / bouncing letters</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-9" target="_blank">
+        <div class="lesson-num-badge">9</div>
+        <div><h3>Shaddah</h3><p>Doubled, stressed letters</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-10" target="_blank">
+        <div class="lesson-num-badge">10</div>
+        <div><h3>Noon Saakin & Tanween Rules</h3><p>Idghaam, Ikhfa, Iqlaab and Izhaar</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-11" target="_blank">
+        <div class="lesson-num-badge">11</div>
+        <div><h3>Meem Saakin Rules</h3><p>The three rules governing a still meem</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-12" target="_blank">
+        <div class="lesson-num-badge">12</div>
+        <div><h3>Ghunnah</h3><p>The nasal sound held for two counts</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-13" target="_blank">
+        <div class="lesson-num-badge">13</div>
+        <div><h3>Waqf Signs</h3><p>Where and how to pause while reciting</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-14" target="_blank">
+        <div class="lesson-num-badge">14</div>
+        <div><h3>Makharij al-Huroof</h3><p>Where each letter is articulated in the mouth/throat</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-15" target="_blank">
+        <div class="lesson-num-badge">15</div>
+        <div><h3>Qur'anic Practice Words</h3><p>Apply every rule above on real Quranic words</p></div>
+      </a>
+      <a class="card lesson-card" href="Al-Falah-Noorani-Qaida.html#lesson-16" target="_blank">
+        <div class="lesson-num-badge">16</div>
+        <div><h3>Short Surahs</h3><p>The Surahs read daily in the five prayers</p></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="track-section bg-light" id="duas">
+  <div class="container">
+    <div class="track-header">
+      <div>
+        <div class="section-badge">Duas & Azkar</div>
+        <h2>50 Authentic Duas — By Category</h2>
+      </div>
+      <a href="Al-Falah-Duas-Azkar.html" target="_blank" class="track-cta">Open Full Booklet →</a>
+    </div>
+    <div class="azkar-grid">
+      <div class="card azkar-card">
+        <div class="azkar-icon">🌅</div>
+        <h3>Morning Adhkar</h3>
+        <p>15 duas for after Fajr</p>
+        <a class="track-cta" href="Al-Falah-Duas-Azkar.html#morning" target="_blank">View →</a>
+      </div>
+      <div class="card azkar-card">
+        <div class="azkar-icon">🌇</div>
+        <h3>Evening Adhkar</h3>
+        <p>10 duas from Asr to Maghrib</p>
+        <a class="track-cta" href="Al-Falah-Duas-Azkar.html#evening" target="_blank">View →</a>
+      </div>
+      <div class="card azkar-card">
+        <div class="azkar-icon">🏠</div>
+        <h3>Daily Sunnah Duas</h3>
+        <p>15 duas for everyday moments</p>
+        <a class="track-cta" href="Al-Falah-Duas-Azkar.html#daily" target="_blank">View →</a>
+      </div>
+      <div class="card azkar-card">
+        <div class="azkar-icon">🛡️</div>
+        <h3>Protection & Repentance</h3>
+        <p>10 duas for safety, tawbah & special occasions</p>
+        <a class="track-cta" href="Al-Falah-Duas-Azkar.html#protection" target="_blank">View →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="lessons-footer">
+  <p style="font-size:13px;color:#666;margin-bottom:10px">Want a teacher to guide you through these lessons live?</p>
+  <a href="enroll.html">Enroll Free →</a>
+</div>
+
+</body>
+</html>

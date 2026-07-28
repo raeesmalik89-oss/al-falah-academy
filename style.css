@@ -123,6 +123,20 @@ img { max-width: 100%; }
 .section-header h2 { font-size: clamp(28px,3vw,40px); font-weight: 800; color: #111; margin-bottom: 12px; }
 .section-header p { font-size: 17px; color: var(--text-sm); max-width: 520px; margin: 0 auto; }
 
+/* ── SHARED CARD/GRID PRIMITIVES ──────────────────────────────────────────
+   Every *-card class above (feature-card, course-card, etc.) reimplements
+   this same background/border/radius/shadow/hover-lift by hand. New pages
+   (e.g. lessons.html) should use .card/.card-grid directly instead of
+   inventing another one-off variant. Existing *-card classes are left as-is. */
+.card {
+  background: #fff; border-radius: var(--radius); padding: 28px;
+  border: 1px solid var(--border); transition: all 0.3s;
+}
+.card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.card-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+@media (max-width: 900px) { .card-grid { grid-template-columns: repeat(2,1fr); } }
+@media (max-width: 600px) { .card-grid { grid-template-columns: 1fr; } }
+
 /* ── FEATURES ─────────────────────────────────────────────────────────── */
 .features-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
 .feature-card {

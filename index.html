@@ -94,7 +94,7 @@
     <span>🎓 Dr. Muhammad Naeem — PhD IIUI · Jamia Ashrafia Graduate</span>
     <span>👨‍👩‍👧 Family packages available — Enroll multiple students</span>
     <span>🌍 Classes available in English, Urdu & Arabic</span>
-    <span>📜 Darse Quran & Darse Hadith — uploaded every week</span>
+    <span>📜 Darse Quran & Darse Hadith — live sessions launching soon</span>
     <span>📚 Free Islamic books library — 24+ books in Urdu, Arabic & English</span>
     <span>🎓 Dr. Muhammad Naeem — PhD IIUI · Jamia Ashrafia Graduate</span>
   </div>
@@ -158,6 +158,13 @@
         <div style="font-size:12px; color:#555; margin-bottom:20px;">📏 Distance to Makkah</div>
         <button onclick="findQibla()" style="background:#1a6b3a; color:#fff; border:none; border-radius:10px; padding:12px; font-size:13px; font-weight:700; cursor:pointer; margin-top:auto; width:100%;">Find My Qibla</button>
         <div id="qiblaResult" style="margin-top:8px; font-size:12px; color:#1a6b3a; font-weight:600; text-align:center; min-height:18px;"></div>
+        <div id="qiblaCompassWrap" style="display:none; justify-content:center; margin-top:14px;">
+          <div style="position:relative; width:110px; height:110px; border-radius:50%; border:3px solid #1a6b3a; background:radial-gradient(circle,#fff,#f7f9f4);">
+            <div style="position:absolute; top:4px; left:50%; transform:translateX(-50%); font-size:10px; font-weight:700; color:#1a6b3a;">N</div>
+            <div id="qiblaNeedle" style="position:absolute; left:50%; top:50%; width:4px; height:44px; margin-left:-2px; margin-top:-44px; background:linear-gradient(#c8972a,#1a6b3a); transform-origin:bottom center; border-radius:4px; transition:transform 0.3s;"></div>
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:16px;">🕋</div>
+          </div>
+        </div>
       </div>
 
       <!-- Hadith Card -->
@@ -251,6 +258,7 @@
           <li>🌍 English & Urdu instruction</li>
         </ul>
         <a href="enroll.html" class="btn-enroll">Enroll Now</a>
+        <div style="margin-top:10px;text-align:center;"><a href="lessons.html#qaida" style="color:var(--green);font-weight:600;font-size:13px;">📚 View Free Curriculum →</a></div>
       </div>
 
       <div class="course-card">
@@ -500,6 +508,7 @@
       <div class="section-badge">Free PDF Downloads</div>
       <h2>Al-Falah Academy Resources</h2>
       <p>Professionally designed, authentically compiled — free for every Muslim to download and share</p>
+      <p style="margin-top:14px"><a href="lessons.html" style="color:var(--green);font-weight:700;font-size:14px">📚 Or browse everything lesson-by-lesson in our Curriculum Hub →</a></p>
     </div>
     <div class="downloads-grid">
 
@@ -543,7 +552,7 @@
           <h3 class="dl-title">Duas &amp; Azkar <span class="dl-title-ur" dir="rtl">دعاء اور اذکار</span></h3>
           <p class="dl-desc">Complete collection of authentic daily supplications from the Quran and Sunnah. Beautifully designed with Arabic text, Urdu translation, English meaning and full references.</p>
           <ul class="dl-features">
-            <li>✅ 22 authentic duas in 7 categories</li>
+            <li>✅ 50 authentic duas in 4 categories</li>
             <li>✅ Arabic text · Urdu translation · English</li>
             <li>✅ Transliteration for every dua</li>
             <li>✅ Full Hadith/Quran references</li>
@@ -577,6 +586,7 @@
       <div class="section-badge">🖼 Learning Resources</div>
       <h2>Islamic Learning Gallery</h2>
       <p>Preview and download our premium educational resources — beautifully designed, authentically compiled</p>
+      <p style="margin-top:14px"><a href="lessons.html" style="color:var(--green);font-weight:700;font-size:14px">📚 Or browse everything lesson-by-lesson in our Curriculum Hub →</a></p>
     </div>
     <div class="gallery-grid">
 
@@ -666,7 +676,7 @@
             <span class="gtag">Color Coded</span>
             <span class="gtag">In Qaida L-10</span>
           </div>
-          <a href="Al-Falah-Noorani-Qaida.html#lesson10" target="_blank" class="gallery-btn blue-btn">📚 View in Qaida</a>
+          <a href="Al-Falah-Noorani-Qaida.html#lesson-10" target="_blank" class="gallery-btn blue-btn">📚 View in Qaida</a>
         </div>
       </div>
 
@@ -813,7 +823,7 @@
     <div class="section-header">
       <div class="section-badge">📡 Live & Recorded</div>
       <h2>Dars — قرآن و حدیث</h2>
-      <p>Watch Darse Quran and Darse Hadith by Dr. Muhammad Naeem — new sessions added every week</p>
+      <p>Watch Darse Quran and Darse Hadith by Dr. Muhammad Naeem — live sessions launching soon</p>
     </div>
 
     <!-- Dars Tabs -->
@@ -1127,7 +1137,7 @@
         <a href="enroll.html" class="btn-pricing">Get Started Free</a>
       </div>
     </div>
-    <p class="pricing-note">💡 Prices in PKR available. Family packages: 2nd student 20% off, 3rd student 30% off. Contact us on WhatsApp for custom plans.</p>
+    <p class="pricing-note">💡 Family packages: 2nd student 20% off, 3rd student 30% off. Contact us on WhatsApp for custom plans.</p>
   </div>
 </section>
 
@@ -1323,7 +1333,7 @@
         <div class="sidebar-card">
           <h3>💬 Have Questions?</h3>
           <p>Our team is available on WhatsApp to help you choose the right course and scholar.</p>
-          <a href="https://wa.me/923168818693?text=Assalamu%20Alaikum%2C%20I%20am%20interested%20in%20enrolling%20at%20Noor%20Academy"
+          <a href="https://wa.me/923168818693?text=Assalamu%20Alaikum%2C%20I%20am%20interested%20in%20enrolling%20at%20Al-Falah%20Islamic%20Academy"
              target="_blank" class="btn-wa">
             💬 Chat on WhatsApp
           </a>
@@ -1363,7 +1373,6 @@
           <li><a href="#scholars">Our Scholars</a></li>
           <li><a href="#how-it-works">How It Works</a></li>
           <li><a href="#pricing">Pricing</a></li>
-          <li><a href="#testimonials">Reviews</a></li>
         </ul>
       </div>
       <div class="footer-links">
@@ -1576,9 +1585,24 @@ let activeCat  = 'all';
 const langFlag = { urdu:'🇵🇰 اردو', arabic:'🕌 عربي', english:'🌍 English' };
 const catColor = { quran:'#1a6b3a', hadith:'#c8972a', fiqh:'#1a56db', aqeedah:'#8b1a8b', seerah:'#8b4513', dua:'#1a8b8b', general:'#555' };
 
-function loadBooks() {
-  // Books are embedded directly — no fetch needed, works offline & on server
+async function loadBooks() {
+  // books.json (generated by books_scraper.py) is the primary, larger catalog.
+  // BOOKS_DATA above stays as an inline fallback for offline use / file:// browsing,
+  // where a fetch() of a local JSON file is blocked by the browser.
   const badge = document.getElementById('booksUpdated');
+  try {
+    const resp = await fetch('books.json', { cache: 'no-store' });
+    if (!resp.ok) throw new Error('books.json request failed');
+    const data = await resp.json();
+    if (data && Array.isArray(data.books) && data.books.length) {
+      ALL_BOOKS = data.books;
+      if (badge) badge.textContent = 'Updated: ' + (data.updated || BOOKS_DATA.updated);
+      renderBooks();
+      return;
+    }
+  } catch (e) {
+    // fall through to the embedded fallback below
+  }
   if (badge) badge.textContent = 'Updated: ' + BOOKS_DATA.updated;
   renderBooks();
 }
@@ -1959,6 +1983,9 @@ function findQibla() {
     if (result) result.innerHTML =
       `🕋 Face <strong>${Math.round(qiblaBearing)}° ${dir}</strong> · ${dist.toLocaleString()} km from Makkah`;
     if (btn) { btn.textContent = '🔄 Recalculate'; btn.disabled = false; }
+    const compassWrap = document.getElementById('qiblaCompassWrap');
+    if (compassWrap) compassWrap.style.display = 'flex';
+    rotateNeedle(qiblaBearing);
     startDeviceCompass();
   }, err => {
     const msgs = { 1:'Location access denied — please allow location in browser settings.',

@@ -41,9 +41,14 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .hifz-label{font-size:13px;color:var(--muted);margin-bottom:12px}
 .hifz-label strong{color:var(--g)}
 .surah-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(36px,1fr));gap:4px}
-.surah-cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:#f0f0ea;color:#999;border:1px solid #e0e0d8;transition:transform .15s}
+.surah-cell{aspect-ratio:1;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;background:#f0f0ea;color:#999;border:1px solid #e0e0d8;transition:transform .15s;cursor:pointer;font-family:inherit}
 .surah-cell.done{background:linear-gradient(135deg,#1a6b3a,#2d9e55);color:#fff;border-color:#1a6b3a}
 .surah-cell:hover{transform:scale(1.15)}
+.hifz-playing{font-size:12px;color:var(--muted);margin-top:10px;min-height:16px}
+.res-links{display:flex;flex-direction:column;gap:10px}
+.res-link{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:12px;background:#fafaf8;border:1px solid #e8e8e0;font-size:13px;font-weight:600;color:var(--g);transition:background .15s}
+.res-link:hover{background:var(--gold-lt)}
+.res-link span{font-size:18px}
 .hifz-legend{display:flex;gap:16px;margin-top:10px;font-size:12px;color:var(--muted);align-items:center}
 .hifz-legend span{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:4px;vertical-align:middle}
 .enroll-row{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid #f0f0ea}
@@ -92,13 +97,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </div>
   <div class="card hifz-card">
     <div class="card-title"><span>📗</span> Quran Hifz Progress — All 114 Surahs</div>
-    <div class="hifz-label">Memorized <strong id="hCount">0</strong> of <strong>114</strong> Surahs</div>
+    <div class="hifz-label">Memorized <strong id="hCount">0</strong> of <strong>114</strong> Surahs — click any surah below to listen</div>
     <div class="hifz-bar"><div class="hifz-fill" id="hFill" style="width:0%"></div></div>
     <div class="surah-grid" id="sGrid"></div>
     <div class="hifz-legend">
       <div><span style="background:linear-gradient(135deg,#1a6b3a,#2d9e55)"></span>Memorized</div>
       <div><span style="background:#f0f0ea;border:1px solid #e0e0d8"></span>Pending</div>
     </div>
+    <p class="hifz-playing" id="hifzNowPlaying"></p>
+    <audio id="hifzAudio" controls style="width:100%;display:none;margin-top:6px"></audio>
   </div>
   <div class="grid">
     <div class="card">
@@ -117,7 +124,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
         <div class="pay-method"><span>📱</span>JazzCash: <strong>0300-0000000</strong></div>
         <div class="pay-method"><span>🏦</span>Bank Transfer: Ask teacher</div>
       </div>
-      <a class="wa-btn" href="https://wa.me/923001234567?text=Assalamu+Alaikum+Dr+Naeem,+fee+payment+confirmation" target="_blank">💬 Confirm via WhatsApp</a>
+      <a class="wa-btn" href="https://wa.me/923168818693?text=Assalamu+Alaikum+Dr+Naeem,+fee+payment+confirmation" target="_blank">💬 Confirm via WhatsApp</a>
     </div>
   </div>
   <div class="grid">
@@ -134,28 +141,30 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="card-title"><span>📝</span> Teacher's Notes</div>
     <p id="tNotes" style="font-size:14px;color:#555;line-height:1.7;font-style:italic">No notes yet.</p>
   </div>
+  <div class="card" style="margin-bottom:24px">
+    <div class="card-title"><span>📚</span> Learning Resources</div>
+    <div class="res-links">
+      <a class="res-link" href="lessons.html" target="_blank"><span>📖</span> Browse Lessons & Curriculum</a>
+      <a class="res-link" id="resBooksLink" href="index.html#books" target="_blank"><span>📚</span> Free Islamic Books Library</a>
+    </div>
+  </div>
 </div>
 </div>
 
 <script src="supabase-config.js"></script>
+<script src="assets/dashboard-shared.js"></script>
 <script>
-const SURAHS=['Al-Fatihah','Al-Baqarah','Aal-Imran','An-Nisa','Al-Maidah','Al-Anam','Al-Araf','Al-Anfal','At-Tawbah','Yunus','Hud','Yusuf','Ar-Ra\'d','Ibrahim','Al-Hijr','An-Nahl','Al-Isra','Al-Kahf','Maryam','Ta-Ha','Al-Anbiya','Al-Hajj','Al-Muminun','An-Nur','Al-Furqan','Ash-Shu\'ara','An-Naml','Al-Qasas','Al-Ankabut','Ar-Rum','Luqman','As-Sajdah','Al-Ahzab','Saba','Fatir','Ya-Sin','As-Saffat','Sad','Az-Zumar','Ghafir','Fussilat','Ash-Shura','Az-Zukhruf','Ad-Dukhan','Al-Jathiyah','Al-Ahqaf','Muhammad','Al-Fath','Al-Hujurat','Qaf','Adh-Dhariyat','At-Tur','An-Najm','Al-Qamar','Ar-Rahman','Al-Waqi\'ah','Al-Hadid','Al-Mujadila','Al-Hashr','Al-Mumtahanah','As-Saf','Al-Jumu\'ah','Al-Munafiqun','At-Taghabun','At-Talaq','At-Tahrim','Al-Mulk','Al-Qalam','Al-Haqqah','Al-Ma\'arij','Nuh','Al-Jinn','Al-Muzzammil','Al-Muddaththir','Al-Qiyamah','Al-Insan','Al-Mursalat','An-Naba','An-Nazi\'at','Abasa','At-Takwir','Al-Infitar','Al-Mutaffifin','Al-Inshiqaq','Al-Buruj','At-Tariq','Al-Ala','Al-Ghashiyah','Al-Fajr','Al-Balad','Ash-Shams','Al-Layl','Ad-Duha','Ash-Sharh','At-Tin','Al-Alaq','Al-Qadr','Al-Bayyinah','Az-Zalzalah','Al-Adiyat','Al-Qari\'ah','At-Takathur','Al-Asr','Al-Humazah','Al-Fil','Quraysh','Al-Ma\'un','Al-Kawthar','Al-Kafirun','An-Nasr','Al-Masad','Al-Ikhlas','Al-Falaq','An-Nas'];
-
-function fmtDate(d){if(!d)return'—';return new Date(d).toLocaleDateString('en-PK',{day:'numeric',month:'short',year:'numeric'})}
-
 (async()=>{
-  const {data:{session}}=await _sb.auth.getSession();
-  if(!session){window.location.href='login.html';return;}
+  const auth = await requireSession('student');
+  if(!auth) return;
+  const {session, profile} = auth;
   const uid=session.user.id;
 
-  const [{data:profile},{data:prog},{data:att},{data:anns}]=await Promise.all([
-    _sb.from('profiles').select('*').eq('id',uid).single(),
+  const [{data:prog},{data:att},{data:anns}]=await Promise.all([
     _sb.from('progress').select('*').eq('id',uid).single(),
     _sb.from('attendance').select('*').eq('student_id',uid).order('date',{ascending:false}).limit(10),
     _sb.from('announcements').select('*').order('created_at',{ascending:false}).limit(5)
   ]);
-
-  if(!profile||profile.role==='teacher'){window.location.href='teacher-dashboard.html';return;}
 
   const mem=prog?.surahs||[];
   const pct=Math.round(mem.length/114*100);
@@ -181,10 +190,10 @@ function fmtDate(d){if(!d)return'—';return new Date(d).toLocaleDateString('en-
   document.getElementById('pBadge').innerHTML=`<span class="badge ${ps==='paid'?'bg':ps==='overdue'?'br':'by'}">${ps==='paid'?'✓ Paid':ps==='overdue'?'⚠ Overdue':'⏳ Due'}</span>`;
 
   const set=new Set(mem);
-  document.getElementById('sGrid').innerHTML=SURAHS.map((n,i)=>`<div class="surah-cell ${set.has(i+1)?'done':''}" title="${i+1}. ${n}">${i+1}</div>`).join('');
+  document.getElementById('sGrid').innerHTML=SURAHS.map((n,i)=>`<button type="button" class="surah-cell ${set.has(i+1)?'done':''}" title="${i+1}. ${n} — click to listen" onclick="playSurah(${i+1},'${n}')">${i+1}</button>`).join('');
 
   const attEl=document.getElementById('attList');
-  attEl.innerHTML=(att&&att.length)?att.map(r=>`<div class="att-row"><span style="color:#666">${fmtDate(r.date)}</span><span style="font-size:12px;color:#555">${r.lesson||'Class'}</span><span class="${r.present?'att-p':'att-a'}">${r.present?'✓ Present':'✗ Absent'}</span></div>`).join(''):'<div class="empty">No attendance records yet</div>';
+  attEl.innerHTML=(att&&att.length)?att.map(renderAttendanceRow).join(''):'<div class="empty">No attendance records yet</div>';
 
   const annEl=document.getElementById('annList');
   annEl.innerHTML=(anns&&anns.length)?anns.map(a=>`<div class="ann-item"><div class="ann-title">${a.title}</div><div class="ann-body">${a.body}</div><div class="ann-date">${fmtDate(a.created_at)} · ${a.teacher_name||'Dr. Naeem'}</div></div>`).join(''):'<div class="empty">No announcements yet</div>';
@@ -192,6 +201,15 @@ function fmtDate(d){if(!d)return'—';return new Date(d).toLocaleDateString('en-
   document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';
 })();
+
+function playSurah(num,name){
+  const audio=document.getElementById('hifzAudio');
+  const status=document.getElementById('hifzNowPlaying');
+  audio.style.display='block';
+  audio.src=surahAudioUrl(num);
+  status.textContent=`▶ Playing Surah ${num}. ${name}…`;
+  audio.play().catch(()=>{status.textContent=`⚠️ Audio unavailable for Surah ${name} right now. Try again shortly.`;});
+}
 
 async function logout(){await _sb.auth.signOut();window.location.href='login.html';}
 </script>
