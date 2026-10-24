@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Photo Gallery | Al-Falah Islamic Academy</title>
+  <meta name="description" content="Photos from Al-Falah Islamic Academy events, classes and student achievements." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕌</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" /></noscript>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-crescent">☽</span>
+      <span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="books.html">Free Books</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="gallery.html" class="active">Gallery</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="login.html" class="nav-login">🔐 Login</a></li>
+      <li><a href="enroll.html" class="nav-cta">Enroll Free</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="toggleMenu()">Home</a>
+    <a href="courses.html" onclick="toggleMenu()">Courses</a>
+    <a href="books.html" onclick="toggleMenu()">Free Books</a>
+    <a href="downloads.html" onclick="toggleMenu()">Downloads</a>
+    <a href="resources.html" onclick="toggleMenu()">Resources</a>
+    <a href="gallery.html" onclick="toggleMenu()">Gallery</a>
+    <a href="about.html" onclick="toggleMenu()">About</a>
+    <a href="tools.html" onclick="toggleMenu()">Tools</a>
+    <a href="login.html" onclick="toggleMenu()">🔐 Login</a>
+    <a href="enroll.html" onclick="toggleMenu()">Enroll Free</a>
+  </div>
+</nav>
+
+<section class="section gallery-section" id="gallery">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">📸 Photo Gallery</div>
+      <h2>Events &amp; Activities Gallery</h2>
+      <p>Photos from our classes, events, competitions and student achievements will appear here soon — in sha' Allah.</p>
+    </div>
+    <div class="gallery-empty" style="max-width:760px;margin:0 auto;text-align:center;border:2px dashed #c9a84c;border-radius:20px;padding:56px 24px;background:#faf8f0;">
+      <div style="font-size:54px;line-height:1;margin-bottom:14px;">🖼️</div>
+      <h3 style="color:#1a4030;font-size:22px;font-weight:800;margin-bottom:8px;">Coming Soon</h3>
+      <p style="color:#666;max-width:460px;margin:0 auto;font-size:15px;line-height:1.6;">
+        This space is reserved for upcoming <strong>event photos</strong> — class moments, prize distributions,
+        Quran competitions and more. Check back soon to see our academy in action!
+      </p>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-crescent">☽</span><span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span></div>
+        <p>Bringing authentic Islamic knowledge to every Muslim, wherever they are in the world.</p>
+        <div class="footer-arabic">وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا</div>
+      </div>
+      <div class="footer-links">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="books.html">Free Books</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="lessons.html">Curriculum Hub</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Academy</h4>
+        <ul>
+          <li><a href="about.html">About &amp; Scholars</a></li>
+          <li><a href="courses.html#how-it-works">How It Works</a></li>
+          <li><a href="courses.html#pricing">Pricing</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="tools.html">Free Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/923168818693" target="_blank">📱 WhatsApp Us</a></li>
+          <li><a href="mailto:raees.malik89@gmail.com">✉️ raees.malik89@gmail.com</a></li>
+          <li>🌍 Serving Students Worldwide</li>
+          <li>⏰ Available 7 Days a Week</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Al-Falah Islamic Academy. All rights reserved. | Serving the Ummah with authentic Islamic education.</p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>

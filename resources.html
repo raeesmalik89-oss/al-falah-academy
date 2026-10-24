@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Islamic Resources — Prayer Times, Qibla, Quran Audio | Al-Falah Islamic Academy</title>
+  <meta name="description" content="Free Islamic tools: live prayer times, Qibla finder, Ayah of the day, full Quran audio with top reciters, and Dars video lessons." />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕌</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" /></noscript>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-crescent">☽</span>
+      <span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="books.html">Free Books</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="resources.html" class="active">Resources</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="login.html" class="nav-login">🔐 Login</a></li>
+      <li><a href="enroll.html" class="nav-cta">Enroll Free</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="toggleMenu()">Home</a>
+    <a href="courses.html" onclick="toggleMenu()">Courses</a>
+    <a href="books.html" onclick="toggleMenu()">Free Books</a>
+    <a href="downloads.html" onclick="toggleMenu()">Downloads</a>
+    <a href="resources.html" onclick="toggleMenu()">Resources</a>
+    <a href="gallery.html" onclick="toggleMenu()">Gallery</a>
+    <a href="about.html" onclick="toggleMenu()">About</a>
+    <a href="tools.html" onclick="toggleMenu()">Tools</a>
+    <a href="login.html" onclick="toggleMenu()">🔐 Login</a>
+    <a href="enroll.html" onclick="toggleMenu()">Enroll Free</a>
+  </div>
+</nav>
+
+<section class="azan-section" id="azan">
+  <div class="container">
+    <div class="azan-header">
+      <div class="azan-title-block">
+        <span class="azan-arabic">أَوْقَاتُ الصَّلَاةِ</span>
+        <span class="azan-label">Prayer Times — Islamabad, Pakistan</span>
+      </div>
+      <div class="azan-city-row">
+        <select id="azanCity" onchange="loadAzan()" class="city-select">
+          <option value="Islamabad">Islamabad</option>
+          <option value="Rawalpindi">Rawalpindi</option>
+          <option value="Lahore">Lahore</option>
+          <option value="Karachi">Karachi</option>
+          <option value="Peshawar">Peshawar</option>
+          <option value="Quetta">Quetta</option>
+          <option value="Multan">Multan</option>
+          <option value="Faisalabad">Faisalabad</option>
+        </select>
+        <span class="azan-date-display" id="azanDateDisplay">Loading…</span>
+      </div>
+    </div>
+
+    <div class="azan-grid" id="azanGrid">
+      <div class="azan-loading">
+        <div class="hadith-spinner"></div>
+        <p>Fetching prayer times…</p>
+      </div>
+    </div>
+
+    <div class="azan-footer-note">
+      <span>🕌 Prayer times via <strong>AlAdhan.com</strong> — updated daily · Hanafi method · Pakistan Standard Time</span>
+      <span id="azanNextUp" class="next-up-badge"></span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="qibla" style="background:#f7f9f4;">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">Islamic Tools</div>
+      <h2>Quran, Hadith &amp; Qibla</h2>
+      <p>Daily Islamic tools — free to use, updated every day</p>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+
+      <!-- Qibla Card -->
+      <div style="background:#fff; border:0.5px solid #e0e0d8; border-radius:16px; padding:28px 22px; box-shadow:0 2px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
+        <div style="font-size:2.2rem; margin-bottom:14px;">🕋</div>
+        <div style="font-size:16px; font-weight:700; color:#1a1a1a; margin-bottom:8px;">Qibla Finder</div>
+        <div style="font-size:13px; color:#555; margin-bottom:14px; line-height:1.6;">Find the exact direction of the Kaaba from your location.</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">📍 Uses your GPS location</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">🧭 Degree bearing shown</div>
+        <div style="font-size:12px; color:#555; margin-bottom:20px;">📏 Distance to Makkah</div>
+        <button onclick="findQibla()" style="background:#1a6b3a; color:#fff; border:none; border-radius:10px; padding:12px; font-size:13px; font-weight:700; cursor:pointer; margin-top:auto; width:100%;">Find My Qibla</button>
+        <div id="qiblaResult" style="margin-top:8px; font-size:12px; color:#1a6b3a; font-weight:600; text-align:center; min-height:18px;"></div>
+        <div id="qiblaCompassWrap" style="display:none; justify-content:center; margin-top:14px;">
+          <div style="position:relative; width:110px; height:110px; border-radius:50%; border:3px solid #1a6b3a; background:radial-gradient(circle,#fff,#f7f9f4);">
+            <div style="position:absolute; top:4px; left:50%; transform:translateX(-50%); font-size:10px; font-weight:700; color:#1a6b3a;">N</div>
+            <div id="qiblaNeedle" style="position:absolute; left:50%; top:50%; width:4px; height:44px; margin-left:-2px; margin-top:-44px; background:linear-gradient(#c8972a,#1a6b3a); transform-origin:bottom center; border-radius:4px; transition:transform 0.3s;"></div>
+            <div style="position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); font-size:16px;">🕋</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hadith Card -->
+      <div style="background:#fff; border:0.5px solid #e0e0d8; border-radius:16px; padding:28px 22px; box-shadow:0 2px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
+        <div style="font-size:2.2rem; margin-bottom:14px;">📿</div>
+        <div style="font-size:16px; font-weight:700; color:#1a1a1a; margin-bottom:8px;">Hadith of the Day</div>
+        <div style="font-size:13px; color:#555; margin-bottom:14px; line-height:1.6;">Authentic hadith from Bukhari, Muslim &amp; Nawawi — new every day.</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">📚 Sahih Bukhari · Muslim</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">🌍 Arabic, Urdu &amp; English</div>
+        <div style="font-size:12px; color:#555; margin-bottom:20px;">🔁 Changes daily</div>
+        <a href="index.html#hadith-day" style="background:#c8972a; color:#fff; border-radius:10px; padding:12px; font-size:13px; font-weight:700; text-decoration:none; text-align:center; margin-top:auto; display:block;">Read Hadith</a>
+      </div>
+
+      <!-- Ayah Card -->
+      <div style="background:#fff; border:0.5px solid #e0e0d8; border-radius:16px; padding:28px 22px; box-shadow:0 2px 12px rgba(0,0,0,0.05); display:flex; flex-direction:column;">
+        <div style="font-size:2.2rem; margin-bottom:14px;">📖</div>
+        <div style="font-size:16px; font-weight:700; color:#1a1a1a; margin-bottom:8px;">Ayah of the Day</div>
+        <div style="font-size:13px; color:#555; margin-bottom:14px; line-height:1.6;">A new verse from the Holy Quran every day with translation.</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">🕌 Full Arabic text</div>
+        <div style="font-size:12px; color:#555; margin-bottom:5px;">📝 Urdu &amp; English</div>
+        <div style="font-size:12px; color:#555; margin-bottom:20px;">🌿 Tafsir reference</div>
+        <a href="#ayah-day" style="background:#1a6b3a; color:#fff; border-radius:10px; padding:12px; font-size:13px; font-weight:700; text-decoration:none; text-align:center; margin-top:auto; display:block;">Read Ayah</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="section ayah-section" id="ayah-day">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">📖 قرآن مجید</div>
+      <h2>Ayah of the Day — آیتِ قرآنی</h2>
+      <p>A new verse from the Holy Quran every day — Arabic, Urdu and English</p>
+    </div>
+
+    <div class="ayah-card" id="ayahCard">
+      <div class="ayah-loading">
+        <div class="hadith-spinner"></div>
+        <p>Loading today's Ayah…</p>
+      </div>
+    </div>
+
+    <div class="ayah-nav">
+      <button class="ayah-btn" onclick="changeAyah(-1)">← Previous</button>
+      <span class="ayah-counter" id="ayahCounter"></span>
+      <button class="ayah-btn" onclick="changeAyah(1)">Next →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section ql-section" id="quran-listen">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">🔊 استماع القرآن</div>
+      <h2>Quran Listening — قرآن سنیں</h2>
+      <p>Stream any Surah by world's most beloved reciters — free, no download needed</p>
+    </div>
+
+    <!-- Controls bar -->
+    <div class="ql-controls">
+      <div class="ql-reciter-wrap">
+        <label class="ql-label">🎙️ Reciter</label>
+        <select id="qlReciter" class="ql-select" onchange="qlChangeReciter()">
+          <option value="ar.alafasy">Mishary Rashid Alafasy</option>
+          <option value="ar.abdurrahmaansudais">Abdul Rahman Al-Sudais</option>
+          <option value="ar.mahermuaiqly">Maher Al-Muaiqly</option>
+          <option value="ar.husary">Mahmoud Khalil Al-Husary</option>
+          <option value="ar.minshawi">Muhammad Siddiq Al-Minshawi</option>
+          <option value="ar.saoodshuraym">Saood Al-Shuraym</option>
+        </select>
+      </div>
+      <div class="ql-search-wrap">
+        <label class="ql-label">🔍 Search Surah</label>
+        <input type="text" id="qlSearch" class="ql-search" placeholder="e.g. Yasin, Rehman, Baqarah…" oninput="qlFilterSurahs()">
+      </div>
+    </div>
+
+    <!-- Surah grid -->
+    <div class="ql-grid" id="qlGrid"></div>
+
+    <p class="ql-source-note">Audio streamed from <strong>Islamic Network CDN</strong> — high quality 128kbps MP3 · Free forever</p>
+  </div>
+</section>
+
+<!-- Sticky Audio Player -->
+<div class="ql-player" id="qlPlayer" style="display:none">
+  <div class="ql-player-inner">
+    <div class="ql-player-info">
+      <div class="ql-player-surah" id="qlPlayerSurah">—</div>
+      <div class="ql-player-reciter" id="qlPlayerReciter">—</div>
+    </div>
+    <div class="ql-player-controls">
+      <button class="ql-ctrl-btn" onclick="qlPrevSurah()" title="Previous">⏮</button>
+      <button class="ql-play-btn" id="qlPlayBtn" onclick="qlTogglePlay()">▶</button>
+      <button class="ql-ctrl-btn" onclick="qlNextSurah()" title="Next">⏭</button>
+    </div>
+    <div class="ql-player-progress-wrap">
+      <span class="ql-time" id="qlCurrentTime">0:00</span>
+      <div class="ql-progress-bar" onclick="qlSeek(event)">
+        <div class="ql-progress-fill" id="qlProgressFill"></div>
+      </div>
+      <span class="ql-time" id="qlDuration">—</span>
+    </div>
+    <div class="ql-player-right">
+      <input type="range" min="0" max="1" step="0.05" value="1" class="ql-volume" id="qlVolume" oninput="qlSetVolume(this.value)" title="Volume">
+      <button class="ql-close-btn" onclick="qlClose()">✕</button>
+    </div>
+  </div>
+  <audio id="qlAudio" onended="qlNextSurah()" ontimeupdate="qlUpdateProgress()" onloadedmetadata="qlUpdateDuration()"></audio>
+</div>
+
+<section class="section bg-light" id="dars">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">📡 Live & Recorded</div>
+      <h2>Dars — قرآن و حدیث</h2>
+      <p>Watch Darse Quran and Darse Hadith by Dr. Muhammad Naeem — live sessions launching soon</p>
+    </div>
+
+    <!-- Dars Tabs -->
+    <div class="dars-tabs">
+      <button class="dars-tab active" id="tabQuran" onclick="switchDars('quran',this)">📖 Darse Quran <span class="dars-count" id="countQuran"></span></button>
+      <button class="dars-tab" id="tabHadith" onclick="switchDars('hadith',this)">📜 Darse Hadith <span class="dars-count" id="countHadith"></span></button>
+    </div>
+
+    <!-- Video Modal -->
+    <div class="dars-modal" id="darsModal" onclick="closeDarsModal(event)">
+      <div class="dars-modal-box">
+        <button class="dars-modal-close" onclick="closeDarsModal()">✕</button>
+        <div class="dars-modal-title" id="darsModalTitle"></div>
+        <div class="dars-modal-player" id="darsModalPlayer"></div>
+      </div>
+    </div>
+
+    <!-- Panels rendered by JS -->
+    <div class="dars-panel" id="darsQuran"></div>
+    <div class="dars-panel" id="darsHadith" style="display:none"></div>
+
+    <!-- Upload Notice -->
+    <div class="dars-upload-notice">
+      <div class="dars-notice-icon">📤</div>
+      <div>
+        <strong>New Dars uploaded every week</strong><br>
+        <span>To add a new video: paste the YouTube link into the <code>DARS_VIDEOS</code> array in the page source</span>
+      </div>
+      <a href="enroll.html" class="btn-primary" style="white-space:nowrap">Get Notified</a>
+    </div>
+
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-crescent">☽</span><span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span></div>
+        <p>Bringing authentic Islamic knowledge to every Muslim, wherever they are in the world.</p>
+        <div class="footer-arabic">وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا</div>
+      </div>
+      <div class="footer-links">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="books.html">Free Books</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="lessons.html">Curriculum Hub</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Academy</h4>
+        <ul>
+          <li><a href="about.html">About &amp; Scholars</a></li>
+          <li><a href="courses.html#how-it-works">How It Works</a></li>
+          <li><a href="courses.html#pricing">Pricing</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="tools.html">Free Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/923168818693" target="_blank">📱 WhatsApp Us</a></li>
+          <li><a href="mailto:raees.malik89@gmail.com">✉️ raees.malik89@gmail.com</a></li>
+          <li>🌍 Serving Students Worldwide</li>
+          <li>⏰ Available 7 Days a Week</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Al-Falah Islamic Academy. All rights reserved. | Serving the Ummah with authentic Islamic education.</p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>
