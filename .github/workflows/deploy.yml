@@ -1,0 +1,23 @@
+# Deploys the site to Cloudflare Workers (static assets) on every push to main.
+# Uses wrangler.jsonc in the repo root. Requires two repo secrets:
+#   CLOUDFLARE_API_TOKEN  — a scoped token with "Edit Cloudflare Workers"
+#   CLOUDFLARE_ACCOUNT_ID — the Cloudflare account id
+name: Deploy to Cloudflare
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch: {}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Deploy with Wrangler
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy
