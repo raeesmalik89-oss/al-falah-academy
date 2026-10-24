@@ -241,8 +241,8 @@ function renderBooks() {
       <p class="book-desc">${b.desc}</p>
       <div class="book-meta">📄 ${b.pages || ''} &nbsp;|&nbsp; 🌐 ${b.source || ''}</div>
       <div class="book-btns">
-        <a href="${b.url}" target="_blank" rel="noopener" class="btn-download">⬇️ Download / Read Free</a>
-        ${b.url2 ? `<a href="${b.url2}" target="_blank" rel="noopener" class="btn-download btn-download-alt">📄 Direct PDF</a>` : ''}
+        <a href="${b.url}" target="_blank" rel="noopener" class="btn-download">📖 Read Online</a>
+        <a href="${b.url2 ? b.url2 : (b.url.includes('/details/') ? b.url.replace('/details/','/download/') : b.url)}" target="_blank" rel="noopener" class="btn-download btn-download-alt">⬇️ Download</a>
       </div>
     </div>
   `).join('');
