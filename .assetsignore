@@ -1,0 +1,7 @@
+.git
+.github
+.gitignore
+.assetsignore
+wrangler.jsonc
+books_scraper.py
+CLAUDE.md

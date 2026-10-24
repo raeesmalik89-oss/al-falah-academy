@@ -1,0 +1,13 @@
+{
+  // Cloudflare Workers static-assets config for Al-Falah Academy.
+  // Makes `npx wrangler deploy` publish the whole repo as a static site
+  // (served from the edge, no server code). Clean URLs (/courses ->
+  // courses.html) come from the default html_handling.
+  "name": "al-falah-academy",
+  "compatibility_date": "2024-12-01",
+  "assets": {
+    "directory": ".",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
