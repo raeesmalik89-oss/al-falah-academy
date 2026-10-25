@@ -914,6 +914,7 @@ const DARS_VIDEOS = {
 // ── DARS RENDERING ──────────────────────────────────────
 function renderDars(type) {
   const panel = document.getElementById(type === 'quran' ? 'darsQuran' : 'darsHadith');
+  if (!panel) return;
   const videos = DARS_VIDEOS[type] || [];
   const countEl = document.getElementById(type === 'quran' ? 'countQuran' : 'countHadith');
   const liveCount = videos.filter(v => v.youtube).length;
