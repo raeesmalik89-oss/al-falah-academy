@@ -19,7 +19,7 @@ function submitEnroll(e) {
   const phone   = fd.get('whatsapp') || '';
   const waMsg   = encodeURIComponent(`Assalamu Alaikum! 🌙 I have just submitted my enrollment form at Al-Falah Islamic Academy.\n\nStudent: ${name}\nCourse: ${course}\nPreferred Time: ${time}\nContact: ${phone}\n\nPlease confirm my free trial class. Jazak Allah Khayran!`);
 
-  fetch('https://formsubmit.co/raees.malik89@gmail.com', {
+  fetch('https://formsubmit.co/info@alfalah-academy.com', {
     method: 'POST', body: fd,
     headers: { 'Accept': 'application/json' }
   })
