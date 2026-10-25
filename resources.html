@@ -61,6 +61,7 @@
       <button class="res-tab" data-t="qibla" onclick="showRes('qibla')">🧭 Qibla Finder</button>
       <button class="res-tab" data-t="quran-listen" onclick="showRes('quran-listen')">🔊 Quran Audio</button>
       <button class="res-tab" data-t="ayah-day" onclick="showRes('ayah-day')">📖 Ayah of the Day</button>
+      <button class="res-tab" data-t="hadith-day" onclick="showRes('hadith-day')">📜 Hadith of the Day</button>
       <button class="res-tab" data-t="dars" onclick="showRes('dars')">🎥 Dars Videos</button>
     </div>
   </div>
@@ -180,6 +181,24 @@
       <button class="ayah-btn" onclick="changeAyah(-1)">← Previous</button>
       <span class="ayah-counter" id="ayahCounter"></span>
       <button class="ayah-btn" onclick="changeAyah(1)">Next →</button>
+    </div>
+  </div>
+</section>
+
+<section class="section hadith-section" id="hadith-day" style="display:none">
+  <div class="container">
+    <div class="section-header light">
+      <div class="section-badge light-badge">Updated Daily</div>
+      <h2 style="color:#fff">Hadith of the Day</h2>
+      <p style="color:rgba(255,255,255,0.8)">A new authentic Hadith every day — in Arabic, Urdu and English</p>
+    </div>
+    <div class="hadith-card" id="hadithCard">
+      <div class="hadith-loading"><div class="hadith-spinner"></div><p>Loading today's Hadith...</p></div>
+    </div>
+    <div class="hadith-nav">
+      <button class="hadith-btn" onclick="prevHadith()">← Previous</button>
+      <span id="hadithCounter" style="color:rgba(255,255,255,0.7);font-size:14px"></span>
+      <button class="hadith-btn" onclick="nextHadith()">Next →</button>
     </div>
   </div>
 </section>
@@ -352,11 +371,15 @@
 <script src="assets/app.js"></script>
 <script>
 function showRes(id){
-  ['azan','qibla','quran-listen','ayah-day','dars'].forEach(function(sx){var el=document.getElementById(sx); if(el) el.style.display=(sx===id)?'':'none';});
+  ['azan','qibla','quran-listen','ayah-day','hadith-day','dars'].forEach(function(sx){var el=document.getElementById(sx); if(el) el.style.display=(sx===id)?'':'none';});
   document.querySelectorAll('.res-tab').forEach(function(b){b.classList.toggle('active', b.dataset.t===id);});
   if(id==='quran-listen' && typeof initQuranPlayer==='function'){ try{initQuranPlayer();}catch(e){} }
   var t=document.getElementById('res-top'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
 }
+document.addEventListener('DOMContentLoaded',function(){
+  var h=(location.hash||'').replace('#','');
+  if(['azan','qibla','quran-listen','ayah-day','hadith-day','dars'].indexOf(h)>=0) showRes(h);
+});
 </script>
 </body>
 </html>
