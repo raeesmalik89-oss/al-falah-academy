@@ -798,27 +798,27 @@ function submitForm() {
 
   // Build WhatsApp message
   const waMsg = encodeURIComponent(
-`Assalamu Alaikum! New Enrollment Request 🌙
+`Assalamu Alaikum! New Enrollment Request
 
-👤 Student: ${data.name}
-📋 Enrolling For: ${data.enrollFor}
-🎂 Age Group: ${data.age}
-⚧ Gender: ${data.gender}
-🌍 Country: ${data.country}${data.city ? ', ' + data.city : ''}
-📊 Current Level: ${data.level}
+Student: ${data.name}
+Enrolling For: ${data.enrollFor}
+Age Group: ${data.age}
+Gender: ${data.gender}
+Country: ${data.country}${data.city ? ', ' + data.city : ''}
+Current Level: ${data.level}
 
-📚 Course Selected: ${data.course}
-🗣 Language: ${data.lang}
-👨‍🏫 Teacher Preference: ${data.tgender}
+Course Selected: ${data.course}
+Language: ${data.lang}
+Teacher Preference: ${data.tgender}
 
-⏰ Preferred Time: ${data.time}
-📅 Frequency: ${data.freq || 'Not specified'}
-📱 WhatsApp: ${data.phone}
-${data.email ? '📧 Email: ' + data.email : ''}
-${data.parent ? '👨‍👩‍👦 Parent: ' + data.parent : ''}
-${data.notes ? '📝 Notes: ' + data.notes : ''}
+Preferred Time: ${data.time}
+Frequency: ${data.freq || 'Not specified'}
+WhatsApp: ${data.phone}
+${data.email ? 'Email: ' + data.email : ''}
+${data.parent ? 'Parent: ' + data.parent : ''}
+${data.notes ? 'Notes: ' + data.notes : ''}
 
-First trial class requested — Jazak Allah Khayran!`
+First trial class requested - Jazak Allah Khayran!`
   );
 
   const waLink = `https://wa.me/923168818693?text=${waMsg}`;
