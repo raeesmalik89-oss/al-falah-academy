@@ -49,6 +49,28 @@
   </div>
 </nav>
 
+<section class="section" id="res-top" style="padding-bottom:0">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">📚 Islamic Resources</div>
+      <h2>Daily Islamic Tools</h2>
+      <p>Choose a tool — prayer times, Qibla, Quran audio, Ayah of the day, or Dars videos.</p>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:840px;margin:0 auto">
+      <button class="res-tab active" data-t="azan" onclick="showRes('azan')">🕐 Prayer Times</button>
+      <button class="res-tab" data-t="qibla" onclick="showRes('qibla')">🧭 Qibla Finder</button>
+      <button class="res-tab" data-t="quran-listen" onclick="showRes('quran-listen')">🔊 Quran Audio</button>
+      <button class="res-tab" data-t="ayah-day" onclick="showRes('ayah-day')">📖 Ayah of the Day</button>
+      <button class="res-tab" data-t="dars" onclick="showRes('dars')">🎥 Dars Videos</button>
+    </div>
+  </div>
+  <style>
+    .res-tab{background:#fff;border:2px solid #e0e6e0;color:#1a4030;padding:11px 18px;border-radius:30px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+    .res-tab:hover{border-color:#1a6b3a}
+    .res-tab.active{background:#1a6b3a;border-color:#1a6b3a;color:#fff}
+  </style>
+</section>
+
 <section class="azan-section" id="azan">
   <div class="container">
     <div class="azan-header">
@@ -85,7 +107,7 @@
   </div>
 </section>
 
-<section class="section" id="qibla" style="background:#f7f9f4;">
+<section class="section" id="qibla" style="background:#f7f9f4;display:none">
   <div class="container">
     <div class="section-header">
       <div class="section-badge">Islamic Tools</div>
@@ -139,7 +161,7 @@
   </div>
 </section>
 
-<section class="section ayah-section" id="ayah-day">
+<section class="section ayah-section" id="ayah-day" style="display:none">
   <div class="container">
     <div class="section-header">
       <div class="section-badge">📖 قرآن مجید</div>
@@ -162,7 +184,7 @@
   </div>
 </section>
 
-<section class="section ql-section" id="quran-listen">
+<section class="section ql-section" id="quran-listen" style="display:none">
   <div class="container">
     <div class="section-header">
       <div class="section-badge">🔊 استماع القرآن</div>
@@ -223,7 +245,7 @@
   <audio id="qlAudio" onended="qlNextSurah()" ontimeupdate="qlUpdateProgress()" onloadedmetadata="qlUpdateDuration()"></audio>
 </div>
 
-<section class="section bg-light" id="dars">
+<section class="section bg-light" id="dars" style="display:none">
   <div class="container">
     <div class="section-header">
       <div class="section-badge">📡 Live & Recorded</div>
@@ -327,5 +349,13 @@
 </footer>
 <div class="toast" id="toast"></div>
 <script src="assets/app.js"></script>
+<script>
+function showRes(id){
+  ['azan','qibla','quran-listen','ayah-day','dars'].forEach(function(sx){var el=document.getElementById(sx); if(el) el.style.display=(sx===id)?'':'none';});
+  document.querySelectorAll('.res-tab').forEach(function(b){b.classList.toggle('active', b.dataset.t===id);});
+  if(id==='quran-listen' && typeof initQuranPlayer==='function'){ try{initQuranPlayer();}catch(e){} }
+  var t=document.getElementById('res-top'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
+}
+</script>
 </body>
 </html>
