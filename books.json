@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-24T00:00:00Z",
-  "total": 28,
+  "updated": "2026-10-25T00:00:00Z",
+  "total": 29,
   "sources": [
     "Archive.org",
     "IslamHouse.com",
@@ -342,6 +342,18 @@
       "desc": "A clear modern explanation of Islamic monotheism (Tawheed) and its categories — essential aqeedah reading.",
       "pages": "230 pages",
       "url": "https://archive.org/details/the-fundamentals-of-tawheed-islamic-monothism-dr-abu-ameenah-bilal-philips-english",
+      "source": "Archive.org"
+    },
+    {
+      "id": "al-barakat-makkiyya",
+      "title": "البركات المكية — Al-Barakaat ul-Makkiyyah",
+      "author": "Collection of Awraad & Adhkaar",
+      "lang": "arabic",
+      "category": "dua",
+      "featured": false,
+      "desc": "A treasured collection of blessed daily litanies, awraad and supplications (البركات المکیہ) for spiritual benefit and protection.",
+      "pages": "Full PDF",
+      "url": "https://archive.org/details/AlBarakaatUlMakkiyyahComplete_201407",
       "source": "Archive.org"
     }
   ]
