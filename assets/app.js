@@ -748,15 +748,19 @@ async function loadAzan() {
     const timings = json.data.timings;
     const dateInfo = json.data.date;
 
-    // Show hijri date in header — Pakistan follows local moon-sighting,
-    // which runs ~1 day behind the Umm al-Qura calendar the API returns.
+    // Hijri date in proper English. Pakistan's moon-sighting runs ~1 day
+    // behind the Umm al-Qura calendar the API uses, so shift by -1 day.
+    const HMONTHS = ['Muharram','Safar','Rabi al-Awwal','Rabi al-Thani','Jumada al-Awwal','Jumada al-Thani','Rajab',"Sha'ban",'Ramadan','Shawwal',"Dhul-Qa'dah",'Dhul-Hijjah'];
     let hijriStr;
     try {
       const pk = new Date(); pk.setDate(pk.getDate() - 1);
-      hijriStr = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',
-        { day: 'numeric', month: 'long', year: 'numeric' }).format(pk);
+      const parts = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',
+        { day: 'numeric', month: 'numeric', year: 'numeric' }).formatToParts(pk);
+      const gv = t => (parts.find(p => p.type === t) || {}).value;
+      hijriStr = `${gv('day')} ${HMONTHS[(+gv('month')) - 1]} ${gv('year')} AH`;
     } catch (e) {
-      const h = dateInfo.hijri; hijriStr = `${h.day} ${h.month.en} ${h.year} AH`;
+      const h = dateInfo.hijri;
+      hijriStr = `${h.day} ${HMONTHS[(+h.month.number) - 1] || h.month.en} ${h.year} AH`;
     }
     document.getElementById('azanDateDisplay').textContent =
       `${hijriStr} · ${dateInfo.readable}`;
