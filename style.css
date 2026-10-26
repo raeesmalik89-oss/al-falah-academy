@@ -436,8 +436,8 @@ img { max-width: 100%; }
 .hadith-narrator { font-size: 12px; color: rgba(255,255,255,0.6); }
 .hadith-arabic {
   font-family: 'Amiri', serif; font-size: 30px; color: #fff;
-  direction: rtl; text-align: right; line-height: 1.8;
-  margin-bottom: 20px; padding: 20px; background: rgba(255,255,255,0.05);
+  direction: rtl; text-align: center; line-height: 1.9;
+  margin-bottom: 20px; padding: 24px 20px; background: rgba(255,255,255,0.05);
   border-radius: 12px;
 }
 .hadith-divider {
@@ -452,11 +452,12 @@ img { max-width: 100%; }
   font-style: italic; margin-bottom: 20px;
 }
 .lang-tag {
-  display: inline-block; font-size: 11px; font-weight: 700;
+  display: block; width: fit-content; font-size: 11px; font-weight: 700;
   background: rgba(200,151,42,0.25); color: var(--gold);
-  padding: 2px 10px; border-radius: 12px; margin-bottom: 6px; margin-left: 8px;
+  padding: 2px 10px; border-radius: 12px; margin: 0 0 8px 0;
   font-style: normal; direction: ltr;
 }
+.hadith-urdu .lang-tag { margin-left: auto; margin-right: 0; }
 .hadith-share { display: flex; gap: 12px; }
 .hadith-share-btn {
   background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
