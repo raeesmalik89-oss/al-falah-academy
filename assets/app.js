@@ -748,10 +748,18 @@ async function loadAzan() {
     const timings = json.data.timings;
     const dateInfo = json.data.date;
 
-    // Show hijri date in header
-    const hijri = dateInfo.hijri;
+    // Show hijri date in header — Pakistan follows local moon-sighting,
+    // which runs ~1 day behind the Umm al-Qura calendar the API returns.
+    let hijriStr;
+    try {
+      const pk = new Date(); pk.setDate(pk.getDate() - 1);
+      hijriStr = new Intl.DateTimeFormat('en-u-ca-islamic-umalqura',
+        { day: 'numeric', month: 'long', year: 'numeric' }).format(pk);
+    } catch (e) {
+      const h = dateInfo.hijri; hijriStr = `${h.day} ${h.month.en} ${h.year} AH`;
+    }
     document.getElementById('azanDateDisplay').textContent =
-      `${hijri.day} ${hijri.month.en} ${hijri.year} AH · ${dateInfo.readable}`;
+      `${hijriStr} · ${dateInfo.readable}`;
 
     // Determine next prayer
     const nowMins = today.getHours() * 60 + today.getMinutes();
