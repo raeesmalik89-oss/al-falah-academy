@@ -1007,7 +1007,9 @@ document.addEventListener('DOMContentLoaded', function () {
     obs.observe(el);
   }
 
-  lazyInit('books',        loadBooks);
+  // Books page: load immediately (it's the whole page). Elsewhere, lazy-load.
+  if (document.getElementById('booksGrid')) loadBooks();
+  else lazyInit('books', loadBooks);
   lazyInit('dars',         () => { renderDars('quran'); renderDars('hadith'); });
   lazyInit('quran-listen', initQuranPlayer);
 
