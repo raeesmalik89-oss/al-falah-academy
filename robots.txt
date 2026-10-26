@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /login
+Disallow: /student-dashboard
+Disallow: /teacher-dashboard
+
+Sitemap: https://alfalah-academy.com/sitemap.xml
