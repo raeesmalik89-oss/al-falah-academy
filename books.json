@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-25T00:00:00Z",
-  "total": 29,
+  "updated": "2026-10-26T00:00:00Z",
+  "total": 36,
   "sources": [
     "Archive.org",
     "IslamHouse.com",
@@ -354,6 +354,90 @@
       "desc": "A treasured collection of blessed daily litanies, awraad and supplications (البركات المکیہ) for spiritual benefit and protection.",
       "pages": "Full PDF",
       "url": "https://archive.org/details/AlBarakaatUlMakkiyyahComplete_201407",
+      "source": "Archive.org"
+    },
+    {
+      "id": "madinah-arabic-course",
+      "title": "Madinah Arabic Course — Books 1, 2 & 3 (with Keys)",
+      "author": "Dr. V. Abdur Rahim",
+      "lang": "arabic",
+      "category": "arabic",
+      "featured": true,
+      "desc": "The world's most popular course for learning Quranic Arabic — Durus al-Lughah al-Arabiyyah. Complete 3-book set with English and Urdu answer keys, solutions and glossary. This is the curriculum used in our Arabic Language course.",
+      "pages": "3-book set + keys",
+      "url": "https://archive.org/details/ArabicLanguageCourseBooks",
+      "source": "Archive.org"
+    },
+    {
+      "id": "madinah-arabic-reader",
+      "title": "Madinah Arabic Reader — Parts 1 to 8",
+      "author": "Dr. V. Abdur Rahim",
+      "lang": "english",
+      "category": "arabic",
+      "featured": false,
+      "desc": "A gentle, step-by-step 8-part Arabic reader — ideal for absolute beginners and younger students. Builds reading and comprehension gradually from the alphabet upward.",
+      "pages": "8 parts",
+      "url": "https://archive.org/details/DrV.AbdurRahim.MadinahArabicReader",
+      "source": "Archive.org"
+    },
+    {
+      "id": "ajurrumiyyah-nahw",
+      "title": "Al-Ajurrumiyyah — Classic Nahw (Arabic Grammar)",
+      "author": "Ibn Ajurrum · trans. Shaykh Hamza Yusuf",
+      "lang": "english",
+      "category": "arabic",
+      "featured": false,
+      "desc": "The timeless beginner's text in Nahw (Arabic syntax), studied across the Muslim world for centuries. English translation of the matn — the perfect first book in Arabic grammar.",
+      "pages": "Full PDF",
+      "url": "https://archive.org/details/al-ajurumiyah-hamzayusuf",
+      "source": "Archive.org"
+    },
+    {
+      "id": "tuhfa-saniyyah-nahw",
+      "title": "Sharh al-Ajurrumiyyah — Al-Tuhfat al-Saniyyah (Nahw Commentary)",
+      "author": "Muhammad Muhyi al-Din Abd al-Hamid",
+      "lang": "english",
+      "category": "arabic",
+      "featured": false,
+      "desc": "A clear bilingual (Arabic-English) explanation of the Ajurrumiyyah — the standard next step after the matn for mastering Nahw (Arabic grammar) with worked examples.",
+      "pages": "Full PDF",
+      "url": "https://archive.org/details/a-commentary-on-al-ajrumiyyah_202108",
+      "source": "Archive.org"
+    },
+    {
+      "id": "ilm-sarf-nahw-english",
+      "title": "Ilm us-Sarf & Nahw — Arabic Morphology & Grammar",
+      "author": "Yusuf Mullan",
+      "lang": "english",
+      "category": "arabic",
+      "featured": false,
+      "desc": "A complete English introduction to Sarf (Arabic morphology — how words change form) together with Nahw (grammar). Well-organised with tables and exercises for self-study.",
+      "pages": "Full PDF",
+      "url": "https://archive.org/details/IlmusSarfNahwArabicMorphology",
+      "source": "Archive.org"
+    },
+    {
+      "id": "treasure-arabic-morphology",
+      "title": "Treasure of Arabic Morphology (Sarf)",
+      "author": "Mawlana Ismail ibn Khalifah",
+      "lang": "english",
+      "category": "arabic",
+      "featured": false,
+      "desc": "A widely-used English textbook of Sarf (Arabic morphology), presenting verb patterns and word-forms in simple, structured lessons for students of classical Arabic.",
+      "pages": "Full PDF",
+      "url": "https://archive.org/details/TreasureOfArabicMorphology",
+      "source": "Archive.org"
+    },
+    {
+      "id": "ilm-sarf-nahw-urdu",
+      "title": "علم الصرف و النحو — Ilm us-Sarf aur Nahw (Urdu)",
+      "author": "Maulana Mushtaq Ahmad Charthawli",
+      "lang": "urdu",
+      "category": "arabic",
+      "featured": false,
+      "desc": "The classic Urdu-medium course in Sarf and Nahw used in madaris across Pakistan and India. Ideal for Urdu-speaking students learning Arabic grammar.",
+      "pages": "Full PDF",
+      "url": "https://archive.org/details/IlmUsSarf",
       "source": "Archive.org"
     }
   ]
