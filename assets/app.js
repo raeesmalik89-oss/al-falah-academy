@@ -739,7 +739,7 @@ async function loadAzan() {
     const today = new Date();
     const d = today.getDate(), m = today.getMonth() + 1, y = today.getFullYear();
     // AlAdhan API — method 1 = University of Islamic Sciences, Karachi (Hanafi)
-    const url = `https://api.aladhan.com/v1/timingsByCity/${d}-${m}-${y}?city=${encodeURIComponent(city)}&country=Pakistan&method=1`;
+    const url = `https://api.aladhan.com/v1/timingsByCity/${d}-${m}-${y}?city=${encodeURIComponent(city)}&country=Pakistan&method=1&school=1`;
     const res  = await fetch(url);
     const json = await res.json();
 
