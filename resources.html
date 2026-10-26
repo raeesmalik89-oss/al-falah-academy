@@ -71,6 +71,7 @@
       <button class="res-tab" data-t="ayah-day" onclick="showRes('ayah-day')">📖 Ayah of the Day</button>
       <button class="res-tab" data-t="hadith-day" onclick="showRes('hadith-day')">📜 Hadith of the Day</button>
       <button class="res-tab" data-t="dars" onclick="showRes('dars')">🎥 Dars Videos</button>
+      <button class="res-tab" data-t="clocks" onclick="showRes('clocks')">🌍 World Clock</button>
     </div>
   </div>
   <style>
@@ -407,6 +408,28 @@
   </div>
 </section>
 
+<section class="section" id="clocks" style="background:#f7f9f4;display:none">
+  <div class="container">
+    <div class="section-head" style="text-align:center;max-width:720px;margin:0 auto 26px">
+      <div class="section-badge">🌍 Around the World</div>
+      <h2>World Clock</h2>
+      <p>Live local times for our students and teachers across the globe — updates every second.</p>
+    </div>
+    <style>
+      .wclock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;max-width:1040px;margin:0 auto}
+      .wclock{background:#fff;border:1px solid #e3ecdf;border-radius:16px;padding:18px 16px;text-align:center;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+      .wclock-home{border:2px solid #1a6b3a;box-shadow:0 6px 20px rgba(26,107,58,.14)}
+      .wc-flag{font-size:30px;line-height:1}
+      .wc-city{font-weight:800;color:#1a4030;font-size:16px;margin-top:8px}
+      .wc-home-tag{display:inline-block;background:#1a6b3a;color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;vertical-align:middle;margin-left:4px}
+      .wc-country{color:#8a988f;font-size:12.5px;margin-top:1px}
+      .wc-time{font-size:26px;font-weight:800;color:#0e3a23;margin-top:12px;font-variant-numeric:tabular-nums;letter-spacing:.5px}
+      .wc-date{color:#5f6f64;font-size:12.5px;margin-top:4px}
+    </style>
+    <div id="clockGrid" class="wclock-grid"></div>
+  </div>
+</section>
+
 <footer class="footer">
   <div class="footer-top">
     <div class="container footer-inner">
@@ -456,15 +479,61 @@
 <script src="assets/app.js"></script>
 <script>
 function showRes(id){
-  ['azan','qibla','quran-listen','ayah-day','hadith-day','dars'].forEach(function(sx){var el=document.getElementById(sx); if(el) el.style.display=(sx===id)?'':'none';});
+  ['azan','qibla','quran-listen','ayah-day','hadith-day','dars','clocks'].forEach(function(sx){var el=document.getElementById(sx); if(el) el.style.display=(sx===id)?'':'none';});
   document.querySelectorAll('.res-tab').forEach(function(b){b.classList.toggle('active', b.dataset.t===id);});
   if(id==='quran-listen' && typeof initQuranPlayer==='function'){ try{initQuranPlayer();}catch(e){} }
+  if(id==='clocks'){ buildClocks(); }
   var t=document.getElementById('res-top'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
 }
 document.addEventListener('DOMContentLoaded',function(){
   var h=(location.hash||'').replace('#','');
-  if(['azan','qibla','quran-listen','ayah-day','hadith-day','dars'].indexOf(h)>=0) showRes(h);
+  if(['azan','qibla','quran-listen','ayah-day','hadith-day','dars','clocks'].indexOf(h)>=0) showRes(h);
 });
+
+// ── World Clock ──────────────────────────────────────
+var WORLD_CLOCKS = [
+  {city:'Islamabad',   country:'Pakistan',        tz:'Asia/Karachi',       flag:'🇵🇰', home:true},
+  {city:'Oslo',        country:'Norway',          tz:'Europe/Oslo',        flag:'🇳🇴'},
+  {city:'Dublin',      country:'Ireland',         tz:'Europe/Dublin',      flag:'🇮🇪'},
+  {city:'London',      country:'United Kingdom',  tz:'Europe/London',      flag:'🇬🇧'},
+  {city:'Sydney',      country:'Australia',       tz:'Australia/Sydney',   flag:'🇦🇺'},
+  {city:'Toronto',     country:'Canada',          tz:'America/Toronto',    flag:'🇨🇦'},
+  {city:'New York',    country:'USA · New York',  tz:'America/New_York',   flag:'🇺🇸'},
+  {city:'Chicago',     country:'USA · Illinois',  tz:'America/Chicago',    flag:'🇺🇸'},
+  {city:'Los Angeles', country:'USA · California',tz:'America/Los_Angeles',flag:'🇺🇸'}
+];
+var clocksBuilt = false, clockTimer = null;
+function buildClocks(){
+  var box = document.getElementById('clockGrid');
+  if(!box || clocksBuilt) { tickClocks(); return; }
+  box.innerHTML = WORLD_CLOCKS.map(function(c,i){
+    return '<div class="wclock'+(c.home?' wclock-home':'')+'">'
+      + '<div class="wc-flag">'+c.flag+'</div>'
+      + '<div class="wc-city">'+c.city+(c.home?' <span class="wc-home-tag">HOME</span>':'')+'</div>'
+      + '<div class="wc-country">'+c.country+'</div>'
+      + '<div class="wc-time" id="wct'+i+'">--:--</div>'
+      + '<div class="wc-date" id="wcd'+i+'">—</div>'
+      + '</div>';
+  }).join('');
+  clocksBuilt = true;
+  tickClocks();
+  if(!clockTimer) clockTimer = setInterval(tickClocks, 1000);
+}
+function tickClocks(){
+  if(!clocksBuilt) return;
+  var now = new Date();
+  WORLD_CLOCKS.forEach(function(c,i){
+    var tEl = document.getElementById('wct'+i), dEl = document.getElementById('wcd'+i);
+    if(!tEl) return;
+    try{
+      var time = new Intl.DateTimeFormat('en-US',{timeZone:c.tz,hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:true}).format(now);
+      var date = new Intl.DateTimeFormat('en-US',{timeZone:c.tz,weekday:'short',day:'numeric',month:'short'}).format(now);
+      var hr   = +new Intl.DateTimeFormat('en-US',{timeZone:c.tz,hour:'2-digit',hour12:false}).format(now).replace('24','0');
+      tEl.textContent = time;
+      dEl.textContent = ((hr>=6 && hr<18)?'🌞 ':'🌙 ') + date;
+    }catch(e){ tEl.textContent = '—'; }
+  });
+}
 </script>
 </body>
 </html>
