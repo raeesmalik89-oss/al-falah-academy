@@ -61,8 +61,7 @@
   <div class="container">
     <div class="section-header">
       <div class="section-badge">📚 Islamic Resources</div>
-      <h2>Daily Islamic Tools</h2>
-      <p>Choose a tool — prayer times, Qibla, Quran audio, Ayah of the day, or Dars videos.</p>
+      <p>Choose a tool — prayer times, Qibla, Quran audio, Ayah of the day, Dars videos, world clock or global prayer times.</p>
     </div>
     <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:840px;margin:0 auto">
       <button class="res-tab active" data-t="azan" onclick="showRes('azan')">🕐 Prayer Times</button>
@@ -72,6 +71,7 @@
       <button class="res-tab" data-t="hadith-day" onclick="showRes('hadith-day')">📜 Hadith of the Day</button>
       <button class="res-tab" data-t="dars" onclick="showRes('dars')">🎥 Dars Videos</button>
       <button class="res-tab" data-t="clocks" onclick="showRes('clocks')">🌍 World Clock</button>
+      <button class="res-tab" data-t="wprayer" onclick="showRes('wprayer')">🕌 World Prayer Times</button>
     </div>
   </div>
   <style>
@@ -413,7 +413,7 @@
     <div class="section-head" style="text-align:center;max-width:720px;margin:0 auto 26px">
       <div class="section-badge">🌍 Around the World</div>
       <h2>World Clock</h2>
-      <p>Live local times for our students and teachers across the globe — updates every second.</p>
+      <p>Live local times for our students and teachers across the globe.</p>
     </div>
     <style>
       .wclock-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px;max-width:1040px;margin:0 auto}
@@ -427,6 +427,30 @@
       .wc-date{color:#5f6f64;font-size:12.5px;margin-top:4px}
     </style>
     <div id="clockGrid" class="wclock-grid"></div>
+  </div>
+</section>
+
+<section class="section bg-light" id="wprayer" style="display:none">
+  <div class="container">
+    <div class="section-head" style="text-align:center;max-width:720px;margin:0 auto 22px">
+      <div class="section-badge">🕌 Global Salah</div>
+      <h2>World Prayer Times</h2>
+      <p>Today's five daily prayer times for cities around the world. Asr is shown per the Hanafi school.</p>
+    </div>
+    <style>
+      .wprayer-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;max-width:1040px;margin:0 auto}
+      .wpcard{background:#fff;border:1px solid #e3ecdf;border-radius:16px;padding:16px 18px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+      .wpcard-home{border:2px solid #1a6b3a;box-shadow:0 6px 20px rgba(26,107,58,.14)}
+      .wp-head{font-size:17px;font-weight:800;color:#1a4030}
+      .wp-flag{font-size:20px}
+      .wp-country{color:#8a988f;font-size:12px;margin:2px 0 10px}
+      .wp-row{display:flex;justify-content:space-between;padding:7px 2px;border-bottom:1px solid #f1f5f1;font-size:14px;color:#30413a}
+      .wp-row:last-child{border-bottom:0}
+      .wp-row b{color:#0e3a23}
+      .wp-sunrise{color:#a98b3a}
+      .wp-loading,.wp-err{color:#888;font-size:13px;padding:14px;text-align:center}
+    </style>
+    <div id="wprayerGrid" class="wprayer-grid"><div class="wp-loading">Loading prayer times…</div></div>
   </div>
 </section>
 
@@ -479,28 +503,30 @@
 <script src="assets/app.js"></script>
 <script>
 function showRes(id){
-  ['azan','qibla','quran-listen','ayah-day','hadith-day','dars','clocks'].forEach(function(sx){var el=document.getElementById(sx); if(el) el.style.display=(sx===id)?'':'none';});
+  ['azan','qibla','quran-listen','ayah-day','hadith-day','dars','clocks','wprayer'].forEach(function(sx){var el=document.getElementById(sx); if(el) el.style.display=(sx===id)?'':'none';});
   document.querySelectorAll('.res-tab').forEach(function(b){b.classList.toggle('active', b.dataset.t===id);});
   if(id==='quran-listen' && typeof initQuranPlayer==='function'){ try{initQuranPlayer();}catch(e){} }
   if(id==='clocks'){ buildClocks(); }
+  if(id==='wprayer'){ buildWorldPrayers(); }
   var t=document.getElementById('res-top'); if(t) t.scrollIntoView({behavior:'smooth',block:'start'});
 }
 document.addEventListener('DOMContentLoaded',function(){
   var h=(location.hash||'').replace('#','');
-  if(['azan','qibla','quran-listen','ayah-day','hadith-day','dars','clocks'].indexOf(h)>=0) showRes(h);
+  if(['azan','qibla','quran-listen','ayah-day','hadith-day','dars','clocks','wprayer'].indexOf(h)>=0) showRes(h);
 });
 
 // ── World Clock ──────────────────────────────────────
 var WORLD_CLOCKS = [
-  {city:'Islamabad',   country:'Pakistan',        tz:'Asia/Karachi',       flag:'🇵🇰', home:true},
-  {city:'Oslo',        country:'Norway',          tz:'Europe/Oslo',        flag:'🇳🇴'},
-  {city:'Dublin',      country:'Ireland',         tz:'Europe/Dublin',      flag:'🇮🇪'},
-  {city:'London',      country:'United Kingdom',  tz:'Europe/London',      flag:'🇬🇧'},
-  {city:'Sydney',      country:'Australia',       tz:'Australia/Sydney',   flag:'🇦🇺'},
-  {city:'Toronto',     country:'Canada',          tz:'America/Toronto',    flag:'🇨🇦'},
-  {city:'New York',    country:'USA · New York',  tz:'America/New_York',   flag:'🇺🇸'},
-  {city:'Chicago',     country:'USA · Illinois',  tz:'America/Chicago',    flag:'🇺🇸'},
-  {city:'Los Angeles', country:'USA · California',tz:'America/Los_Angeles',flag:'🇺🇸'}
+  {city:'Islamabad',   country:'Pakistan',          tz:'Asia/Karachi',       flag:'🇵🇰', home:true, m:1, ac:'Islamabad',   aco:'Pakistan'},
+  {city:'Oslo',        country:'Norway',            tz:'Europe/Oslo',        flag:'🇳🇴', m:3, ac:'Oslo',        aco:'Norway'},
+  {city:'Dublin',      country:'Ireland',           tz:'Europe/Dublin',      flag:'🇮🇪', m:3, ac:'Dublin',      aco:'Ireland'},
+  {city:'London',      country:'United Kingdom',    tz:'Europe/London',      flag:'🇬🇧', m:3, ac:'London',      aco:'United Kingdom'},
+  {city:'Sydney',      country:'Australia',         tz:'Australia/Sydney',   flag:'🇦🇺', m:3, ac:'Sydney',      aco:'Australia'},
+  {city:'Toronto',     country:'Canada',            tz:'America/Toronto',    flag:'🇨🇦', m:2, ac:'Toronto',     aco:'Canada'},
+  {city:'New York',    country:'USA · New York',    tz:'America/New_York',   flag:'🇺🇸', m:2, ac:'New York',    aco:'United States'},
+  {city:'Washington',  country:'USA · Washington DC',tz:'America/New_York',  flag:'🇺🇸', m:2, ac:'Washington',  aco:'United States'},
+  {city:'Chicago',     country:'USA · Illinois',    tz:'America/Chicago',    flag:'🇺🇸', m:2, ac:'Chicago',     aco:'United States'},
+  {city:'Los Angeles', country:'USA · California',  tz:'America/Los_Angeles',flag:'🇺🇸', m:2, ac:'Los Angeles', aco:'United States'}
 ];
 var clocksBuilt = false, clockTimer = null;
 function buildClocks(){
@@ -533,6 +559,37 @@ function tickClocks(){
       dEl.textContent = ((hr>=6 && hr<18)?'🌞 ':'🌙 ') + date;
     }catch(e){ tEl.textContent = '—'; }
   });
+}
+
+// ── World Prayer Times ───────────────────────────────
+var wprayerBuilt = false;
+function wpTo12(hm){
+  if(!hm) return '—';
+  var p = hm.split(':'); var h = +p[0]; var ap = h>=12?'PM':'AM'; var hh = h%12; if(hh===0) hh=12;
+  return hh + ':' + p[1] + ' ' + ap;
+}
+async function buildWorldPrayers(){
+  var box = document.getElementById('wprayerGrid');
+  if(!box || wprayerBuilt) return;
+  box.innerHTML = '<div class="wp-loading">Loading prayer times…</div>';
+  var now = new Date();
+  var ds = now.getDate() + '-' + (now.getMonth()+1) + '-' + now.getFullYear();
+  var cards = await Promise.all(WORLD_CLOCKS.map(async function(c){
+    var headHTML = '<div class="wp-head"><span class="wp-flag">'+c.flag+'</span> '+c.city+(c.home?' <span class="wc-home-tag">HOME</span>':'')+'</div><div class="wp-country">'+c.country+'</div>';
+    try{
+      var u = 'https://api.aladhan.com/v1/timingsByCity/'+ds+'?city='+encodeURIComponent(c.ac)+'&country='+encodeURIComponent(c.aco)+'&method='+c.m+'&school=1';
+      var r = await fetch(u); var j = await r.json();
+      var t = j.data.timings;
+      var rows = [['Fajr',t.Fajr,''],['Sunrise',t.Sunrise,' wp-sunrise'],['Dhuhr',t.Dhuhr,''],['Asr',t.Asr,''],['Maghrib',t.Maghrib,''],['Isha',t.Isha,'']];
+      return '<div class="wpcard'+(c.home?' wpcard-home':'')+'">'+headHTML
+        + rows.map(function(rw){return '<div class="wp-row'+rw[2]+'"><span>'+rw[0]+'</span><b>'+wpTo12(rw[1])+'</b></div>';}).join('')
+        + '</div>';
+    }catch(e){
+      return '<div class="wpcard">'+headHTML+'<div class="wp-err">Times unavailable</div></div>';
+    }
+  }));
+  box.innerHTML = cards.join('');
+  wprayerBuilt = true;
 }
 </script>
 </body>
