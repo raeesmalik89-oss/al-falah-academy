@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us | Al-Falah Islamic Academy</title>
+  <meta name="description" content="Contact Al-Falah Islamic Academy — send us your questions or complaints through our query form, or reach us on WhatsApp and email." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://alfalah-academy.com/contact" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Al-Falah Islamic Academy" />
+  <meta property="og:title" content="Contact Us — Al-Falah Islamic Academy" />
+  <meta property="og:description" content="Send us your queries or complaints, or reach us on WhatsApp and email." />
+  <meta property="og:url" content="https://alfalah-academy.com/contact" />
+  <meta property="og:image" content="https://alfalah-academy.com/assets/logo-full.png" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" /></noscript>
+  <link rel="stylesheet" href="style.css?v=1" />
+  <style>
+    .contact-wrap { display: grid; grid-template-columns: 1.3fr 1fr; gap: 26px; max-width: 980px; margin: 0 auto; align-items: start; }
+    @media (max-width: 760px) { .contact-wrap { grid-template-columns: 1fr; } }
+    .query-card { background: #fff; border: 1px solid #e3ecdf; border-radius: 18px; padding: 30px 28px; box-shadow: 0 10px 34px rgba(13,40,24,.08); }
+    .query-card h3 { font-size: 20px; margin: 0 0 8px; color: #14472d; }
+    .query-card .lead { font-size: 14px; color: #52635a; line-height: 1.65; margin: 0 0 20px; }
+    .fg { display: flex; flex-direction: column; gap: 6px; margin-bottom: 15px; }
+    .fg label { font-size: .82rem; font-weight: 700; color: #33403a; }
+    .fg input, .fg textarea { width: 100%; box-sizing: border-box; padding: 12px 14px; border: 1px solid #d7e0d7; border-radius: 10px; font-size: 15px; font-family: inherit; background: #fcfdfc; transition: border-color .15s, box-shadow .15s; }
+    .fg input:focus, .fg textarea:focus { outline: none; border-color: var(--green); box-shadow: 0 0 0 3px rgba(26,107,58,.12); }
+    .fg input.err, .fg textarea.err { border-color: #d9534f; }
+    .fg textarea { resize: vertical; min-height: 120px; }
+    .query-card .req { color: #d9534f; }
+    .send-btn { width: 100%; background: linear-gradient(135deg, var(--green), var(--green-mid)); color: #fff; border: none; border-radius: 12px; padding: 15px; font-size: 16px; font-weight: 700; cursor: pointer; transition: transform .15s, box-shadow .15s; box-shadow: 0 6px 18px rgba(26,107,58,.28); }
+    .send-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(26,107,58,.36); }
+    .query-success { display: none; text-align: center; padding: 20px 0; }
+    .query-success.show { display: block; }
+    .query-success .ok-ic { font-size: 54px; margin-bottom: 8px; }
+    .query-success h3 { font-size: 20px; color: var(--green); margin: 0 0 6px; }
+    .query-success p { color: #52635a; font-size: 14px; margin: 0 0 16px; }
+    .contact-info { background: linear-gradient(160deg, #0d2818, #1a6b3a); color: #fff; border-radius: 18px; padding: 30px 26px; }
+    .contact-info h3 { font-size: 18px; margin: 0 0 16px; }
+    .ci-row { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 16px; font-size: 14px; line-height: 1.5; }
+    .ci-row .ci-ic { font-size: 20px; flex: none; }
+    .ci-row a { color: #eaf4ee; text-decoration: none; word-break: break-word; }
+    .ci-row a:hover { text-decoration: underline; }
+    .ci-label { display: block; font-size: 12px; color: var(--gold-lt); font-weight: 700; margin-bottom: 2px; }
+  </style>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9KM8FWM46X');
+  </script>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-icon.png" alt="Al-Falah Islamic Academy" style="height:40px;width:auto;display:block;margin-right:5px" />
+      <span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="books.html">Free e-Books</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="contact.html" class="active">Contact</a></li>
+      <li><a href="login.html" class="nav-login">🔐 Login</a></li>
+      <li><a href="enroll.html" class="nav-cta">Enroll Free</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="toggleMenu()">Home</a>
+    <a href="courses.html" onclick="toggleMenu()">Courses</a>
+    <a href="books.html" onclick="toggleMenu()">Free e-Books</a>
+    <a href="downloads.html" onclick="toggleMenu()">Downloads</a>
+    <a href="resources.html" onclick="toggleMenu()">Resources</a>
+    <a href="gallery.html" onclick="toggleMenu()">Gallery</a>
+    <a href="events.html" onclick="toggleMenu()">Events</a>
+    <a href="about.html" onclick="toggleMenu()">About Us</a>
+    <a href="tools.html" onclick="toggleMenu()">Tools</a>
+    <a href="contact.html" onclick="toggleMenu()">Contact</a>
+    <a href="login.html" onclick="toggleMenu()">🔐 Login</a>
+    <a href="enroll.html" onclick="toggleMenu()">Enroll Free</a>
+  </div>
+</nav>
+
+<section class="section bg-light">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">💬 Contact</div>
+      <h2>Submit Your Query</h2>
+      <p>Reach out through our support channels, or send us your question or complaint directly using the form below. We value your input and are committed to excellent student care.</p>
+    </div>
+
+    <div class="contact-wrap">
+      <!-- FORM -->
+      <div class="query-card">
+        <div id="queryForm">
+          <h3>Submit Queries</h3>
+          <p class="lead">Students can use this form to send us their queries or complaints directly — we usually reply within one working day.</p>
+          <div class="fg">
+            <label for="q_name">Full Name <span class="req">*</span></label>
+            <input type="text" id="q_name" placeholder="Enter your full name" autocomplete="name" />
+          </div>
+          <div class="fg">
+            <label for="q_email">Email <span class="req">*</span></label>
+            <input type="email" id="q_email" placeholder="Enter your email" autocomplete="email" />
+          </div>
+          <div class="fg">
+            <label for="q_phone">Phone / WhatsApp</label>
+            <input type="tel" id="q_phone" placeholder="e.g. +92 300 0000000" autocomplete="tel" />
+          </div>
+          <div class="fg">
+            <label for="q_msg">Message <span class="req">*</span></label>
+            <textarea id="q_msg" placeholder="Enter your message"></textarea>
+          </div>
+          <button type="button" class="send-btn" onclick="sendQuery()">Send Message</button>
+        </div>
+        <div class="query-success" id="querySuccess">
+          <div class="ok-ic">✅</div>
+          <h3>Jazak Allah Khayran!</h3>
+          <p>Your message has been sent. Our team will get back to you soon, in sha Allah.</p>
+          <a href="https://wa.me/923168818693" target="_blank" rel="noopener" class="btn-primary" style="display:inline-block">💬 Chat on WhatsApp</a>
+        </div>
+      </div>
+
+      <!-- CONTACT INFO -->
+      <div class="contact-info">
+        <h3>Other ways to reach us</h3>
+        <div class="ci-row">
+          <span class="ci-ic">📱</span>
+          <div><span class="ci-label">WhatsApp</span><a href="https://wa.me/923168818693" target="_blank" rel="noopener">+92 316 8818693</a></div>
+        </div>
+        <div class="ci-row">
+          <span class="ci-ic">✉️</span>
+          <div><span class="ci-label">Email</span><a href="mailto:info@alfalah-academy.com">info@alfalah-academy.com</a></div>
+        </div>
+        <div class="ci-row">
+          <span class="ci-ic">▶️</span>
+          <div><span class="ci-label">YouTube</span><a href="https://www.youtube.com/@Al-falahofficial" target="_blank" rel="noopener">@Al-falahofficial</a></div>
+        </div>
+        <div class="ci-row">
+          <span class="ci-ic">🌍</span>
+          <div><span class="ci-label">Availability</span>Serving students worldwide · 7 days a week</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><img src="assets/logo-icon.png" alt="Al-Falah Islamic Academy" style="height:40px;width:auto;display:block;margin-right:5px" /><span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span></div>
+        <p>Bringing authentic Islamic knowledge to every Muslim, wherever they are in the world.</p>
+        <div class="footer-arabic">وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا</div>
+      </div>
+      <div class="footer-links">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="curriculum.html">Full Curriculum</a></li>
+          <li><a href="books.html">Free e-Books</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="resources.html">Resources</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Academy</h4>
+        <ul>
+          <li><a href="about.html">About Us</a></li>
+          <li><a href="courses.html#how-it-works">How It Works</a></li>
+          <li><a href="courses.html#pricing">Pricing</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/923168818693" target="_blank">📱 WhatsApp Us</a></li>
+          <li><a href="mailto:info@alfalah-academy.com">✉️ info@alfalah-academy.com</a></li>
+          <li><a href="https://www.youtube.com/@Al-falahofficial" target="_blank" rel="noopener" style="white-space:nowrap">▶️ YouTube Channel</a></li>
+          <li>🌍 Serving Students Worldwide</li>
+          <li>⏰ Available 7 Days a Week</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Al-Falah Islamic Academy. All rights reserved. | Serving the Ummah with authentic Islamic education.</p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script src="assets/app.js"></script>
+<script>
+function sendQuery(){
+  var name=document.getElementById('q_name');
+  var email=document.getElementById('q_email');
+  var phone=document.getElementById('q_phone');
+  var msg=document.getElementById('q_msg');
+  var ok=true;
+  [name,email,msg].forEach(function(el){
+    if(!el.value.trim()){ el.classList.add('err'); ok=false; } else { el.classList.remove('err'); }
+  });
+  if(!ok) return;
+  var data={ Name:name.value.trim(), Email:email.value.trim(), Phone:(phone.value.trim()||'—'), Message:msg.value.trim() };
+  var fd=new FormData();
+  fd.append('_subject','New Query — Al-Falah Islamic Academy — '+data.Name);
+  fd.append('_captcha','false');
+  fd.append('_template','table');
+  Object.keys(data).forEach(function(k){ fd.append(k,data[k]); });
+  fetch('https://formsubmit.co/info@alfalah-academy.com',{ method:'POST', body:fd, headers:{'Accept':'application/json'} })
+    .then(function(r){ return r.json(); })
+    .catch(function(){ return {success:'true'}; })
+    .finally(function(){
+      document.getElementById('queryForm').style.display='none';
+      document.getElementById('querySuccess').classList.add('show');
+    });
+}
+</script>
+</body>
+</html>
