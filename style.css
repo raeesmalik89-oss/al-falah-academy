@@ -93,6 +93,26 @@ img { max-width: 100%; }
   transition: all 0.2s; display: inline-block;
 }
 .btn-primary:hover { background: #e8b84b; transform: translateY(-2px); box-shadow: 0 8px 24px rgba(200,151,42,0.4); }
+
+/* "View All Courses" CTA — green gradient pill, used in the What We Teach section */
+.btn-view-all {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: linear-gradient(135deg, var(--green), var(--green-mid));
+  color: #fff; font-size: 16px; font-weight: 700; letter-spacing: .2px;
+  padding: 15px 36px; border-radius: 50px; border: none; cursor: pointer;
+  text-decoration: none;
+  box-shadow: 0 6px 18px rgba(26,107,58,0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+.btn-view-all:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(26,107,58,0.38);
+  background: linear-gradient(135deg, var(--green-dark), var(--green));
+}
+.btn-view-all:focus-visible { outline: 3px solid var(--gold); outline-offset: 3px; }
+.btn-view-all .arrow { transition: transform 0.2s ease; }
+.btn-view-all:hover .arrow { transform: translateX(4px); }
+.view-all-wrap { text-align: center; margin-top: 34px; }
 .btn-ghost {
   color: rgba(255,255,255,0.9); font-size: 16px; font-weight: 600;
   padding: 16px 32px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.3);
@@ -1434,14 +1454,32 @@ img { max-width: 100%; }
   gap: 6px;
   margin-bottom: 14px;
 }
+/* "What We Teach" course chips — aligned grid of shining green pills */
+.teach-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+  max-width: 920px;
+  margin: 0 auto 26px;
+}
+@media (max-width: 900px) { .teach-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (max-width: 560px) { .teach-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
 .gtag {
-  font-size: 0.72rem;
-  padding: 3px 10px;
-  background: var(--green-lt);
-  color: var(--green-dark);
-  border-radius: 20px;
-  border: 1px solid #c0d8c0;
-  font-weight: 600;
+  display: flex; align-items: center; justify-content: center; gap: 6px;
+  text-align: center; line-height: 1.25;
+  font-size: 0.8rem; font-weight: 700;
+  padding: 12px 14px;
+  background: linear-gradient(135deg, var(--green-mid), var(--green));
+  color: #fff;
+  border-radius: 30px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35), 0 4px 14px rgba(26, 107, 58, 0.28);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.gtag:hover {
+  transform: translateY(-2px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45), 0 8px 20px rgba(26, 107, 58, 0.38);
 }
 .gallery-btn {
   display: inline-block;
