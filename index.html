@@ -38,7 +38,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" /></noscript>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=4" />
   <style>
   /* Hero auto-slider (moving pictures) */
   .hero{position:relative;overflow:hidden}
@@ -154,19 +154,19 @@
       <h2>Courses for Every Learner</h2>
       <p>From your first Arabic letter to Tafseer, Seerah and advanced Hadith — all live, 1-on-1, at your own pace.</p>
     </div>
-    <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;max-width:820px;margin:0 auto 26px">
+    <div class="teach-grid">
       <span class="gtag">🕌 Seerah-tun-Nabi ﷺ</span>
       <span class="gtag">📖 Tafseer</span>
-      <span class="gtag">🧠 Hifz (Memorization)</span>
-      <span class="gtag">🎯 Tajweed</span>
-      <span class="gtag">📗 Quran Recitation (Nazra)</span>
       <span class="gtag">🌙 Fahm-ul-Quran</span>
       <span class="gtag">📜 Selected Ahadith</span>
+      <span class="gtag">🧠 Hifz (Memorization)</span>
       <span class="gtag">🇸🇦 Arabic Language</span>
       <span class="gtag">🔤 English Language</span>
+      <span class="gtag">🎯 Tajweed</span>
+      <span class="gtag">📗 Quran Recitation (Nazra)</span>
     </div>
-    <div style="text-align:center">
-      <a href="courses.html" class="btn-primary" style="display:inline-block">View All Courses &amp; Durations →</a>
+    <div class="view-all-wrap">
+      <a href="courses.html" class="btn-view-all">View All Courses &amp; Durations <span class="arrow">→</span></a>
     </div>
   </div>
 </section>
@@ -190,47 +190,45 @@
   </div>
 </section>
 
-<section class="section" id="faq">
-  <div class="container" style="max-width:860px">
-    <div class="section-header" style="text-align:center">
-      <div class="section-badge">❓ FAQ</div>
-      <h2>Frequently Asked Questions</h2>
-      <p>Everything you need to know about learning Quran online with Al-Falah Islamic Academy.</p>
+<section class="section" id="meet-teacher">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-badge">👨‍🏫 Meet Your Teacher</div>
+      <h2>Learn Directly from Dr. Muhammad Naeem</h2>
+      <p>PhD in Islamic Studies (IIUI) · Jamia Ashrafia graduate · Ustad-ul-Hadith at Darul Uloom Farooqia, Rawalpindi</p>
     </div>
-    <style>
-      #faq .section-header h2{font-size:clamp(21px,4vw,30px);line-height:1.3;overflow-wrap:break-word;max-width:100%}
-      #faq .section-header p{overflow-wrap:break-word;max-width:100%}
-      #faq .container{padding-left:16px;padding-right:16px;box-sizing:border-box}
-      .faq-item{background:#fff;border:1px solid #e3ecdf;border-radius:14px;margin-bottom:12px;overflow:hidden;box-shadow:0 2px 10px rgba(0,0,0,.04)}
-      .faq-item summary{list-style:none;cursor:pointer;padding:18px 22px;font-weight:700;color:#1a4030;font-size:16px;display:flex;justify-content:space-between;align-items:center;gap:14px}
-      .faq-item summary::-webkit-details-marker{display:none}
-      .faq-item summary::after{content:'+';font-size:22px;color:#1a6b3a;font-weight:700;flex:none}
-      .faq-item[open] summary::after{content:'–'}
-      .faq-item .faq-a{padding:0 22px 18px;color:#44554c;line-height:1.7;font-size:15px}
-    </style>
-    <div class="faq-list">
-      <details class="faq-item"><summary>How do I learn Quran online with Al-Falah Islamic Academy?</summary><div class="faq-a">Enrol for a <strong>free trial class</strong>, then attend live one-on-one online lessons with a certified scholar at a time that suits you. We teach Seerah, Tafseer, Hifz, Tajweed, Quran reading (Nazra), Fahm-ul-Quran, Selected Ahadith, Arabic and English to students of all ages, anywhere in the world.</div></details>
-      <details class="faq-item"><summary>Is the first class really free?</summary><div class="faq-a">Yes. Your first trial class is <strong>completely free</strong> — no credit card and no commitment. You only continue if you are happy with the teaching.</div></details>
-      <details class="faq-item"><summary>What courses do you offer?</summary><div class="faq-a">Seerah, Tafseer, Hifz (memorisation), Tajweed, Quran Recitation (Nazra), Fahm-ul-Quran, Selected Ahadith (HEC-aligned for BS, MPhil &amp; PhD), classical (Quranic) Arabic and English. Every course is live and one-on-one with a dedicated teacher.</div></details>
-      <details class="faq-item"><summary>Who teaches the classes?</summary><div class="faq-a">Qualified, certified scholars — including <strong>Dr. Muhammad Naeem</strong> (Ustad-ul-Hadith &amp; Fiqh at Darul Uloom Farooqia, Rawalpindi). Lessons are taught with authentic knowledge and proper adab.</div></details>
-      <details class="faq-item"><summary>Are classes suitable for beginners, children and women?</summary><div class="faq-a">Yes. We teach complete beginners, children, and brothers and sisters of all ages — starting from the Arabic alphabet (Noorani Qaida) all the way to advanced Tafseer, Seerah and Hadith.</div></details>
-      <details class="faq-item"><summary>Can I join from outside Pakistan?</summary><div class="faq-a">Absolutely. Our online classes are available <strong>worldwide</strong> — students join from the UK, USA, Canada, Australia, Europe and the Gulf, all from the comfort of home.</div></details>
+    <div class="scholars-grid">
+      <div class="scholar-card featured-scholar">
+        <div class="scholar-featured-badge">⭐ Featured Scholar</div>
+        <div class="scholar-avatar" style="background:linear-gradient(135deg,#1a4030,#1a6b3a)">
+          <span style="font-size:11px;line-height:1.4">ڈاکٹر محمد نعیم</span>
+        </div>
+        <div class="scholar-info">
+          <h3>Dr. Muhammad Naeem</h3>
+          <span class="scholar-title">Islamic Studies, Hadith & Fiqh</span>
+          <div class="scholar-badges">
+            <span class="badge badge-gold">Jamia Ashrafia Graduate</span>
+            <span class="badge badge-gold">PhD – IIUI</span>
+            <span class="badge badge-gold">Ustad-ul-Hadith – Jamia Farooqia</span>
+            <span class="badge">Visiting Faculty – FAST-NUCES</span>
+            <span class="badge">Visiting Faculty – FJWU</span>
+          </div>
+          <p>Dr. Muhammad Naeem is one of our most distinguished scholars. He completed his foundational Islamic education from the prestigious <strong>Jamia Ashrafia, Lahore</strong> — one of Pakistan's most renowned Darul Ulooms. He then went on to earn his <strong>PhD in Islamic Studies from the International Islamic University Islamabad (IIUI)</strong>. He currently serves as <strong>Ustad-ul-Hadith &amp; Fiqh at Darul Uloom Farooqia (Gulzar Jamia Masjid), Qaid-e-Azam Colony, Rawalpindi</strong>, and as a <strong>Visiting Faculty Member at FAST-NUCES University, Islamabad</strong> and <strong>Fatima Jinnah Women University, Rawalpindi</strong>, where he teaches Hadith, Islamic Studies and Research Methodology. Dr. Naeem specializes in Hadith sciences, Islamic jurisprudence (Fiqh), and contemporary Islamic thought.</p>
+          <div class="scholar-credentials">
+            <div class="credential-item">🎓 <strong>Jamia Ashrafia, Lahore</strong> — Fazil ul Dars (Traditional Islamic Studies)</div>
+            <div class="credential-item">🎓 <strong>IIUI Islamabad</strong> — PhD, Islamic Studies</div>
+            <div class="credential-item">📖 <strong>Darul Uloom Farooqia, Gulzar Jamia Masjid</strong> — Ustad-ul-Hadith &amp; Fiqh · Qaid-e-Azam Colony, Rawalpindi (Current)</div>
+            <div class="credential-item">🏛️ <strong>FAST-NUCES University, Islamabad</strong> — Visiting Faculty (Current)</div>
+            <div class="credential-item">🏛️ <strong>Fatima Jinnah Women University</strong> — Visiting Faculty (Current)</div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap;">
+            <a href="https://wa.me/923070009958?text=Assalamu%20Alaikum%20Dr.%20Naeem%2C%20I%20would%20like%20to%20book%20a%20class%20with%20you%20at%20Al-Falah%20Islamic%20Academy." target="_blank" rel="noopener" class="btn-scholar">📅 Book a Class with Dr. Naeem</a>
+            <a href="https://wa.me/923070009958?text=Assalamu%20Alaikum%20Dr.%20Naeem%2C%20I%20have%20a%20Deeni%20Masala%20(question)%20I%20would%20like%20to%20ask%3A%0A%0A" target="_blank" rel="noopener" class="btn-scholar" style="background:#25d366;border-color:#25d366;color:#fff;">💬 Ask a Deeni Masail</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {"@type":"Question","name":"How do I learn Quran online with Al-Falah Islamic Academy?","acceptedAnswer":{"@type":"Answer","text":"Enrol for a free trial class, then attend live one-on-one online lessons with a certified scholar at a time that suits you. We teach Seerah, Tafseer, Hifz, Tajweed, Quran reading (Nazra), Fahm-ul-Quran, Selected Ahadith, Arabic and English to students of all ages, anywhere in the world."}},
-      {"@type":"Question","name":"Is the first class really free?","acceptedAnswer":{"@type":"Answer","text":"Yes. Your first trial class is completely free — no credit card and no commitment. You only continue if you are happy with the teaching."}},
-      {"@type":"Question","name":"What courses do you offer?","acceptedAnswer":{"@type":"Answer","text":"Seerah, Tafseer, Hifz (memorisation), Tajweed, Quran Recitation (Nazra), Fahm-ul-Quran, Selected Ahadith (HEC-aligned for BS, MPhil and PhD), classical (Quranic) Arabic and English. Every course is live and one-on-one with a dedicated teacher."}},
-      {"@type":"Question","name":"Who teaches the classes?","acceptedAnswer":{"@type":"Answer","text":"Qualified, certified scholars including Dr. Muhammad Naeem (Ustad-ul-Hadith and Fiqh at Darul Uloom Farooqia, Rawalpindi). Lessons are taught with authentic knowledge and proper adab."}},
-      {"@type":"Question","name":"Are classes suitable for beginners, children and women?","acceptedAnswer":{"@type":"Answer","text":"Yes. We teach complete beginners, children, and brothers and sisters of all ages — starting from the Arabic alphabet (Noorani Qaida) all the way to advanced Tafseer, Seerah and Hadith."}},
-      {"@type":"Question","name":"Can I join from outside Pakistan?","acceptedAnswer":{"@type":"Answer","text":"Absolutely. Our online classes are available worldwide — students join from the UK, USA, Canada, Australia, Europe and the Gulf, all from the comfort of home."}}
-    ]
-  }
-  </script>
 </section>
 
 <section class="section bg-light" id="cta">
@@ -240,8 +238,8 @@
       <p>Your first class is completely free. No credit card, no commitment — just authentic learning.</p>
     </div>
     <div class="hero-actions" style="justify-content:center">
-      <a href="enroll.html" class="btn-primary">📖 Enroll Free Now</a>
-      <a href="https://wa.me/923168818693?text=Assalamu%20Alaikum%2C%20I%20want%20to%20enroll%20at%20Al-Falah%20Islamic%20Academy" target="_blank" class="btn-ghost" style="color:#1a6b3a;border-color:#1a6b3a">💬 Chat on WhatsApp</a>
+      <a href="https://wa.me/923168818693?text=Assalamu%20Alaikum%2C%20I%20want%20to%20enroll%20at%20Al-Falah%20Islamic%20Academy" target="_blank" class="btn-primary">💬 Chat on WhatsApp</a>
+      <a href="courses.html" class="btn-ghost" style="color:#1a6b3a;border-color:#1a6b3a">📚 Explore Courses →</a>
     </div>
   </div>
 </section>
@@ -273,6 +271,7 @@
           <li><a href="gallery.html">Gallery</a></li>
           <li><a href="events.html">Events</a></li>
           <li><a href="tools.html">Free Tools</a></li>
+          <li><a href="resources.html#faq">FAQ</a></li>
         </ul>
       </div>
       <div class="footer-links">
