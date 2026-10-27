@@ -113,6 +113,33 @@ img { max-width: 100%; }
 .btn-view-all .arrow { transition: transform 0.2s ease; }
 .btn-view-all:hover .arrow { transform: translateX(4px); }
 .view-all-wrap { text-align: center; margin-top: 34px; }
+
+/* Curriculum outline (Courses page teaser) */
+.curric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(265px, 1fr)); gap: 16px; max-width: 1020px; margin: 0 auto; }
+.curric-item { background: #f6f8f3; border: 1px solid #e3ecdf; border-left: 4px solid var(--green); border-radius: 12px; padding: 18px 20px; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.curric-item:hover { transform: translateY(-3px); box-shadow: 0 10px 26px rgba(26,107,58,0.12); }
+.curric-item h3 { font-size: 16px; margin: 0 0 8px; color: #1a2a22; }
+.curric-levels { display: inline-block; font-size: 12px; font-weight: 700; color: var(--green); background: var(--green-lt); padding: 3px 10px; border-radius: 20px; margin-bottom: 9px; }
+.curric-item p { font-size: 13px; color: #52635a; line-height: 1.55; margin: 0; }
+
+/* Full curriculum page */
+.syll-course { max-width: 1080px; margin: 0 auto; }
+.syll-course + .syll-course { margin-top: 32px; }
+.syll-course-title { font-size: 20px; margin: 0 0 14px; color: #14472d; }
+.syll-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px; }
+.syll-card { background: #fff; border: 1px solid #e3ecdf; border-radius: 16px; padding: 22px 24px; box-shadow: 0 4px 16px rgba(0,0,0,.05); }
+.syll-card.soon { background: #f7f9f4; border: 2px dashed #cdddcf; box-shadow: none; }
+.syll-tag { display: inline-block; font-size: 11.5px; font-weight: 800; letter-spacing: .6px; text-transform: uppercase; color: var(--green); background: var(--green-lt); padding: 4px 11px; border-radius: 20px; margin-bottom: 11px; }
+.syll-tag.gold { color: #8a6d1f; background: var(--gold-lt); }
+.syll-card h3 { font-size: 17px; margin: 0 0 3px; color: #1a2a22; }
+.syll-sub { font-size: 13px; color: #52635a; margin: 0 0 13px; }
+.syll-card ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.syll-card li { position: relative; padding-left: 20px; font-size: 13.5px; color: #3a4a42; line-height: 1.5; }
+.syll-card li::before { content: ""; position: absolute; left: 3px; top: .55em; width: 6px; height: 6px; border-radius: 2px; background: var(--gold); transform: rotate(45deg); }
+.syll-meta { margin-top: 14px; padding-top: 12px; border-top: 1px dashed #e3ecdf; font-size: 12.5px; color: #6a7a70; font-weight: 600; }
+.hec-note { max-width: 1080px; margin: 0 auto 24px; background: var(--green-lt); border-left: 4px solid var(--green); border-radius: 12px; padding: 16px 20px; font-size: 14px; line-height: 1.6; color: #24352c; }
+.hec-note strong { color: #14472d; }
+.back-link { display: inline-block; margin-top: 14px; color: var(--green); font-weight: 700; font-size: 14px; text-decoration: none; }
 .btn-ghost {
   color: rgba(255,255,255,0.9); font-size: 16px; font-weight: 600;
   padding: 16px 32px; border-radius: 50px; border: 2px solid rgba(255,255,255,0.3);
