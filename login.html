@@ -31,7 +31,7 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0d2818,#1
 label{display:block;font-size:13px;font-weight:600;color:#444;margin:14px 0 5px}
 input,select{width:100%;padding:11px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:#fafaf8;transition:border .2s}
 input:focus,select:focus{border-color:#1a6b3a;background:#fff}
-.role-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:5px}
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:5px}
 .role-btn{padding:14px;border:2px solid #e0e0e0;border-radius:12px;text-align:center;cursor:pointer;transition:all .2s;background:#fafaf8}
 .role-btn .ri{font-size:24px;display:block;margin-bottom:6px}
 .role-btn .rl{font-size:13px;font-weight:600;color:#666}
@@ -63,7 +63,7 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
   <div class="logo">
     <div class="logo-circle">🕌</div>
     <h1>Al-Falah Islamic Academy</h1>
-    <p>Student &amp; Teacher Portal</p>
+    <p>Academy Portal</p>
   </div>
 
   <div class="tabs">
@@ -98,9 +98,12 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
       <div class="role-btn" id="rT" onclick="selRole('teacher')">
         <span class="ri">👨‍🏫</span><span class="rl">Teacher</span>
       </div>
+      <div class="role-btn" id="rA" onclick="selRole('admin')">
+        <span class="ri">🛠️</span><span class="rl">Admin</span>
+      </div>
     </div>
     <div class="tc-wrap" id="tcWrap">
-      <label>Teacher Access Code</label>
+      <label id="tcLabel">Access Code</label>
       <input type="password" id="tc" placeholder="Enter code provided by Dr. Naeem">
     </div>
     <div class="msg" id="suMsg"></div>
@@ -115,6 +118,7 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
 <script>
 let role = 'student';
 const TC = 'ALFALAH-TEACHER-2024';
+const AC = 'ALFALAH-ADMIN-2024';
 
 function switchTab(t) {
   document.querySelectorAll('.tab').forEach((el,i) => el.classList.toggle('active',(i===0)===(t==='in')));
@@ -125,7 +129,13 @@ function selRole(r) {
   role = r;
   document.getElementById('rS').classList.toggle('sel', r==='student');
   document.getElementById('rT').classList.toggle('sel', r==='teacher');
-  document.getElementById('tcWrap').classList.toggle('show', r==='teacher');
+  document.getElementById('rA').classList.toggle('sel', r==='admin');
+  const needsCode = (r==='teacher' || r==='admin');
+  document.getElementById('tcWrap').classList.toggle('show', needsCode);
+  if (needsCode) {
+    document.getElementById('tcLabel').textContent = r==='admin' ? 'Admin Access Code' : 'Teacher Access Code';
+    document.getElementById('tc').placeholder = r==='admin' ? 'Enter admin code' : 'Enter code provided by Dr. Naeem';
+  }
 }
 function showMsg(id, msg, type='err') {
   const el = document.getElementById(id);
@@ -146,7 +156,7 @@ async function doSignIn(btn) {
     const { data, error } = await _sb.auth.signInWithPassword({ email, password });
     if (error) throw error;
     const { data: profile } = await _sb.from('profiles').select('role').eq('id', data.user.id).single();
-    window.location.href = (profile?.role === 'teacher') ? 'teacher-dashboard.html' : 'student-dashboard.html';
+    window.location.href = dashboardFor(profile?.role);
   } catch(e) {
     setBtn(btn, false, 'Sign In →');
     showMsg('siMsg', e.message.includes('Invalid login') ? 'Invalid email or password.' : e.message);
@@ -161,18 +171,24 @@ async function doSignUp(btn) {
   if (password.length < 6) return showMsg('suMsg','Password must be at least 6 characters.');
   if (role==='teacher' && document.getElementById('tc').value !== TC)
     return showMsg('suMsg','Invalid teacher access code. Contact Dr. Muhammad Naeem.');
+  if (role==='admin' && document.getElementById('tc').value !== AC)
+    return showMsg('suMsg','Invalid admin access code.');
   setBtn(btn, true, 'Creating account…');
   try {
     const { data, error } = await _sb.auth.signUp({ email, password });
     if (error) throw error;
     const uid = data.user.id;
-    await _sb.from('profiles').insert({ id: uid, name, role, phone: '', course: 'Quran Hifz', monthly_fee: 2000, payment_status: 'pending' });
+    // Students carry course + fee fields; teachers/admins don't.
+    const profile = (role === 'student')
+      ? { id: uid, name, role, phone: '', course: 'Quran Hifz', monthly_fee: 2000, payment_status: 'pending' }
+      : { id: uid, name, role, phone: '' };
+    await _sb.from('profiles').insert(profile);
     if (role === 'student') {
       await _sb.from('progress').insert({ id: uid, surahs: [], notes: '' });
     }
     // Check if email confirmation needed
     if (data.session) {
-      window.location.href = role==='teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
+      window.location.href = dashboardFor(role);
     } else {
       showMsg('suMsg', '✓ Account created! Check your email to confirm, then sign in.', 'ok');
       setBtn(btn, false, 'Create Account →');
