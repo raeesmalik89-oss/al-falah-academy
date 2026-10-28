@@ -143,7 +143,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <script src="supabase-config.js"></script>
 <script src="assets/dashboard-shared.js"></script>
 <script>
-let students=[], selUid=null, tName='Dr. Muhammad Naeem';
+let students=[], selUid=null, tName='Dr Raees';
 const toast=msg=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);};
 const ini=s=>s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
 function courseResourceLink(course){
@@ -313,7 +313,7 @@ function updateAvgHifz(){
 (async()=>{
   const auth = await requireSession('teacher');
   if(!auth) return;
-  tName=auth.profile.name||'Dr. Muhammad Naeem';
+  tName=auth.profile.name||'Dr Raees';
   document.getElementById('navName').textContent=tName;
   document.getElementById('stDate').textContent=new Date().toLocaleDateString('en-PK',{day:'numeric',month:'short'});
 

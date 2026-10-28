@@ -214,7 +214,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   attEl.innerHTML=(att&&att.length)?att.map(renderAttendanceRow).join(''):'<div class="empty">No attendance records yet</div>';
 
   const annEl=document.getElementById('annList');
-  annEl.innerHTML=(anns&&anns.length)?anns.map(a=>`<div class="ann-item"><div class="ann-title">${a.title}</div><div class="ann-body">${a.body}</div><div class="ann-date">${fmtDate(a.created_at)} · ${a.teacher_name||'Dr. Naeem'}</div></div>`).join(''):'<div class="empty">No announcements yet</div>';
+  annEl.innerHTML=(anns&&anns.length)?anns.map(a=>`<div class="ann-item"><div class="ann-title">${a.title}</div><div class="ann-body">${a.body}</div><div class="ann-date">${fmtDate(a.created_at)} · ${a.teacher_name||'Dr Raees'}</div></div>`).join(''):'<div class="empty">No announcements yet</div>';
 
   document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';

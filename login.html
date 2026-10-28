@@ -104,7 +104,7 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
     </div>
     <div class="tc-wrap" id="tcWrap">
       <label id="tcLabel">Access Code</label>
-      <input type="password" id="tc" placeholder="Enter code provided by Dr. Naeem">
+      <input type="password" id="tc" placeholder="Enter code provided by Dr Raees">
     </div>
     <div class="msg" id="suMsg"></div>
     <button class="btn" onclick="doSignUp(this)">Create Account →</button>
@@ -134,7 +134,7 @@ function selRole(r) {
   document.getElementById('tcWrap').classList.toggle('show', needsCode);
   if (needsCode) {
     document.getElementById('tcLabel').textContent = r==='admin' ? 'Admin Access Code' : 'Teacher Access Code';
-    document.getElementById('tc').placeholder = r==='admin' ? 'Enter admin code' : 'Enter code provided by Dr. Naeem';
+    document.getElementById('tc').placeholder = r==='admin' ? 'Enter admin code' : 'Enter code provided by Dr Raees';
   }
 }
 function showMsg(id, msg, type='err') {
@@ -170,7 +170,7 @@ async function doSignUp(btn) {
   if (!name||!email||!password) return showMsg('suMsg','Please fill in all fields.');
   if (password.length < 6) return showMsg('suMsg','Password must be at least 6 characters.');
   if (role==='teacher' && document.getElementById('tc').value !== TC)
-    return showMsg('suMsg','Invalid teacher access code. Contact Dr. Muhammad Naeem.');
+    return showMsg('suMsg','Invalid teacher access code. Contact Dr Raees.');
   if (role==='admin' && document.getElementById('tc').value !== AC)
     return showMsg('suMsg','Invalid admin access code.');
   setBtn(btn, true, 'Creating account…');
