@@ -50,6 +50,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .fee-wrap small{font-size:11px;color:#999}
 .fee-in{width:92px;padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:9px;font-size:13px;font-family:inherit;outline:none;background:#fafaf8}
 .fee-in:focus{border-color:#1a6b3a}
+.cls-in{width:130px}
 .stat-sel{padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:9px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;background:#fafaf8;outline:none}
 .stat-sel.paid{color:#15803d;border-color:#bbf7d0;background:#f0f9f4}
 .stat-sel.pending{color:#d97706;border-color:#fde68a;background:#fffbeb}
@@ -141,6 +142,7 @@ function renderStudents(list){
     return `<div class="frow">
       <div class="s-av">${ini(s)}</div>
       <div class="fmeta"><div class="s-name">${s.name}</div><div class="s-meta">${s.course||'Quran Hifz'}${s.email?' · '+s.email:''}</div></div>
+      <div class="fee-wrap"><small>Class</small><input class="fee-in cls-in" type="text" value="${s.class_name||''}" placeholder="e.g. Hifz L1" onchange="saveClass('${s.id}',this)"></div>
       <div class="fee-wrap"><small>Fee</small><input class="fee-in" type="number" value="${s.monthly_fee||0}" onchange="saveFee('${s.id}',this)"></div>
       <select class="stat-sel ${statusBadgeClass(ps)}" onchange="saveStatus('${s.id}',this)">
         <option value="paid" ${ps==='paid'?'selected':''}>✓ Paid</option>
@@ -164,6 +166,12 @@ async function saveStatus(uid,sel){
   await _sb.from('profiles').update({payment_status:status}).eq('id',uid);
   const s=students.find(x=>x.id===uid); if(s)s.payment_status=status;
   refreshStats(); toast('✓ Status updated — '+status);
+}
+async function saveClass(uid,input){
+  const cls=input.value.trim();
+  await _sb.from('profiles').update({class_name:cls}).eq('id',uid);
+  const s=students.find(x=>x.id===uid); if(s)s.class_name=cls;
+  toast(cls?('✓ Class set — '+cls):'✓ Class cleared');
 }
 
 function renderTeachers(){
