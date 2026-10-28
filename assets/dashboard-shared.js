@@ -26,14 +26,23 @@ function surahAudioUrl(num, reciter = 'ar.alafasy') {
   return mp3quran[reciter] || `https://cdn.islamic.network/quran/audio-surah/128/${reciter}/${num}.mp3`;
 }
 
-// Used by student-dashboard.html / teacher-dashboard.html. Redirects to login if there's
-// no session, or to the other dashboard if the signed-in profile's role doesn't match.
+// The dashboard page for a given profile role.
+function dashboardFor(role) {
+  return role === 'admin' ? 'admin-dashboard.html'
+       : role === 'teacher' ? 'teacher-dashboard.html'
+       : 'student-dashboard.html';
+}
+
+// Used by *-dashboard.html. Redirects to login if there's no session, or to the
+// signed-in profile's OWN dashboard if its role doesn't match the page's expected role.
 async function requireSession(expectedRole) {
   const { data: { session } } = await _sb.auth.getSession();
   if (!session) { window.location.href = 'login.html'; return null; }
   const { data: profile } = await _sb.from('profiles').select('*').eq('id', session.user.id).single();
-  const otherDashboard = expectedRole === 'teacher' ? 'student-dashboard.html' : 'teacher-dashboard.html';
-  if (!profile || profile.role !== expectedRole) { window.location.href = otherDashboard; return null; }
+  if (!profile || profile.role !== expectedRole) {
+    window.location.href = dashboardFor(profile?.role);
+    return null;
+  }
   return { session, profile };
 }
 
@@ -42,5 +51,5 @@ async function redirectIfLoggedIn() {
   const { data: { session } } = await _sb.auth.getSession();
   if (!session) return;
   const { data: profile } = await _sb.from('profiles').select('role').eq('id', session.user.id).single();
-  if (profile) window.location.href = profile.role === 'teacher' ? 'teacher-dashboard.html' : 'student-dashboard.html';
+  if (profile) window.location.href = dashboardFor(profile.role);
 }

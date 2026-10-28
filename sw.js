@@ -14,6 +14,7 @@ const PRECACHE = [
   '/login.html',
   '/student-dashboard.html',
   '/teacher-dashboard.html',
+  '/admin-dashboard.html',
   '/enroll.html',
   '/lessons.html',
   '/manifest.json',

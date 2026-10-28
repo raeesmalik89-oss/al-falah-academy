@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a4030">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Al-Falah">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png">
+  <script src="/assets/pwa.js" defer></script>
+<title>Admin Dashboard · Al-Falah Islamic Academy</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--g:#1a4030;--gm:#1a6b3a;--gold:#c9a84c;--bg:#f5f7f4;--card:#fff;--text:#1a1a1a;--muted:#666}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+.nav{background:linear-gradient(135deg,#0d2818,#1a4030);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.nav-logo span{font-size:22px}
+.nav-title{font-size:15px;font-weight:700;color:#fff;white-space:nowrap}
+.nav-title small{display:block;font-size:11px;font-weight:400;color:rgba(255,255,255,.6)}
+.nav-right{display:flex;align-items:center;gap:12px}
+.nav-name{font-size:13px;font-weight:600;color:rgba(255,255,255,.85)}
+.nav-logout{font-size:12px;font-weight:600;background:rgba(255,255,255,.12);color:#fff;border:1px solid rgba(255,255,255,.2);padding:6px 14px;border-radius:8px;cursor:pointer;font-family:inherit}
+.nav-logout:hover{background:rgba(255,255,255,.22)}
+.main{max-width:1100px;margin:0 auto;padding:28px 20px}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;margin-bottom:28px}
+.stat{background:var(--card);border-radius:16px;padding:18px 20px;border:1px solid #e8e8e0;display:flex;align-items:center;gap:14px}
+.stat-icon{font-size:28px}
+.stat-val{font-size:22px;font-weight:800;color:var(--g)}
+.stat-label{font-size:12px;color:var(--muted);margin-top:1px}
+.card{background:var(--card);border-radius:18px;padding:24px;border:1px solid #e8e8e0;margin-bottom:22px}
+.card-title{font-size:14px;font-weight:700;color:var(--g);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title span{font-size:18px}
+.search{width:100%;padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:13px;font-family:inherit;outline:none;background:#fafaf8;margin-bottom:14px}
+.search:focus{border-color:#1a6b3a}
+.s-av{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#1a4030,#1a6b3a);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:15px;flex-shrink:0}
+.s-name{font-size:13px;font-weight:600}
+.s-meta{font-size:11px;color:var(--muted)}
+.frow{display:flex;align-items:center;gap:12px;padding:12px;border-radius:12px;border:1px solid #eee;margin-bottom:8px;flex-wrap:wrap}
+.frow:hover{background:#f9faf8}
+.fmeta{flex:1;min-width:150px}
+.fee-wrap{display:flex;align-items:center;gap:6px}
+.fee-wrap small{font-size:11px;color:#999}
+.fee-in{width:92px;padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:9px;font-size:13px;font-family:inherit;outline:none;background:#fafaf8}
+.fee-in:focus{border-color:#1a6b3a}
+.stat-sel{padding:8px 10px;border:1.5px solid #e0e0e0;border-radius:9px;font-size:12px;font-weight:700;font-family:inherit;cursor:pointer;background:#fafaf8;outline:none}
+.stat-sel.paid{color:#15803d;border-color:#bbf7d0;background:#f0f9f4}
+.stat-sel.pending{color:#d97706;border-color:#fde68a;background:#fffbeb}
+.stat-sel.overdue{color:#dc2626;border-color:#fecaca;background:#fef2f2}
+.tch{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:12px;margin-bottom:6px;background:#fafaf8;border:1px solid #eee}
+.no-s{text-align:center;padding:26px;color:var(--muted);font-size:13px}
+.ann-form{display:flex;flex-direction:column;gap:12px;margin-bottom:20px}
+.ann-form input,.ann-form textarea{padding:10px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:13px;font-family:inherit;outline:none;background:#fafaf8;resize:vertical}
+.ann-form input:focus,.ann-form textarea:focus{border-color:#1a6b3a}
+.ann-item{padding:14px;background:#fafaf8;border-radius:12px;margin-bottom:10px;border:1px solid #e8e8e0}
+.ann-t{font-size:14px;font-weight:700;margin-bottom:4px}
+.ann-b{font-size:13px;color:var(--muted);line-height:1.5}
+.ann-m{font-size:11px;color:#bbb;margin-top:6px;display:flex;justify-content:space-between}
+.ann-del{color:#dc2626;cursor:pointer;font-weight:600}
+.btn-p{padding:10px 20px;background:linear-gradient(135deg,#1a4030,#1a6b3a);color:#fff;border:none;border-radius:10px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .2s}
+.btn-p:hover{opacity:.9}.btn-p:disabled{opacity:.6;cursor:not-allowed}
+.toast{position:fixed;bottom:28px;right:28px;background:#1a4030;color:#fff;padding:12px 20px;border-radius:12px;font-size:13px;font-weight:600;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:999;opacity:0;transform:translateY(10px);transition:all .3s;pointer-events:none}
+.toast.show{opacity:1;transform:translateY(0)}
+.loading-screen{display:flex;align-items:center;justify-content:center;min-height:100vh;flex-direction:column;gap:16px;background:var(--bg)}
+.spin{width:40px;height:40px;border:3px solid #e0e0e0;border-top-color:#1a6b3a;border-radius:50%;animation:sp .8s linear infinite}
+.spin-sm{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:6px}
+@keyframes sp{to{transform:rotate(360deg)}}
+</style>
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9KM8FWM46X');
+  </script>
+</head>
+<body>
+<div class="loading-screen" id="ls"><div class="spin"></div><p style="color:#666;font-size:14px">Loading dashboard…</p></div>
+<div id="app" style="display:none">
+<nav class="nav">
+  <div class="nav-logo"><span>🕌</span><div class="nav-title">Al-Falah Academy<small>Admin Dashboard</small></div></div>
+  <div class="nav-right"><span class="nav-name" id="navName"></span><button class="nav-logout" onclick="logout()">Logout</button></div>
+</nav>
+<div class="main">
+  <div class="stats">
+    <div class="stat"><div class="stat-icon">🎓</div><div><div class="stat-val" id="stStudents">0</div><div class="stat-label">Students</div></div></div>
+    <div class="stat"><div class="stat-icon">👨‍🏫</div><div><div class="stat-val" id="stTeachers">0</div><div class="stat-label">Teachers</div></div></div>
+    <div class="stat"><div class="stat-icon">✅</div><div><div class="stat-val" id="stPaid">0</div><div class="stat-label">Fees Paid</div></div></div>
+    <div class="stat"><div class="stat-icon">⚠️</div><div><div class="stat-val" id="stUnpaid">0</div><div class="stat-label">Unpaid</div></div></div>
+    <div class="stat"><div class="stat-icon">💰</div><div><div class="stat-val" id="stRevenue">—</div><div class="stat-label">Collected (PKR)</div></div></div>
+    <div class="stat"><div class="stat-icon">📋</div><div><div class="stat-val" id="stToday">—</div><div class="stat-label">Present Today</div></div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span>💳</span> Students &amp; Fees</div>
+    <input class="search" type="text" placeholder="Search student…" oninput="filterS(this.value)">
+    <div id="sList"><div class="no-s">No students yet</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span>👨‍🏫</span> Teachers</div>
+    <div id="tList"><div class="no-s">No teachers yet</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-title"><span>📢</span> Announcements — Visible to All Students</div>
+    <div class="ann-form">
+      <input type="text" id="annT" placeholder="Announcement title (e.g. Fee Reminder)">
+      <textarea id="annB" rows="3" placeholder="Write your announcement…"></textarea>
+      <div><button class="btn-p" onclick="postAnn(this)">Post Announcement</button></div>
+    </div>
+    <div id="annList"></div>
+  </div>
+</div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script src="supabase-config.js"></script>
+<script src="assets/dashboard-shared.js"></script>
+<script>
+let students=[], teachers=[], aName='Admin';
+const toast=msg=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);};
+const ini=s=>(s.name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+const money=n=>'PKR '+(n||0).toLocaleString('en-PK');
+
+function statusBadgeClass(ps){return ps==='paid'?'paid':ps==='overdue'?'overdue':'pending';}
+
+function renderStudents(list){
+  const el=document.getElementById('sList');
+  if(!list.length){el.innerHTML='<div class="no-s">No students enrolled yet</div>';return;}
+  el.innerHTML=list.map(s=>{
+    const ps=s.payment_status||'pending';
+    return `<div class="frow">
+      <div class="s-av">${ini(s)}</div>
+      <div class="fmeta"><div class="s-name">${s.name}</div><div class="s-meta">${s.course||'Quran Hifz'}${s.email?' · '+s.email:''}</div></div>
+      <div class="fee-wrap"><small>Fee</small><input class="fee-in" type="number" value="${s.monthly_fee||0}" onchange="saveFee('${s.id}',this)"></div>
+      <select class="stat-sel ${statusBadgeClass(ps)}" onchange="saveStatus('${s.id}',this)">
+        <option value="paid" ${ps==='paid'?'selected':''}>✓ Paid</option>
+        <option value="pending" ${ps==='pending'?'selected':''}>⏳ Pending</option>
+        <option value="overdue" ${ps==='overdue'?'selected':''}>⚠ Overdue</option>
+      </select>
+    </div>`;
+  }).join('');
+}
+function filterS(q){renderStudents(q?students.filter(s=>(s.name||'').toLowerCase().includes(q.toLowerCase())):students);}
+
+async function saveFee(uid,input){
+  const fee=parseInt(input.value)||0;
+  await _sb.from('profiles').update({monthly_fee:fee}).eq('id',uid);
+  const s=students.find(x=>x.id===uid); if(s)s.monthly_fee=fee;
+  refreshStats(); toast('✓ Fee updated — '+money(fee));
+}
+async function saveStatus(uid,sel){
+  const status=sel.value;
+  sel.className='stat-sel '+statusBadgeClass(status);
+  await _sb.from('profiles').update({payment_status:status}).eq('id',uid);
+  const s=students.find(x=>x.id===uid); if(s)s.payment_status=status;
+  refreshStats(); toast('✓ Status updated — '+status);
+}
+
+function renderTeachers(){
+  const el=document.getElementById('tList');
+  if(!teachers.length){el.innerHTML='<div class="no-s">No teachers yet</div>';return;}
+  el.innerHTML=teachers.map(t=>`<div class="tch"><div class="s-av">${ini(t)}</div><div><div class="s-name">${t.name}</div><div class="s-meta">${t.email||'Teacher'}</div></div></div>`).join('');
+}
+
+function refreshStats(){
+  const paid=students.filter(s=>s.payment_status==='paid');
+  document.getElementById('stStudents').textContent=students.length;
+  document.getElementById('stTeachers').textContent=teachers.length;
+  document.getElementById('stPaid').textContent=paid.length;
+  document.getElementById('stUnpaid').textContent=students.length-paid.length;
+  document.getElementById('stRevenue').textContent=money(paid.reduce((a,s)=>a+(s.monthly_fee||0),0));
+}
+
+async function postAnn(btn){
+  const title=document.getElementById('annT').value.trim();
+  const body=document.getElementById('annB').value.trim();
+  if(!title||!body)return toast('Fill in both fields');
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Posting…';
+  await _sb.from('announcements').insert({title,body,teacher_name:aName});
+  document.getElementById('annT').value='';document.getElementById('annB').value='';
+  toast('✓ Announcement posted');loadAnns();
+  btn.disabled=false;btn.textContent='Post Announcement';
+}
+async function delAnn(id){
+  if(!confirm('Delete this announcement?'))return;
+  await _sb.from('announcements').delete().eq('id',id);
+  toast('Deleted');loadAnns();
+}
+async function loadAnns(){
+  const {data}=await _sb.from('announcements').select('*').order('created_at',{ascending:false}).limit(10);
+  const el=document.getElementById('annList');
+  if(!data?.length){el.innerHTML='<p style="text-align:center;color:#999;padding:16px;font-size:13px">No announcements yet</p>';return;}
+  el.innerHTML=data.map(a=>`<div class="ann-item"><div class="ann-t">${a.title}</div><div class="ann-b">${a.body}</div><div class="ann-m"><span>${fmtDate(a.created_at)} · ${a.teacher_name||''}</span><span class="ann-del" onclick="delAnn('${a.id}')">Delete</span></div></div>`).join('');
+}
+
+(async()=>{
+  const auth = await requireSession('admin');
+  if(!auth) return;
+  aName=auth.profile.name||'Admin';
+  document.getElementById('navName').textContent=aName;
+
+  const {data:profiles}=await _sb.from('profiles').select('*');
+  const all=profiles||[];
+  students=all.filter(p=>p.role==='student');
+  teachers=all.filter(p=>p.role==='teacher');
+  refreshStats();
+  renderStudents(students);
+  renderTeachers();
+
+  // Today's attendance summary
+  const today=new Date().toISOString().split('T')[0];
+  const {data:att}=await _sb.from('attendance').select('present').eq('date',today);
+  const marked=att||[]; const present=marked.filter(a=>a.present).length;
+  document.getElementById('stToday').textContent=marked.length?`${present}/${marked.length}`:'0';
+
+  await loadAnns();
+  document.getElementById('ls').style.display='none';
+  document.getElementById('app').style.display='block';
+})();
+
+async function logout(){await _sb.auth.signOut();window.location.href='login.html';}
+</script>
+</body>
+</html>

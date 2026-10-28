@@ -20,6 +20,7 @@
   "shortcuts": [
     { "name": "Login", "url": "/login.html" },
     { "name": "Student Dashboard", "url": "/student-dashboard.html" },
-    { "name": "Teacher Dashboard", "url": "/teacher-dashboard.html" }
+    { "name": "Teacher Dashboard", "url": "/teacher-dashboard.html" },
+    { "name": "Admin Dashboard", "url": "/admin-dashboard.html" }
   ]
 }
