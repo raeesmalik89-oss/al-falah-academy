@@ -1,0 +1,25 @@
+{
+  "name": "Al-Falah Islamic Academy",
+  "short_name": "Al-Falah",
+  "description": "Student & Teacher portal for Al-Falah Islamic Academy — attendance, fees, progress and announcements.",
+  "start_url": "/login.html",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0d2818",
+  "theme_color": "#1a4030",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["education"],
+  "icons": [
+    { "src": "/assets/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Login", "url": "/login.html" },
+    { "name": "Student Dashboard", "url": "/student-dashboard.html" },
+    { "name": "Teacher Dashboard", "url": "/teacher-dashboard.html" }
+  ]
+}
