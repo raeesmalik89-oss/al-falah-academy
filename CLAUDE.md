@@ -12,11 +12,19 @@ no bundler, no package.json — every page is a single self-contained HTML file 
 ## Commands
 
 There is no build/lint/test tooling in this repo. To work on it locally, just serve the static
-files, e.g. `python -m http.server` or open the HTML files directly in a browser. Deployment is
-automatic on push to `main` via two independent, unrelated pipelines:
-- `vercel.json` — Vercel deploys the whole repo as static output (`outputDirectory: "."`, no
-  build command).
-- `.github/workflows/static.yml` — GitHub Actions also deploys the whole repo to GitHub Pages.
+files, e.g. `python -m http.server` or open the HTML files directly in a browser.
+
+Deployment is automatic on push to `main` via `.github/workflows/deploy.yml`, which runs
+`wrangler deploy` to publish the whole repo as a **Cloudflare Workers static site** (edge-served,
+no server code). Config is `wrangler.jsonc` (`assets.directory: "."`, `html_handling:
+"auto-trailing-slash"` gives clean URLs like `/courses` → `courses.html`, `not_found_handling:
+"404-page"`). The workflow needs two repo secrets: `CLOUDFLARE_API_TOKEN` and
+`CLOUDFLARE_ACCOUNT_ID`. (There is no Vercel or GitHub Pages pipeline anymore — the old
+`vercel.json` and `static.yml` were removed when the site moved to Cloudflare.)
+
+A second workflow, `.github/workflows/keepalive.yml`, is unrelated to deployment: it pings the
+Supabase REST API on a cron schedule so the free-tier database doesn't auto-pause (needs
+`SUPABASE_URL` and `SUPABASE_ANON_KEY` secrets).
 
 Regenerating the free-books catalog: `pip install requests beautifulsoup4 lxml --break-system-packages`
 then `python books_scraper.py`, which overwrites `books.json` (loaded client-side by the site).
