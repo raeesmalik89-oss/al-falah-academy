@@ -72,6 +72,12 @@
       padding:10px 18px;border-radius:10px;font-weight:700;font-size:13px;text-decoration:none}
     .note-box{max-width:960px;margin:28px auto 0;background:#f7f9f4;border:1px solid #e3ecdf;border-radius:14px;padding:20px 24px;color:#44554c;font-size:13.5px;line-height:1.7}
     .note-box b{color:#1a4030}
+    .hero-donate-btn{margin-top:24px;background:var(--gold);color:#1a2a22;border:none;cursor:pointer;font-family:inherit;
+      font-weight:800;font-size:16px;padding:15px 42px;border-radius:30px;transition:.2s;box-shadow:0 8px 26px rgba(0,0,0,.28)}
+    .hero-donate-btn:hover{transform:translateY(-2px);background:#e8b84b}
+    #fundsWrap{display:none}
+    #fundsWrap.open{display:block;animation:fade .3s ease}
+    .funds-hint{text-align:center;color:#8a988f;font-size:13px;margin:0 0 22px}
     @media(max-width:720px){.fund-grid{grid-template-columns:1fr}}
   </style>
 </head>
@@ -121,11 +127,14 @@
     <div class="bism">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
     <h1>Support Our Madrassah Students</h1>
     <p>Help deserving students access authentic Islamic education and essential support. Your Zakat and Atiyat are received with trust and used in the way of Allah — آمین.</p>
+    <button class="hero-donate-btn" onclick="revealFunds()">❤ Donate Now</button>
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="funds">
   <div class="container">
+    <div id="fundsWrap">
+    <p class="funds-hint">Choose a fund below, then tap “Give” to view the account details.</p>
     <div class="fund-grid">
 
       <!-- ZAKAT — Allied Bank -->
@@ -173,6 +182,7 @@
       <a href="https://wa.me/923168818693" target="_blank" rel="noopener" style="color:var(--green);font-weight:700">+92 316 881 8693</a>.
       May Allah accept it from you and multiply its reward. آمین.
     </div>
+    </div><!-- /#fundsWrap -->
   </div>
 </section>
 
@@ -223,6 +233,11 @@
 <div class="toast" id="toast"></div>
 <script src="assets/app.js"></script>
 <script>
+  function revealFunds(){
+    var w = document.getElementById('fundsWrap');
+    w.classList.add('open');
+    document.getElementById('funds').scrollIntoView({behavior:'smooth', block:'start'});
+  }
   function toggleAcct(id, btn){
     var el = document.getElementById('acct-' + id);
     var open = el.classList.toggle('open');
