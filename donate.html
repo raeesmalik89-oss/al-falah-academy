@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a4030">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Al-Falah">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png">
+  <script src="/assets/pwa.js" defer></script>
+  <title>Donate — Zakat &amp; Atiyat | Al-Falah Islamic Academy</title>
+  <meta name="description" content="Support deserving madrassah students at Al-Falah Islamic Academy. Give Zakat (Shariah-compliant, kept separate) or Atiyat towards learning materials and student welfare." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://alfalah-academy.com/donate" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Al-Falah Islamic Academy" />
+  <meta property="og:title" content="Donate — Zakat & Atiyat | Al-Falah Islamic Academy" />
+  <meta property="og:description" content="Support deserving madrassah students. Give Zakat or Atiyat — handled separately with transparent records." />
+  <meta property="og:url" content="https://alfalah-academy.com/donate" />
+  <meta property="og:image" content="https://alfalah-academy.com/assets/logo-full.png" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" /></noscript>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9KM8FWM46X');
+  </script>
+  <style>
+    .dn-hero{background:linear-gradient(135deg,#0d2818,#1a6b3a);color:#fff;padding:58px 0 50px;text-align:center}
+    .dn-hero .bism{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin-bottom:10px}
+    .dn-hero h1{font-size:clamp(26px,5vw,36px);font-weight:800;margin:0 0 10px}
+    .dn-hero p{max-width:600px;margin:0 auto;opacity:.9;font-size:15px;line-height:1.7}
+    .fund-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;max-width:960px;margin:0 auto}
+    .fund{background:#fff;border:1px solid #e3ecdf;border-radius:18px;padding:28px 26px;box-shadow:0 4px 18px rgba(0,0,0,.06);display:flex;flex-direction:column}
+    .fund.zakat{border-top:4px solid var(--green)}
+    .fund.atiyat{border-top:4px solid var(--gold)}
+    .fund .ic{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;margin-bottom:14px}
+    .fund.zakat .ic{background:var(--green-lt)}
+    .fund.atiyat .ic{background:var(--gold-lt)}
+    .fund h3{font-size:20px;color:#1a2a22;margin:0 0 4px}
+    .fund .ar{font-family:'Amiri',serif;font-size:17px;color:#1a6b3a;margin:0 0 10px}
+    .fund .desc{color:#55615a;font-size:14px;line-height:1.65;margin:0 0 18px}
+    .give-btn{width:100%;border:none;cursor:pointer;font-family:inherit;font-weight:700;font-size:15px;color:#fff;
+      padding:14px;border-radius:12px;margin-top:auto;transition:.2s}
+    .fund.zakat .give-btn{background:var(--green)}
+    .fund.atiyat .give-btn{background:var(--gold);color:#1a2a22}
+    .give-btn:hover{opacity:.92;transform:translateY(-1px)}
+    .acct{display:none;margin-top:16px;border-top:1px dashed #d6e0d9;padding-top:16px;animation:fade .25s ease}
+    .acct.open{display:block}
+    @keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+    .acct .row{display:flex;justify-content:space-between;gap:12px;font-size:13.5px;padding:4px 0;border-bottom:1px solid #f1f5f1}
+    .acct .row:last-of-type{border-bottom:0}
+    .acct .row .k{color:#8a988f;flex:none}
+    .acct .row .v{color:#1a2a22;font-weight:600;text-align:right;word-break:break-all}
+    .iban-box{display:flex;align-items:center;gap:10px;background:#f7faf7;border:1px solid #e3ecdf;border-radius:10px;padding:10px 12px;margin-top:12px}
+    .iban-box code{font-family:'Courier New',monospace;font-size:13px;color:#0e3a23;font-weight:700;letter-spacing:.3px;word-break:break-all;flex:1}
+    .copy-btn{flex:none;border:1px solid var(--green);background:#fff;color:var(--green);font-weight:700;font-size:12px;
+      padding:7px 12px;border-radius:8px;cursor:pointer;font-family:inherit;transition:.2s;white-space:nowrap}
+    .copy-btn:hover{background:var(--green);color:#fff}
+    .acct .wa{display:inline-flex;align-items:center;gap:8px;margin-top:14px;background:#25d366;color:#fff;
+      padding:10px 18px;border-radius:10px;font-weight:700;font-size:13px;text-decoration:none}
+    .note-box{max-width:960px;margin:28px auto 0;background:#f7f9f4;border:1px solid #e3ecdf;border-radius:14px;padding:20px 24px;color:#44554c;font-size:13.5px;line-height:1.7}
+    .note-box b{color:#1a4030}
+    @media(max-width:720px){.fund-grid{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-icon.png" alt="Al-Falah Islamic Academy" style="height:40px;width:auto;display:block;margin-right:5px" />
+      <span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="books.html">Free e-Books</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html" class="nav-login">🔐 Login</a></li>
+      <li><a href="donate.html" class="nav-donate active">❤ Donate</a></li>
+      <li><a href="enroll.html" class="nav-cta">Enroll Free</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="toggleMenu()">Home</a>
+    <a href="courses.html" onclick="toggleMenu()">Courses</a>
+    <a href="books.html" onclick="toggleMenu()">Free e-Books</a>
+    <a href="downloads.html" onclick="toggleMenu()">Downloads</a>
+    <a href="resources.html" onclick="toggleMenu()">Resources</a>
+    <a href="gallery.html" onclick="toggleMenu()">Gallery</a>
+    <a href="events.html" onclick="toggleMenu()">Events</a>
+    <a href="about.html" onclick="toggleMenu()">About Us</a>
+    <a href="tools.html" onclick="toggleMenu()">Tools</a>
+    <a href="contact.html" onclick="toggleMenu()">Contact</a>
+    <a href="login.html" onclick="toggleMenu()">🔐 Login</a>
+    <a href="donate.html" onclick="toggleMenu()">❤ Donate</a>
+    <a href="enroll.html" onclick="toggleMenu()">Enroll Free</a>
+  </div>
+</nav>
+
+<section class="dn-hero">
+  <div class="container">
+    <div class="bism">بِسْمِ اللّٰهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
+    <h1>Support Our Madrassah Students</h1>
+    <p>Help deserving students access authentic Islamic education and essential support. Your Zakat and Atiyat are received with trust and used in the way of Allah — آمین.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container">
+    <div class="fund-grid">
+
+      <!-- ZAKAT — Allied Bank -->
+      <div class="fund zakat">
+        <div class="ic">💚</div>
+        <h3>Zakat Fund</h3>
+        <div class="ar">زکوٰۃ</div>
+        <p class="desc">Support eligible students through Shariah-compliant distribution. Zakat is kept strictly separate and given only to those entitled to receive it.</p>
+        <button class="give-btn" onclick="toggleAcct('zakat', this)" aria-expanded="false" aria-controls="acct-zakat">Give Zakat</button>
+        <div class="acct" id="acct-zakat">
+          <div class="row"><span class="k">Bank</span><span class="v">Allied Bank Limited</span></div>
+          <div class="row"><span class="k">Account Title</span><span class="v">Muhammad Naeem</span></div>
+          <div class="row"><span class="k">Branch</span><span class="v">Dhoke Syedan / Misrial Road, Rawalpindi</span></div>
+          <div class="iban-box">
+            <code id="iban-zakat">PK72ABPA0010003487802020010</code>
+            <button class="copy-btn" onclick="copyIban('iban-zakat', this)">Copy IBAN</button>
+          </div>
+          <a class="wa" href="https://wa.me/923168818693?text=Assalamu%20Alaikum%2C%20I%20have%20sent%20a%20Zakat%20donation%20to%20Al-Falah%20Islamic%20Academy.%20Here%20is%20my%20receipt%3A" target="_blank" rel="noopener">💬 Send donation receipt</a>
+        </div>
+      </div>
+
+      <!-- ATIYAT — Bank Alfalah Islamic -->
+      <div class="fund atiyat">
+        <div class="ic">📖</div>
+        <h3>Atiyat Fund</h3>
+        <div class="ar">عطیات</div>
+        <p class="desc">Contribute towards learning materials, books and general student welfare. Atiyat (voluntary charity) may be given by anyone, for any student need.</p>
+        <button class="give-btn" onclick="toggleAcct('atiyat', this)" aria-expanded="false" aria-controls="acct-atiyat">Give Atiyat</button>
+        <div class="acct" id="acct-atiyat">
+          <div class="row"><span class="k">Bank</span><span class="v">Bank Alfalah — Islamic</span></div>
+          <div class="row"><span class="k">Account Title</span><span class="v">Muhammad Naeem</span></div>
+          <div class="row"><span class="k">Branch</span><span class="v">IBG Kalma Chowk Branch, Rawalpindi</span></div>
+          <div class="iban-box">
+            <code id="iban-atiyat">PK61ALFH5597005000042696</code>
+            <button class="copy-btn" onclick="copyIban('iban-atiyat', this)">Copy IBAN</button>
+          </div>
+          <a class="wa" href="https://wa.me/923168818693?text=Assalamu%20Alaikum%2C%20I%20have%20sent%20an%20Atiyat%20donation%20to%20Al-Falah%20Islamic%20Academy.%20Here%20is%20my%20receipt%3A" target="_blank" rel="noopener">💬 Send donation receipt</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="note-box">
+      <b>Handled separately, with transparency.</b> Zakat and Atiyat are kept in separate accounts and recorded separately, with appropriate Shariah oversight — your Zakat reaches only eligible recipients. After transferring, please share your receipt on WhatsApp so we can acknowledge it and keep clear records. For any question about where your donation goes, message us at
+      <a href="https://wa.me/923168818693" target="_blank" rel="noopener" style="color:var(--green);font-weight:700">+92 316 881 8693</a>.
+      May Allah accept it from you and multiply its reward. آمین.
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><img src="assets/logo-icon.png" alt="Al-Falah Islamic Academy" style="height:40px;width:auto;display:block;margin-right:5px" /><span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span></div>
+        <p>Bringing authentic Islamic knowledge to every Muslim, wherever they are in the world.</p>
+        <div class="footer-arabic">وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا</div>
+      </div>
+      <div class="footer-links">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="books.html">Free e-Books</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="lessons.html">Curriculum Hub</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Academy</h4>
+        <ul>
+          <li><a href="about.html">About &amp; Scholars</a></li>
+          <li><a href="donate.html">Donate</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="events.html">Events</a></li>
+          <li><a href="tools.html">Free Tools</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/923168818693" target="_blank">📱 WhatsApp Us</a></li>
+          <li><a href="mailto:info@alfalah-academy.com">✉️ info@alfalah-academy.com</a></li>
+          <li><a href="https://www.youtube.com/@Al-falahofficial" target="_blank" rel="noopener" style="white-space:nowrap">▶️ YouTube Channel</a></li>
+          <li>🌍 Serving Students Worldwide</li>
+          <li>⏰ Available 7 Days a Week</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Al-Falah Islamic Academy. All rights reserved. | Serving the Ummah with authentic Islamic education.</p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script src="assets/app.js"></script>
+<script>
+  function toggleAcct(id, btn){
+    var el = document.getElementById('acct-' + id);
+    var open = el.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  }
+  function copyIban(id, btn){
+    var txt = document.getElementById(id).textContent.trim();
+    var done = function(){ var o = btn.textContent; btn.textContent = '✓ Copied'; setTimeout(function(){ btn.textContent = o; }, 1600); };
+    if (navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(txt).then(done).catch(function(){ fallbackCopy(txt, done); });
+    } else { fallbackCopy(txt, done); }
+  }
+  function fallbackCopy(txt, done){
+    try{ var t=document.createElement('textarea'); t.value=txt; t.style.position='fixed'; t.style.opacity='0'; document.body.appendChild(t); t.select(); document.execCommand('copy'); document.body.removeChild(t); done(); }catch(e){}
+  }
+</script>
+</body>
+</html>

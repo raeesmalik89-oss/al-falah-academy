@@ -57,6 +57,13 @@ img { max-width: 100%; }
   font-weight: 700 !important; padding: 8px 20px !important; border-radius: 24px !important;
 }
 .nav-cta:hover { background: #e8b84b !important; transform: translateY(-1px); }
+.nav-donate {
+  background: transparent !important; color: var(--gold) !important;
+  font-weight: 700 !important; padding: 7px 15px !important; border-radius: 24px !important;
+  border: 1.5px solid var(--gold) !important; font-size: 13px !important;
+  transition: background 0.2s, color 0.2s !important;
+}
+.nav-donate:hover, .nav-donate.active { background: var(--gold) !important; color: #1a1a1a !important; }
 .hamburger { display: none; background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; margin-left: auto; }
 .mobile-menu { display: none; flex-direction: column; padding: 12px 24px 16px; gap: 4px; }
 .mobile-menu.open { display: flex; }
