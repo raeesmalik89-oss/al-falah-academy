@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a4030">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Al-Falah">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png">
+  <script src="/assets/pwa.js" defer></script>
+  <title>Dr. Muhammad Naeem — Profile, Research &amp; Publications | Al-Falah Islamic Academy</title>
+  <meta name="description" content="Profile of Dr. Muhammad Naeem — Founder & Chief Academic Scholar of Al-Falah Islamic Academy. PhD in Tafseer & Quranic Sciences (IIUI), Ustad-ul-Tafseer & Hadith at Darul Uloom Farooqia. Research, publications and academic qualifications." />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://alfalah-academy.com/dr-naeem" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:site_name" content="Al-Falah Islamic Academy" />
+  <meta property="og:title" content="Dr. Muhammad Naeem — Profile, Research & Publications" />
+  <meta property="og:description" content="Founder & Chief Academic Scholar of Al-Falah Islamic Academy. PhD in Tafseer & Quranic Sciences (IIUI)." />
+  <meta property="og:url" content="https://alfalah-academy.com/dr-naeem" />
+  <meta property="og:image" content="https://alfalah-academy.com/assets/dr-naeem.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" onload="this.onload=null;this.rel='stylesheet'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" /></noscript>
+  <link rel="stylesheet" href="style.css" />
+  <!-- Google Analytics (GA4) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-9KM8FWM46X');
+  </script>
+  <style>
+    .dn-hero{background:linear-gradient(135deg,#0d2818,#1a6b3a);color:#fff;padding:70px 0 54px}
+    .dn-hero-inner{display:flex;align-items:center;gap:34px;max-width:880px;margin:0 auto;flex-wrap:wrap;justify-content:center;text-align:left}
+    .dn-photo{width:168px;height:168px;border-radius:50%;object-fit:cover;object-position:center 15%;border:4px solid var(--gold);box-shadow:0 14px 40px rgba(0,0,0,.35);flex:none;background:#fff}
+    .dn-hero h1{font-size:clamp(26px,5vw,36px);margin:0 0 6px;font-weight:800}
+    .dn-hero .dn-ar{font-family:'Amiri',serif;font-size:22px;color:var(--gold);margin:0 0 10px}
+    .dn-role{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:6px 14px;border-radius:30px;font-size:13px;font-weight:700;margin-bottom:14px}
+    .dn-hero-badges{display:flex;flex-wrap:wrap;gap:8px;max-width:520px}
+    .dn-hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px}
+    .dn-btn{padding:12px 22px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:.2s}
+    .dn-btn-gold{background:var(--gold);color:#1a2a22}
+    .dn-btn-ghost{background:rgba(255,255,255,.12);color:#fff;border:1.5px solid rgba(255,255,255,.4)}
+    .dn-btn:hover{transform:translateY(-2px);opacity:.94}
+    .dn-card{background:#fff;border:1px solid #e3ecdf;border-radius:16px;padding:22px 24px;box-shadow:0 3px 14px rgba(0,0,0,.05)}
+    .dn-edu{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;max-width:1000px;margin:0 auto}
+    .dn-edu .yr{display:inline-block;font-size:12px;font-weight:800;color:#8a6d1f;background:var(--gold-lt);padding:3px 10px;border-radius:20px;margin-bottom:8px}
+    .dn-edu h3{margin:0 0 4px;font-size:16px;color:#1a2a22}
+    .dn-edu p{margin:0;font-size:13px;color:#6a7d70;line-height:1.5}
+    .dn-research{display:grid;grid-template-columns:1fr 1fr;gap:18px;max-width:1000px;margin:0 auto}
+    .dn-research .dn-card .lvl{display:inline-block;font-size:12px;font-weight:800;color:#1a6b3a;background:var(--green-lt);padding:4px 12px;border-radius:20px;margin-bottom:12px}
+    .dn-research .dn-ar-title{font-family:'Amiri',serif;font-size:19px;line-height:1.8;color:#1a4030;direction:rtl}
+    .dn-pub-list{max-width:1000px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+    .dn-pub{display:flex;gap:16px;align-items:flex-start}
+    .dn-pub .dn-pub-yr{flex:none;width:58px;text-align:center;font-weight:800;color:#1a6b3a;font-size:15px;padding-top:2px}
+    .dn-pub .dn-pub-body{flex:1;min-width:0}
+    .dn-pub .dn-pub-ti{font-family:'Amiri',serif;font-size:18px;line-height:1.7;color:#1a2a22;direction:rtl;margin:0 0 4px}
+    .dn-pub .dn-pub-ti.ltr{font-family:'Inter',sans-serif;direction:ltr;font-size:15px;font-weight:700}
+    .dn-pub .dn-pub-src{font-size:12.5px;color:#6a7d70}
+    .dn-pub .dn-pub-src a{color:var(--green);font-weight:700;text-decoration:none}
+    .dn-pub .dn-pub-src .pill{display:inline-block;background:#eef5ef;color:#3b5244;font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;margin-left:6px}
+    @media(max-width:620px){.dn-research{grid-template-columns:1fr}.dn-hero-inner{text-align:center}.dn-hero-badges{justify-content:center}.dn-hero-cta{justify-content:center}}
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-icon.png" alt="Al-Falah Islamic Academy" style="height:40px;width:auto;display:block;margin-right:5px" />
+      <span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="books.html">Free e-Books</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="gallery.html">Gallery</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="about.html" class="active">About Us</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="login.html" class="nav-login">🔐 Login</a></li>
+      <li><a href="enroll.html" class="nav-cta">Enroll Free</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="toggleMenu()">Home</a>
+    <a href="courses.html" onclick="toggleMenu()">Courses</a>
+    <a href="books.html" onclick="toggleMenu()">Free e-Books</a>
+    <a href="downloads.html" onclick="toggleMenu()">Downloads</a>
+    <a href="resources.html" onclick="toggleMenu()">Resources</a>
+    <a href="gallery.html" onclick="toggleMenu()">Gallery</a>
+    <a href="events.html" onclick="toggleMenu()">Events</a>
+    <a href="about.html" onclick="toggleMenu()">About Us</a>
+    <a href="tools.html" onclick="toggleMenu()">Tools</a>
+    <a href="contact.html" onclick="toggleMenu()">Contact</a>
+    <a href="login.html" onclick="toggleMenu()">🔐 Login</a>
+    <a href="enroll.html" onclick="toggleMenu()">Enroll Free</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="dn-hero">
+  <div class="container">
+    <div class="dn-hero-inner">
+      <img class="dn-photo" src="assets/dr-naeem.jpg" alt="Dr. Muhammad Naeem" />
+      <div>
+        <h1>Dr. Muhammad Naeem</h1>
+        <span class="dn-role">Founder &amp; CEO · Chief Academic Scholar</span>
+        <div class="dn-hero-badges">
+          <span class="badge badge-gold">PhD – Tafseer &amp; Quranic Sciences (IIUI)</span>
+          <span class="badge badge-gold">Ustad-ul-Tafseer &amp; Hadith – Jamia Farooqia</span>
+          <span class="badge">Jamia Ashrafia Graduate</span>
+          <span class="badge">Hafiz-ul-Quran</span>
+        </div>
+        <div class="dn-hero-cta">
+          <a class="dn-btn dn-btn-gold" href="research/Dr-Muhammad-Naeem-Curriculum-Vitae.pdf" download>⬇ Download CV</a>
+          <a class="dn-btn dn-btn-ghost" href="https://wa.me/923070009958?text=Assalamu%20Alaikum%20Dr.%20Naeem" target="_blank" rel="noopener">💬 Ask a Deeni Masail</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section">
+  <div class="container" style="max-width:880px">
+    <div class="section-header" style="text-align:center">
+      <div class="section-badge">About the Scholar</div>
+      <h2>A Life Devoted to the Quran &amp; Sunnah</h2>
+    </div>
+    <div class="dn-card" style="line-height:1.9;color:#44554c;font-size:15.5px">
+      <p style="margin:0 0 14px">Dr. Muhammad Naeem is the founder and guiding scholar of <strong>Al-Falah Islamic Academy</strong>. He began his journey as a <strong>Hafiz-ul-Quran</strong> and completed his classical Islamic education (Dars-e-Nizami) at the renowned <strong>Jamia Ashrafia, Lahore</strong> and under the Wifaq-ul-Madaris al-Arabia.</p>
+      <p style="margin:0 0 14px">He went on to earn his <strong>MS</strong> and <strong>PhD in Tafseer &amp; Quranic Sciences</strong> from the <strong>International Islamic University Islamabad (IIUI)</strong>, combining traditional scholarship with modern academic research methodology.</p>
+      <p style="margin:0">Today he serves as <strong>Ustad-ul-Tafseer &amp; Hadith at Darul Uloom Farooqia, Rawalpindi</strong> and as visiting faculty at the <strong>International Islamic University Islamabad</strong>, <strong>FAST-NUCES</strong> and <strong>Fatima Jinnah Women University</strong>, teaching Tafseer, Hadith, Islamic Studies and Research Methodology. Through Al-Falah Academy he brings authentic, scholarly Islamic education to students around the world.</p>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section class="section bg-light">
+  <div class="container">
+    <div class="section-header" style="text-align:center">
+      <div class="section-badge">🎓 Education</div>
+      <h2>Academic Qualifications</h2>
+      <p>Degrees &amp; certifications from recognised Islamic and academic institutions</p>
+    </div>
+    <div class="dn-edu">
+      <div class="dn-card"><span class="yr">2024</span><h3>Ph.D — Tafseer &amp; Quranic Sciences</h3><p>International Islamic University, Islamabad</p></div>
+      <div class="dn-card"><span class="yr">2020</span><h3>MS — Tafseer &amp; Quranic Sciences</h3><p>International Islamic University, Islamabad</p></div>
+      <div class="dn-card"><span class="yr">2008</span><h3>Shahadat-ul-Aalmia (Masters-equivalent, Arabic &amp; Islamic Studies)</h3><p>Wifaq-ul-Madaris al-Arabia, Multan &amp; Jamia Ashrafia, Lahore</p></div>
+      <div class="dn-card"><span class="yr">2021</span><h3>B.A (Associate Degree) — Arts</h3><p>University of the Punjab, Lahore</p></div>
+      <div class="dn-card"><span class="yr">2005</span><h3>Sanvia Aama &amp; Sanvia Khasa</h3><p>Wifaq-ul-Madaris al-Arabia, Multan</p></div>
+      <div class="dn-card"><span class="yr">1999</span><h3>Hifz-ul-Quran &amp; Tajweed</h3><p>Completed memorisation of the Holy Quran</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- RESEARCH -->
+<section class="section">
+  <div class="container">
+    <div class="section-header" style="text-align:center">
+      <div class="section-badge">🔬 Research</div>
+      <h2>Doctoral &amp; Postgraduate Research</h2>
+      <p>Original research theses in the field of Tafseer &amp; Quranic Sciences</p>
+    </div>
+    <div class="dn-research">
+      <div class="dn-card">
+        <span class="lvl">Ph.D Thesis</span>
+        <p class="dn-ar-title">التفسير المقاصدي لآيات الأموال في القرآن الكريم — دراسة مقارنة بين أحكام القرآن للتهانوي (١٩٤٣م) وبين التحرير والتنوير لابن عاشور (١٩٧٣م)</p>
+        <p style="margin:12px 0 0;font-size:13px;color:#6a7d70;line-height:1.6">The intent-based (Maqāsidī) interpretation of the verses on wealth in the Holy Qur'an — a comparative study of Al-Thanawi's <em>Ahkām ul-Qur'an</em> and Ibn Ashour's <em>Al-Tahrīr wa Al-Tanwīr</em>.</p>
+      </div>
+      <div class="dn-card">
+        <span class="lvl">MS Thesis</span>
+        <p class="dn-ar-title">التشبيهات التمثيلية في القرآن الكريم وأثرها في التفسير (من أول سورة الفاتحة إلى آخر سورة الناس)</p>
+        <p style="margin:12px 0 0;font-size:13px;color:#6a7d70;line-height:1.6">Representative similes (Al-Tashbih Al-Tamsili) in the Holy Qur'an and their effect on Tafsir — a study spanning from Surah Al-Fatiha to Surah An-Nas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PUBLICATIONS -->
+<section class="section bg-light">
+  <div class="container">
+    <div class="section-header" style="text-align:center">
+      <div class="section-badge">📚 Publications</div>
+      <h2>Research Papers &amp; Journal Publications</h2>
+      <p>Peer-reviewed articles published in recognised research journals. Read the available papers online.</p>
+    </div>
+    <div class="dn-pub-list">
+
+      <div class="dn-card dn-pub">
+        <div class="dn-pub-yr">2025</div>
+        <div class="dn-pub-body">
+          <p class="dn-pub-ti">طرق نفاذ الأمن العام في جمهورية باكستان الإسلامية</p>
+          <p class="dn-pub-src">Methods of Enforcing Public Order in the Islamic Republic of Pakistan · ABHATH Research Journal, Lahore Garrison University (Vol 10, Issue 37) <span class="pill">Arabic</span>
+            · <a href="research/Al-Falah-Public-Order-Pakistan-ABHATH-2025.pdf" target="_blank" rel="noopener">📖 Read</a>
+            · <a href="research/Al-Falah-Public-Order-Pakistan-ABHATH-2025.pdf" download>⬇ PDF</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="dn-card dn-pub">
+        <div class="dn-pub-yr">2024</div>
+        <div class="dn-pub-body">
+          <p class="dn-pub-ti">التفسير المقاصدي لآيات الإنفاق في سبيل الله — دراسة مقارنة بين أحكام القرآن للتهانوي وبين التحرير والتنوير لابن عاشور</p>
+          <p class="dn-pub-src">The Maqāsidī interpretation of the verses on spending for the sake of God · Jahan-e-Tahqeeq (Vol 7, No 2) <span class="pill">Arabic</span>
+            · <a href="research/Al-Falah-Maqasdi-Tafsir-Infaq-Jahan-Tahqeeq-2024.pdf" target="_blank" rel="noopener">📖 Read</a>
+            · <a href="research/Al-Falah-Maqasdi-Tafsir-Infaq-Jahan-Tahqeeq-2024.pdf" download>⬇ PDF</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="dn-card dn-pub">
+        <div class="dn-pub-yr">2024</div>
+        <div class="dn-pub-body">
+          <p class="dn-pub-ti">حقوقِ نسواں اور جدید چیلنجز: تحقیقی جائزہ</p>
+          <p class="dn-pub-src">Women's Rights and Modern Challenges: A Research Review · International Research Journal <span class="pill">Urdu</span></p>
+        </div>
+      </div>
+
+      <div class="dn-card dn-pub">
+        <div class="dn-pub-yr">2023</div>
+        <div class="dn-pub-body">
+          <p class="dn-pub-ti">الحجة البالغة على شاتم الرسول ﷺ في ضوء القرآن الكريم والسنة</p>
+          <p class="dn-pub-src">Al-Hujjah al-Balighah on the one who insults the Messenger ﷺ, in light of the Qur'an &amp; Sunnah · Al-Iqaz Journal <span class="pill">Arabic</span></p>
+        </div>
+      </div>
+
+      <div class="dn-card dn-pub">
+        <div class="dn-pub-yr">2022</div>
+        <div class="dn-pub-body">
+          <p class="dn-pub-ti">جماليات التشبيه التمثيلي في القرآن الكريم وأثرها في التفسير</p>
+          <p class="dn-pub-src">The Aesthetics of Al-Tashbih Al-Tamsili in the Holy Qur'an and its Effect on Tafsir · AL-ILM Journal, GCWUS Sialkot (Vol 6, Issue 1) <span class="pill">Arabic</span>
+            · <a href="research/Al-Falah-Tashbih-Tamsili-Quran-AL-ILM-2022.pdf" target="_blank" rel="noopener">📖 Read</a>
+            · <a href="research/Al-Falah-Tashbih-Tamsili-Quran-AL-ILM-2022.pdf" download>⬇ PDF</a>
+          </p>
+        </div>
+      </div>
+
+      <div class="dn-card dn-pub">
+        <div class="dn-pub-yr">2026</div>
+        <div class="dn-pub-body">
+          <p class="dn-pub-ti">تخفیفِ عذاب برائے کفار کا ثبوت اور اس کے اسباب</p>
+          <p class="dn-pub-src">Evidence for the reduction of punishment for disbelievers and its causes · AL-ISRA Journal <span class="pill">Urdu</span> <span class="pill">Forthcoming</span></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT CTA -->
+<section class="section">
+  <div class="container" style="max-width:860px">
+    <div style="background:linear-gradient(120deg,#0d2818,#1a6b3a);border-radius:20px;padding:40px 28px;text-align:center;color:#fff;box-shadow:0 12px 40px rgba(26,107,58,.25)">
+      <div style="font-size:44px;margin-bottom:10px">💬</div>
+      <h3 style="font-size:24px;font-weight:800;margin:0 0 8px">Ask Dr. Muhammad Naeem</h3>
+      <p style="max-width:580px;margin:0 auto 22px;opacity:.92;font-size:15px;line-height:1.7">Have a religious question (مسئلہ)? Message Dr. Naeem directly on WhatsApp for authentic guidance on Fiqh, Hadith, worship and everyday Islamic matters — free of charge.</p>
+      <div style="display:flex;gap:12px;flex-wrap:wrap;justify-content:center">
+        <a href="https://wa.me/923070009958?text=Assalamu%20Alaikum%20Dr.%20Naeem%2C%20I%20have%20a%20Deeni%20Masala%20(question)%20I%20would%20like%20to%20ask%3A%0A%0A" target="_blank" rel="noopener"
+           style="display:inline-flex;align-items:center;gap:9px;background:#25d366;color:#fff;padding:14px 30px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none">💬 WhatsApp</a>
+        <a href="mailto:mnaeemmalik08@gmail.com"
+           style="display:inline-flex;align-items:center;gap:9px;background:rgba(255,255,255,.14);border:1.5px solid rgba(255,255,255,.4);color:#fff;padding:14px 30px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none">✉️ Email</a>
+        <a href="enroll.html"
+           style="display:inline-flex;align-items:center;gap:9px;background:var(--gold);color:#1a2a22;padding:14px 30px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none">🎓 Enrol in a Class</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-top">
+    <div class="container footer-inner">
+      <div class="footer-brand">
+        <div class="logo"><img src="assets/logo-icon.png" alt="Al-Falah Islamic Academy" style="height:40px;width:auto;display:block;margin-right:5px" /><span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span></div>
+        <p>Bringing authentic Islamic knowledge to every Muslim, wherever they are in the world.</p>
+        <div class="footer-arabic">وَمَن يَتَّقِ اللَّهَ يَجْعَل لَّهُ مَخْرَجًا</div>
+      </div>
+      <div class="footer-links">
+        <h4>Learn</h4>
+        <ul>
+          <li><a href="courses.html">Courses</a></li>
+          <li><a href="books.html">Free e-Books</a></li>
+          <li><a href="downloads.html">Downloads</a></li>
+          <li><a href="resources.html">Resources</a></li>
+          <li><a href="lessons.html">Curriculum Hub</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Academy</h4>
+        <ul>
+          <li><a href="about.html">About &amp; Scholars</a></li>
+          <li><a href="dr-naeem.html">Dr. Muhammad Naeem</a></li>
+          <li><a href="resources.html#books">Books &amp; Research</a></li>
+          <li><a href="gallery.html">Gallery</a></li>
+          <li><a href="events.html">Events</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Contact</h4>
+        <ul>
+          <li><a href="https://wa.me/923168818693" target="_blank">📱 WhatsApp Us</a></li>
+          <li><a href="mailto:info@alfalah-academy.com">✉️ info@alfalah-academy.com</a></li>
+          <li><a href="https://www.youtube.com/@Al-falahofficial" target="_blank" rel="noopener" style="white-space:nowrap">▶️ YouTube Channel</a></li>
+          <li>🌍 Serving Students Worldwide</li>
+          <li>⏰ Available 7 Days a Week</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Al-Falah Islamic Academy. All rights reserved. | Serving the Ummah with authentic Islamic education.</p>
+  </div>
+</footer>
+<div class="toast" id="toast"></div>
+<script src="assets/app.js"></script>
+</body>
+</html>
