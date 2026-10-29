@@ -64,6 +64,14 @@ img { max-width: 100%; }
   transition: background 0.2s, color 0.2s !important;
 }
 .nav-donate:hover, .nav-donate.active { background: var(--gold) !important; color: #1a1a1a !important; }
+/* Always-visible Donate button that appears in the bar when the full nav
+   collapses into the hamburger (so Donate is never hidden). */
+.nav-donate-compact {
+  display: none; align-items: center; gap: 5px;
+  background: var(--gold); color: #1a1a1a; font-weight: 700; font-size: 13px;
+  padding: 8px 16px; border-radius: 24px; white-space: nowrap;
+}
+.nav-donate-compact:hover { background: #e8b84b; color: #1a1a1a; }
 .hamburger { display: none; background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; margin-left: auto; }
 .mobile-menu { display: none; flex-direction: column; padding: 12px 24px 16px; gap: 4px; }
 .mobile-menu.open { display: flex; }
@@ -73,7 +81,8 @@ img { max-width: 100%; }
    Donate/Enroll buttons from being clipped on small laptops). */
 @media (max-width: 1150px) {
   .nav-links { display: none; }
-  .hamburger { display: block; }
+  .hamburger { display: block; margin-left: 14px; }
+  .nav-donate-compact { display: inline-flex; margin-left: auto; }
 }
 
 /* ── HERO ─────────────────────────────────────────────────────────────── */
