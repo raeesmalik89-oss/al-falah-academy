@@ -78,7 +78,25 @@
     #fundsWrap{display:none}
     #fundsWrap.open{display:block;animation:fade .3s ease}
     .funds-hint{text-align:center;color:#8a988f;font-size:13px;margin:0 0 22px}
-    @media(max-width:720px){.fund-grid{grid-template-columns:1fr}}
+    /* Institute project section */
+    .inst-intro{max-width:780px;margin:0 auto 10px;color:#44554c;font-size:15px;line-height:1.85;text-align:center}
+    .inst-salam{font-family:'Amiri',serif;font-size:19px;color:#1a6b3a;text-align:center;margin:0 0 14px}
+    .inst-h3{text-align:center;color:#1a4030;font-size:18px;font-weight:800;margin:30px 0 16px}
+    .inst-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:980px;margin:0 auto}
+    .inst-card{background:#fff;border:1px solid #e3ecdf;border-radius:16px;padding:24px 22px;box-shadow:0 3px 14px rgba(0,0,0,.05)}
+    .inst-card .n{width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;margin-bottom:12px}
+    .inst-card.z .n{background:var(--gold);color:#1a2a22}
+    .inst-card h4{font-size:15.5px;color:#1a2a22;margin:0 0 8px}
+    .inst-card p{font-size:13px;color:#55615a;line-height:1.65;margin:0}
+    .inst-facts{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin:26px 0 0}
+    .inst-facts .chip{background:var(--green-lt);color:#1a4030;font-weight:700;font-size:13px;padding:8px 16px;border-radius:30px}
+    .inst-cta{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:22px}
+    .inst-cta a{display:inline-flex;align-items:center;gap:8px;padding:13px 26px;border-radius:12px;font-weight:700;font-size:14px;text-decoration:none;cursor:pointer}
+    .inst-cta .primary{background:var(--green);color:#fff}
+    .inst-cta .ghost{background:#fff;color:var(--green);border:1.5px solid var(--green)}
+    .inst-cta a:hover{opacity:.92;transform:translateY(-1px)}
+    .inst-disc{max-width:780px;margin:24px auto 0;font-style:italic;color:#97a39a;font-size:12px;text-align:center;line-height:1.65}
+    @media(max-width:720px){.fund-grid{grid-template-columns:1fr}.inst-grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
@@ -183,6 +201,57 @@
       May Allah accept it from you and multiply its reward. آمین.
     </div>
     </div><!-- /#fundsWrap -->
+  </div>
+</section>
+
+<!-- ── Islamic Institute Project ── -->
+<section class="section bg-light" id="institute">
+  <div class="container" style="max-width:980px">
+    <div class="section-header" style="text-align:center">
+      <div class="section-badge">🕌 Our Vision · Our Community · Our Future</div>
+      <h2>Help Establish an Islamic Institute in Islamabad</h2>
+      <p>Building a centre for Quranic education and Islamic learning.</p>
+    </div>
+
+    <p class="inst-salam">السلام علیکم ورحمۃ اللہ وبرکاتہ</p>
+    <p class="inst-intro">We are working towards establishing an Islamic institute in Islamabad, Pakistan — dedicated to Quranic education, Islamic learning, character development and community service. To begin this initiative, we are seeking support to acquire a proposed <strong>7-kanal plot in Islamabad</strong> and, in subsequent phases, develop the facilities needed to serve students and the wider community.</p>
+    <p class="inst-intro">Our vision is a welcoming centre where students can learn the Holy Quran, develop Islamic knowledge and values, and benefit from educational opportunities in a supportive environment.</p>
+
+    <h3 class="inst-h3">How You Can Help</h3>
+    <div class="inst-grid">
+      <div class="inst-card">
+        <div class="n">1</div>
+        <h4>Support the Land Acquisition Fund</h4>
+        <p>Contribute through general donations or voluntary Sadaqah towards the proposed purchase of land for the institute. All contributions are handled transparently and used according to the project's disclosed funding policy.</p>
+      </div>
+      <div class="inst-card z">
+        <div class="n">2</div>
+        <h4>Support Eligible Zakat Recipients</h4>
+        <p>Zakat is collected separately and allocated only for purposes and beneficiaries eligible under Islamic Shariah, following scholarly guidance. Zakat is not represented as funding for land acquisition unless the proposed use has been independently confirmed as permissible.</p>
+      </div>
+      <div class="inst-card">
+        <div class="n">3</div>
+        <h4>Share Our Mission</h4>
+        <p>Help by sharing this initiative with your family, friends, community organisations and anyone interested in supporting Islamic education.</p>
+      </div>
+    </div>
+
+    <div class="note-box" style="margin-top:28px">
+      <b>Our commitment to transparency.</b> Before contributing, donors will be able to review the institute's project information, responsible management, registration status (where applicable), verified payment details, fundraising targets and financial reporting arrangements. We will provide updates on fundraising progress, land acquisition and future development. May Allah accept every sincere effort and reward all those who contribute towards beneficial knowledge and the service of the community. آمین.
+    </div>
+
+    <div class="inst-facts">
+      <span class="chip">📍 Islamabad, Pakistan</span>
+      <span class="chip">📐 Proposed: 7 Kanal</span>
+      <span class="chip">🏗️ Proposed project — phased</span>
+    </div>
+
+    <div class="inst-cta">
+      <a class="primary" onclick="revealFunds()">❤ Donate to the Land Fund</a>
+      <a class="ghost" href="mailto:info@alfalah-academy.com?subject=Islamic%20Institute%20Project%20%E2%80%94%20Inquiry&body=Assalamu%20Alaikum%2C%20I%20would%20like%20to%20learn%20more%20about%20the%20proposed%20Islamic%20Institute%20project.">✉️ Contact our team</a>
+    </div>
+
+    <p class="inst-disc">This is a proposed project. Land acquisition, construction and opening are subject to funding, legal approvals and other necessary arrangements. Contributions towards the land fund are voluntary Sadaqah/general donations; Zakat is kept separate and used only for Shariah-eligible purposes.</p>
   </div>
 </section>
 
