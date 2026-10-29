@@ -42,25 +42,25 @@ img { max-width: 100%; }
 .logo-crescent { font-size: 26px; color: var(--gold); }
 .logo-text { font-size: 18px; font-weight: 800; color: #fff; letter-spacing: -0.5px; white-space: nowrap; }
 .logo-sub { color: var(--gold); font-weight: 400; }
-.nav-links { display: flex; align-items: center; gap: 2px; margin-left: auto; flex-wrap: nowrap; }
-.nav-links a { color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 500; padding: 7px 10px; border-radius: 8px; transition: all 0.2s; white-space: nowrap; }
+.nav-links { display: flex; align-items: center; gap: 0; margin-left: auto; flex-wrap: nowrap; }
+.nav-links a { color: rgba(255,255,255,0.9); font-size: 12.5px; font-weight: 500; padding: 6px 7px; border-radius: 8px; transition: all 0.2s; white-space: nowrap; }
 .nav-links a:hover { color: #fff; background: rgba(255,255,255,0.12); }
 .nav-login {
   background: rgba(255,255,255,0.12) !important; color: #fff !important;
-  font-weight: 600 !important; padding: 7px 16px !important; border-radius: 24px !important;
-  border: 1px solid rgba(255,255,255,0.25) !important; font-size: 13px !important;
-  transition: background 0.2s !important;
+  font-weight: 600 !important; padding: 6px 12px !important; border-radius: 24px !important;
+  border: 1px solid rgba(255,255,255,0.25) !important; font-size: 12.5px !important;
+  margin-left: 4px !important; transition: background 0.2s !important;
 }
 .nav-login:hover { background: rgba(255,255,255,0.22) !important; }
 .nav-cta {
   background: var(--gold) !important; color: #1a1a1a !important;
-  font-weight: 700 !important; padding: 8px 20px !important; border-radius: 24px !important;
+  font-weight: 700 !important; padding: 7px 15px !important; border-radius: 24px !important; font-size: 12.5px !important;
 }
 .nav-cta:hover { background: #e8b84b !important; transform: translateY(-1px); }
 .nav-donate {
   background: transparent !important; color: var(--gold) !important;
-  font-weight: 700 !important; padding: 7px 15px !important; border-radius: 24px !important;
-  border: 1.5px solid var(--gold) !important; font-size: 13px !important;
+  font-weight: 700 !important; padding: 6px 13px !important; border-radius: 24px !important;
+  border: 1.5px solid var(--gold) !important; font-size: 12.5px !important;
   transition: background 0.2s, color 0.2s !important;
 }
 .nav-donate:hover, .nav-donate.active { background: var(--gold) !important; color: #1a1a1a !important; }
@@ -69,6 +69,12 @@ img { max-width: 100%; }
 .mobile-menu.open { display: flex; }
 .mobile-menu a { color: rgba(255,255,255,0.9); padding: 10px 12px; font-size: 15px; border-radius: 8px; }
 .mobile-menu a:hover { background: rgba(255,255,255,0.1); color: #fff; }
+/* Switch to the hamburger menu before the full nav can overflow (keeps the
+   Donate/Enroll buttons from being clipped on small laptops). */
+@media (max-width: 1150px) {
+  .nav-links { display: none; }
+  .hamburger { display: block; }
+}
 
 /* ── HERO ─────────────────────────────────────────────────────────────── */
 .hero {
