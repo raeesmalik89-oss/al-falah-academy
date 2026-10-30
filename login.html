@@ -123,6 +123,8 @@ let role = 'student';
 const TC = 'ALFALAH-TEACHER-2024';
 const AC = 'ALFALAH-ADMIN-2024';
 const CC = 'ALFALAH-CEO-2024';
+// The CEO role is locked to the academy owner's email (from the portfolio).
+const CEO_EMAIL = 'raees.malik89@gmail.com';
 
 function switchTab(t) {
   document.querySelectorAll('.tab').forEach((el,i) => el.classList.toggle('active',(i===0)===(t==='in')));
@@ -143,6 +145,10 @@ function selRole(r) {
     document.getElementById('tcLabel').textContent = labels[r];
     document.getElementById('tc').placeholder = holders[r];
   }
+  // CEO is a single, fixed account — pre-fill and lock its email.
+  const emailEl = document.getElementById('suE');
+  if (r==='ceo') { emailEl.value = CEO_EMAIL; emailEl.readOnly = true; }
+  else { emailEl.readOnly = false; }
 }
 function showMsg(id, msg, type='err') {
   const el = document.getElementById(id);
@@ -182,6 +188,8 @@ async function doSignUp(btn) {
     return showMsg('suMsg','Invalid admin access code.');
   if (role==='ceo' && document.getElementById('tc').value !== CC)
     return showMsg('suMsg','Invalid CEO access code.');
+  if (role==='ceo' && email.toLowerCase() !== CEO_EMAIL)
+    return showMsg('suMsg','The CEO role is reserved for '+CEO_EMAIL+'.');
   setBtn(btn, true, 'Creating account…');
   try {
     const { data, error } = await _sb.auth.signUp({ email, password });
