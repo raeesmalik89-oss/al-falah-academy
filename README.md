@@ -15,7 +15,7 @@ deployed to the edge on Cloudflare Workers via GitHub Actions.
 | Area | Files |
 |------|-------|
 | **Marketing site** | `index.html`, `about.html`, `courses.html`, `curriculum.html`, `enroll.html`, `contact.html`, `events.html`, `gallery.html`, `resources.html`, `tools.html`, `books.html`, `downloads.html`, `lessons.html`, shared `style.css` |
-| **Student/teacher/admin portal** | `login.html`, `student-dashboard.html`, `teacher-dashboard.html`, `admin-dashboard.html`, `assets/dashboard-shared.js`, `supabase-config.js` |
+| **Student/teacher/admin/CEO portal** | `login.html`, `student-dashboard.html`, `teacher-dashboard.html`, `admin-dashboard.html`, `ceo-dashboard.html`, `assets/dashboard-shared.js`, `supabase-config.js` |
 | **Portfolio** | `portfolio/index.html`, `portfolio/portfolio.css`, `portfolio/portfolio.js`, `portfolio/favicon.svg` |
 | **PWA** | `manifest.json`, `sw.js`, `assets/pwa.js`, `assets/icon-*.png` |
 | **Data pipeline** | `books_scraper.py` → `books.json` |
@@ -27,7 +27,7 @@ deployed to the edge on Cloudflare Workers via GitHub Actions.
 - **Frontend:** vanilla HTML, CSS, JavaScript — no framework, no bundler, no `package.json`.
 - **Backend:** [Supabase](https://supabase.com) (PostgreSQL + Auth) — tables `profiles`,
   `progress`, `attendance`, `announcements`, `exam_results`. Role-based routing for
-  student / teacher / admin.
+  student / teacher / admin / ceo (the CEO is a full-access super-user).
 - **PWA:** installable, offline-capable via a service worker (`sw.js`).
 - **Automation:** Python (`requests` + `BeautifulSoup`) builds the free-books catalog.
 - **Deployment:** Cloudflare Workers static assets (`wrangler.jsonc`), deployed by GitHub

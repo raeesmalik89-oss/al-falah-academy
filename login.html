@@ -31,7 +31,7 @@ body{font-family:'Inter',sans-serif;background:linear-gradient(135deg,#0d2818,#1
 label{display:block;font-size:13px;font-weight:600;color:#444;margin:14px 0 5px}
 input,select{width:100%;padding:11px 14px;border:1.5px solid #e0e0e0;border-radius:10px;font-size:14px;font-family:inherit;outline:none;background:#fafaf8;transition:border .2s}
 input:focus,select:focus{border-color:#1a6b3a;background:#fff}
-.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:5px}
+.role-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:5px}
 .role-btn{padding:14px;border:2px solid #e0e0e0;border-radius:12px;text-align:center;cursor:pointer;transition:all .2s;background:#fafaf8}
 .role-btn .ri{font-size:24px;display:block;margin-bottom:6px}
 .role-btn .rl{font-size:13px;font-weight:600;color:#666}
@@ -101,6 +101,9 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
       <div class="role-btn" id="rA" onclick="selRole('admin')">
         <span class="ri">🛠️</span><span class="rl">Admin</span>
       </div>
+      <div class="role-btn" id="rC" onclick="selRole('ceo')">
+        <span class="ri">👑</span><span class="rl">CEO</span>
+      </div>
     </div>
     <div class="tc-wrap" id="tcWrap">
       <label id="tcLabel">Access Code</label>
@@ -119,6 +122,7 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
 let role = 'student';
 const TC = 'ALFALAH-TEACHER-2024';
 const AC = 'ALFALAH-ADMIN-2024';
+const CC = 'ALFALAH-CEO-2024';
 
 function switchTab(t) {
   document.querySelectorAll('.tab').forEach((el,i) => el.classList.toggle('active',(i===0)===(t==='in')));
@@ -130,11 +134,14 @@ function selRole(r) {
   document.getElementById('rS').classList.toggle('sel', r==='student');
   document.getElementById('rT').classList.toggle('sel', r==='teacher');
   document.getElementById('rA').classList.toggle('sel', r==='admin');
-  const needsCode = (r==='teacher' || r==='admin');
+  document.getElementById('rC').classList.toggle('sel', r==='ceo');
+  const needsCode = (r==='teacher' || r==='admin' || r==='ceo');
   document.getElementById('tcWrap').classList.toggle('show', needsCode);
   if (needsCode) {
-    document.getElementById('tcLabel').textContent = r==='admin' ? 'Admin Access Code' : 'Teacher Access Code';
-    document.getElementById('tc').placeholder = r==='admin' ? 'Enter admin code' : 'Enter code provided by Dr Raees';
+    const labels = { teacher: 'Teacher Access Code', admin: 'Admin Access Code', ceo: 'CEO Access Code' };
+    const holders = { teacher: 'Enter code provided by Dr Raees', admin: 'Enter admin code', ceo: 'Enter CEO code' };
+    document.getElementById('tcLabel').textContent = labels[r];
+    document.getElementById('tc').placeholder = holders[r];
   }
 }
 function showMsg(id, msg, type='err') {
@@ -173,6 +180,8 @@ async function doSignUp(btn) {
     return showMsg('suMsg','Invalid teacher access code. Contact Dr Raees.');
   if (role==='admin' && document.getElementById('tc').value !== AC)
     return showMsg('suMsg','Invalid admin access code.');
+  if (role==='ceo' && document.getElementById('tc').value !== CC)
+    return showMsg('suMsg','Invalid CEO access code.');
   setBtn(btn, true, 'Creating account…');
   try {
     const { data, error } = await _sb.auth.signUp({ email, password });
