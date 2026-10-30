@@ -168,7 +168,15 @@ async function doSignIn(btn) {
   try {
     const { data, error } = await _sb.auth.signInWithPassword({ email, password });
     if (error) throw error;
-    const { data: profile } = await _sb.from('profiles').select('role').eq('id', data.user.id).single();
+    const uid = data.user.id;
+    let { data: profile } = await _sb.from('profiles').select('*').eq('id', uid).maybeSingle();
+    // Bootstrap: the academy owner's account is always the CEO (self-healing),
+    // so an email that already existed under another role is promoted on sign-in.
+    if (email.toLowerCase() === CEO_EMAIL && profile?.role !== 'ceo') {
+      if (profile) await _sb.from('profiles').update({ role: 'ceo' }).eq('id', uid);
+      else await _sb.from('profiles').insert({ id: uid, name: 'CEO', role: 'ceo', phone: '' });
+      profile = { ...(profile || {}), role: 'ceo' };
+    }
     window.location.href = dashboardFor(profile?.role);
   } catch(e) {
     setBtn(btn, false, 'Sign In →');
