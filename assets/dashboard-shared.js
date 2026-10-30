@@ -28,7 +28,8 @@ function surahAudioUrl(num, reciter = 'ar.alafasy') {
 
 // The dashboard page for a given profile role.
 function dashboardFor(role) {
-  return role === 'admin' ? 'admin-dashboard.html'
+  return role === 'ceo' ? 'ceo-dashboard.html'
+       : role === 'admin' ? 'admin-dashboard.html'
        : role === 'teacher' ? 'teacher-dashboard.html'
        : 'student-dashboard.html';
 }
@@ -39,7 +40,10 @@ async function requireSession(expectedRole) {
   const { data: { session } } = await _sb.auth.getSession();
   if (!session) { window.location.href = 'login.html'; return null; }
   const { data: profile } = await _sb.from('profiles').select('*').eq('id', session.user.id).single();
-  if (!profile || profile.role !== expectedRole) {
+  // The CEO is a super-user with full access: allow it onto the management
+  // dashboards (teacher/admin) as well as its own, not just an exact role match.
+  const ceoCanView = profile?.role === 'ceo' && expectedRole !== 'student';
+  if (!profile || (profile.role !== expectedRole && !ceoCanView)) {
     window.location.href = dashboardFor(profile?.role);
     return null;
   }
