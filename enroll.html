@@ -13,6 +13,9 @@
   <meta name="apple-mobile-web-app-title" content="Al-Falah">
   <link rel="apple-touch-icon" href="/assets/icon-192.png">
   <script src="/assets/pwa.js" defer></script>
+  <!-- Supabase client: lets the enrollment save into the database (Admin/CEO dashboards). -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
 <title>Enroll Free — Al-Falah Islamic Academy</title>
 <meta name="description" content="Enroll in Al-Falah Islamic Academy — free trial class. Learn Quran, Tajweed, Hadith and Arabic with certified scholars online.">
 <meta name="robots" content="index, follow">
@@ -813,6 +816,19 @@ function submitForm() {
     parent:    document.getElementById('f_parent').value.trim(),
     notes:     document.getElementById('f_notes').value.trim()
   };
+
+  // Save the enrollment into Supabase so it shows up in the Admin/CEO dashboards.
+  // Email is optional — a phone-only enrollment saves fine (empty fields become null).
+  if (window._sb) {
+    _sb.from('enrollments').insert({
+      name: data.name || null, enroll_for: data.enrollFor || null, age: data.age || null,
+      gender: data.gender || null, country: data.country || null, city: data.city || null,
+      level: data.level || null, course: data.course || null, lang: data.lang || null,
+      teacher_pref: data.tgender || null, pref_time: data.time || null, freq: data.freq || null,
+      phone: data.phone || null, email: data.email || null, parent: data.parent || null,
+      notes: data.notes || null
+    }).then(({ error }) => { if (error) console.warn('Enrollment DB save failed:', error.message); });
+  }
 
   // Build WhatsApp message
   const waMsg = encodeURIComponent(
