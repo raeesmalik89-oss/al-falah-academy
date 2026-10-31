@@ -6,7 +6,7 @@
  *  - HTML pages: network-first (fresh content when online, cached shell offline).
  *  - Other static assets (css/js/images/icons): cache-first (fast, offline-ready).
  */
-const CACHE = 'alfalah-v1';
+const CACHE = 'alfalah-v2';
 
 const PRECACHE = [
   '/',
