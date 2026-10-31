@@ -123,8 +123,12 @@ let role = 'student';
 const TC = 'ALFALAH-TEACHER-2024';
 const AC = 'ALFALAH-ADMIN-2024';
 const CC = 'ALFALAH-CEO-2026';
-// The CEO role is locked to the academy owner's email (from the portfolio).
-const CEO_EMAIL = 'raees.malik89@gmail.com';
+// The CEO role is locked to a single owner-controlled email. During testing this
+// is a +ceo alias of the owner's inbox, so every CEO signup-confirmation and
+// password-reset email is delivered to raees.malik89@gmail.com (Gmail routes the
+// alias to the same inbox). It is a distinct account from the admin login. At
+// hand-over, change this account's email to Dr Naeem's real address in Supabase.
+const CEO_EMAIL = 'raees.malik89+ceo@gmail.com';
 
 function switchTab(t) {
   document.querySelectorAll('.tab').forEach((el,i) => el.classList.toggle('active',(i===0)===(t==='in')));
