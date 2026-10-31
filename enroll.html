@@ -846,6 +846,8 @@ First trial class requested - Jazak Allah Khayran!`
   formData.append('_subject', `New Enrollment — Al-Falah Islamic Academy — ${data.name}`);
   formData.append('_captcha', 'false');
   formData.append('_template', 'table');
+  // Auto-reply sent to the applicant's email (only if they provided one).
+  formData.append('_autoresponse', 'Assalamu Alaikum! Thank you for your interest in Al-Falah Islamic Academy. We have received your enrollment request and our team will contact you shortly to arrange your free trial class.\n\n— Al-Falah Islamic Academy');
   Object.entries(data).forEach(([k,v]) => formData.append(k, v || '—'));
 
   fetch('https://formsubmit.co/raees.malik89@gmail.com', {
