@@ -238,7 +238,7 @@ function renderEnrollments(list){
         <option value="contacted" ${st==='contacted'?'selected':''}>📞 Contacted</option>
         <option value="enrolled" ${st==='enrolled'?'selected':''}>✅ Enrolled</option>
       </select>
-      ${e.email?`<button onclick="makeStudent('${e.id}')" style="background:#1a6b3a;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit" title="Create a student login">➕ Student</button>`:''}
+      <button onclick="makeStudent('${e.id}')" style="background:#1a6b3a;color:#fff;border:none;border-radius:8px;padding:6px 10px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit" title="Create a student login">➕ Student</button>
       <span class="ann-del" onclick="delEnroll('${e.id}')">Delete</span>
     </div>`;
   }).join('');
@@ -261,8 +261,9 @@ async function loadEnrollments(){
 }
 async function makeStudent(id){
   const e=enrollments.find(x=>x.id===id);
-  if(!e||!e.email){ toast('This lead has no email — add one first'); return; }
-  if(!confirm('Create a student login for '+(e.name||'this lead')+' ('+e.email+')?')) return;
+  if(!e){ return; }
+  if(!e.email && !e.phone){ toast('This lead has no email or phone'); return; }
+  if(!confirm('Create a student login for '+(e.name||'this lead')+' ('+(e.email||e.phone||'')+')?')) return;
   toast('Creating account…');
   const resp=await _sb.functions.invoke('convert-enrollment',{ body:{ enrollment_id:id } });
   let data=resp.data;
@@ -272,7 +273,7 @@ async function makeStudent(id){
     alert('Could not create account:\n'+msg); return;
   }
   if(!data||data.error){ alert('Could not create account:\n'+((data&&data.error)||'unknown error')); return; }
-  alert('✅ Student account created!\n\nName: '+data.name+'\nEmail: '+data.email+'\nTemporary password: '+data.temp_password+'\n\nShare these with the student — they can change it via "Forgot password".');
+  alert('✅ Student account created!\n\nName: '+data.name+'\nLogin email: '+data.email+'\nTemporary password: '+data.temp_password+(data.synthesized?'\n\n(No email was provided, so this login email was auto-generated from the phone number. Share the login email + password with the student.)':'')+'\n\nThey can change the password later via "Forgot password".');
   e.status='enrolled'; renderEnrollments(enrollments);
   const {data:profiles}=await _sb.from('profiles').select('*');
   students=(profiles||[]).filter(p=>p.role==='student');
