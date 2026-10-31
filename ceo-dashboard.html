@@ -121,6 +121,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </div>
 
   <div class="card">
+    <div class="card-title"><span>📝</span> Website Enrollments <span id="enrollCount" style="font-weight:400;color:#888;font-size:12px"></span></div>
+    <input class="search" type="text" placeholder="Search by name or phone…" oninput="filterE(this.value)">
+    <div id="enrollList"><div class="no-s">No enrollments yet</div></div>
+  </div>
+
+  <div class="card">
     <div class="card-title"><span>💳</span> Students &amp; Fees</div>
     <input class="search" type="text" placeholder="Search student…" oninput="filterS(this.value)">
     <div id="sList"><div class="no-s">No students yet</div></div>
@@ -284,6 +290,46 @@ async function loadAnns(){
   el.innerHTML=data.map(a=>`<div class="ann-item"><div class="ann-t">${a.title}</div><div class="ann-b">${a.body}</div><div class="ann-m"><span>${fmtDate(a.created_at)} · ${a.teacher_name||''}</span><span class="ann-del" onclick="delAnn('${a.id}')">Delete</span></div></div>`).join('');
 }
 
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let enrollments=[];
+function renderEnrollments(list){
+  const el=document.getElementById('enrollList');
+  document.getElementById('enrollCount').textContent=enrollments.length?enrollments.length+' total':'';
+  if(!list.length){el.innerHTML='<div class="no-s">No enrollments yet</div>';return;}
+  el.innerHTML=list.map(e=>{
+    const st=e.status||'new';
+    const meta=[e.course,e.level,e.pref_time,e.freq].filter(Boolean).map(esc).join(' · ');
+    const contact=[e.phone,e.email].filter(Boolean).map(esc).join(' · ');
+    const selcls=st==='enrolled'?'paid':st==='contacted'?'pending':'';
+    return `<div class="frow">
+      <div class="s-av">${esc(ini(e))}</div>
+      <div class="fmeta"><div class="s-name">${esc(e.name)||'—'}</div><div class="s-meta">${meta||'—'}</div><div class="s-meta">${contact||'no email'} · ${fmtDate(e.created_at)}</div></div>
+      <select class="stat-sel ${selcls}" onchange="saveEnrollStatus('${e.id}',this)">
+        <option value="new" ${st==='new'?'selected':''}>🆕 New</option>
+        <option value="contacted" ${st==='contacted'?'selected':''}>📞 Contacted</option>
+        <option value="enrolled" ${st==='enrolled'?'selected':''}>✅ Enrolled</option>
+      </select>
+      <span class="del-btn" onclick="delEnroll('${e.id}')">Remove</span>
+    </div>`;
+  }).join('');
+}
+function filterE(q){q=(q||'').toLowerCase();renderEnrollments(q?enrollments.filter(e=>(e.name||'').toLowerCase().includes(q)||(e.phone||'').toLowerCase().includes(q)):enrollments);}
+async function saveEnrollStatus(id,sel){
+  await _sb.from('enrollments').update({status:sel.value}).eq('id',id);
+  const e=enrollments.find(x=>x.id===id); if(e)e.status=sel.value;
+  sel.className='stat-sel '+(sel.value==='enrolled'?'paid':sel.value==='contacted'?'pending':'');
+  toast('✓ Marked '+sel.value);
+}
+async function delEnroll(id){
+  if(!confirm('Delete this enrollment lead?'))return;
+  await _sb.from('enrollments').delete().eq('id',id);
+  enrollments=enrollments.filter(x=>x.id!==id); renderEnrollments(enrollments); toast('Deleted');
+}
+async function loadEnrollments(){
+  const {data}=await _sb.from('enrollments').select('*').order('created_at',{ascending:false}).limit(300);
+  enrollments=data||[]; renderEnrollments(enrollments);
+}
+
 (async()=>{
   const auth = await requireSession('ceo');
   if(!auth) return;
@@ -300,6 +346,7 @@ async function loadAnns(){
   document.getElementById('stToday').textContent=marked.length?`${present}/${marked.length}`:'0';
 
   await loadAnns();
+  await loadEnrollments();
   document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';
 })();
