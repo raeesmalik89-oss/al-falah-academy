@@ -264,8 +264,14 @@ async function makeStudent(id){
   if(!e||!e.email){ toast('This lead has no email — add one first'); return; }
   if(!confirm('Create a student login for '+(e.name||'this lead')+' ('+e.email+')?')) return;
   toast('Creating account…');
-  const {data,error}=await _sb.functions.invoke('convert-enrollment',{ body:{ enrollment_id:id } });
-  if(error||!data||data.error){ alert('Could not create account:\n'+((data&&data.error)||(error&&error.message)||'unknown error')); return; }
+  const resp=await _sb.functions.invoke('convert-enrollment',{ body:{ enrollment_id:id } });
+  let data=resp.data;
+  if(resp.error){
+    let msg=resp.error.message||'unknown error';
+    try{ if(resp.error.context&&resp.error.context.json){ const b=await resp.error.context.json(); if(b&&b.error) msg=b.error; } }catch(_){}
+    alert('Could not create account:\n'+msg); return;
+  }
+  if(!data||data.error){ alert('Could not create account:\n'+((data&&data.error)||'unknown error')); return; }
   alert('✅ Student account created!\n\nName: '+data.name+'\nEmail: '+data.email+'\nTemporary password: '+data.temp_password+'\n\nShare these with the student — they can change it via "Forgot password".');
   e.status='enrolled'; renderEnrollments(enrollments);
   const {data:profiles}=await _sb.from('profiles').select('*');
