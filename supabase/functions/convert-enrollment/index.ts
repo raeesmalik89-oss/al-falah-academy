@@ -63,14 +63,18 @@ Deno.serve(async (req) => {
     const { data: enr, error: eErr } = await admin
       .from("enrollments").select("*").eq("id", enrollment_id).single();
     if (eErr || !enr) return json({ error: "Enrollment not found." }, 404);
-    if (!enr.email) {
-      return json({ error: "This enrollment has no email, so a login account can't be created. Add an email first." }, 400);
+    // Use the real email if given; otherwise build a login email from the phone,
+    // so phone-only enrollments can still become student accounts.
+    const digits = String(enr.phone || "").replace(/\D/g, "");
+    const loginEmail = enr.email || (digits ? digits + "@students.alfalah-academy.com" : "");
+    if (!loginEmail) {
+      return json({ error: "This enrollment has neither an email nor a phone, so a login can't be created." }, 400);
     }
 
     // 5) Create the auth user (email pre-confirmed) with a temporary password.
     const tempPassword = genPassword();
     const { data: created, error: cErr } = await admin.auth.admin.createUser({
-      email: enr.email,
+      email: loginEmail,
       password: tempPassword,
       email_confirm: true,
       user_metadata: { name: enr.name },
@@ -95,7 +99,7 @@ Deno.serve(async (req) => {
     // 7) Mark the enrollment as enrolled.
     await admin.from("enrollments").update({ status: "enrolled" }).eq("id", enrollment_id);
 
-    return json({ ok: true, name: enr.name, email: enr.email, temp_password: tempPassword });
+    return json({ ok: true, name: enr.name, email: loginEmail, synthesized: !enr.email, temp_password: tempPassword });
   } catch (e) {
     return json({ error: String(e) }, 500);
   }
