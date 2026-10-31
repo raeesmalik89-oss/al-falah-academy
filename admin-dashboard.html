@@ -98,6 +98,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="stat"><div class="stat-icon">⚠️</div><div><div class="stat-val" id="stUnpaid">0</div><div class="stat-label">Unpaid</div></div></div>
     <div class="stat"><div class="stat-icon">💰</div><div><div class="stat-val" id="stRevenue">—</div><div class="stat-label">Collected (PKR)</div></div></div>
     <div class="stat"><div class="stat-icon">📋</div><div><div class="stat-val" id="stToday">—</div><div class="stat-label">Present Today</div></div></div>
+    <div class="stat"><div class="stat-icon">📝</div><div><div class="stat-val" id="stEnroll">0</div><div class="stat-label">Enrollments</div></div></div>
   </div>
 
   <div class="card">
@@ -222,6 +223,7 @@ let enrollments=[];
 function renderEnrollments(list){
   const el=document.getElementById('enrollList');
   document.getElementById('enrollCount').textContent=enrollments.length?enrollments.length+' total':'';
+  const _se=document.getElementById('stEnroll'); if(_se)_se.textContent=enrollments.length;
   if(!list.length){el.innerHTML='<div class="no-s">No enrollments yet</div>';return;}
   el.innerHTML=list.map(e=>{
     const st=e.status||'new';
