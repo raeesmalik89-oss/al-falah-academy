@@ -48,6 +48,10 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
 .back{text-align:center;margin-top:22px}.back a{font-size:13px;color:#1a6b3a;font-weight:600}
 .spin{display:inline-block;width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes sp{to{transform:rotate(360deg)}}
+.pw-wrap{position:relative}
+.pw-wrap input{padding-right:46px}
+.pw-toggle{position:absolute;right:6px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:17px;line-height:1;padding:6px 8px;border-radius:8px;color:#888}
+.pw-toggle:hover{background:#f0f7f2}
 </style>
   <!-- Google Analytics (GA4) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
@@ -76,7 +80,10 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
     <label>Email Address</label>
     <input type="email" id="siE" placeholder="your@email.com">
     <label>Password</label>
-    <input type="password" id="siP" placeholder="••••••••">
+    <div class="pw-wrap">
+      <input type="password" id="siP" placeholder="••••••••">
+      <button type="button" class="pw-toggle" aria-label="Show password" onclick="togglePw('siP',this)">👁</button>
+    </div>
     <div class="forgot"><a onclick="forgotPw()">Forgot password?</a></div>
     <div class="msg" id="siMsg"></div>
     <button class="btn" onclick="doSignIn(this)">Sign In →</button>
@@ -89,7 +96,10 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
     <label>Email Address</label>
     <input type="email" id="suE" placeholder="your@email.com">
     <label>Password</label>
-    <input type="password" id="suP" placeholder="Minimum 6 characters">
+    <div class="pw-wrap">
+      <input type="password" id="suP" placeholder="Minimum 6 characters">
+      <button type="button" class="pw-toggle" aria-label="Show password" onclick="togglePw('suP',this)">👁</button>
+    </div>
     <label>I am a</label>
     <div class="role-grid">
       <div class="role-btn sel" id="rS" onclick="selRole('student')">
@@ -107,7 +117,10 @@ input:focus,select:focus{border-color:#1a6b3a;background:#fff}
     </div>
     <div class="tc-wrap" id="tcWrap">
       <label id="tcLabel">Access Code</label>
-      <input type="password" id="tc" placeholder="Enter code provided by Dr Raees">
+      <div class="pw-wrap">
+        <input type="password" id="tc" placeholder="Enter code provided by Dr Raees">
+        <button type="button" class="pw-toggle" aria-label="Show access code" onclick="togglePw('tc',this)">👁</button>
+      </div>
     </div>
     <div class="msg" id="suMsg"></div>
     <button class="btn" onclick="doSignUp(this)">Create Account →</button>
@@ -162,6 +175,13 @@ function showMsg(id, msg, type='err') {
 function setBtn(btn, loading, text) {
   btn.disabled = loading;
   btn.innerHTML = loading ? `<span class="spin"></span>${text}` : text;
+}
+function togglePw(id, btn) {
+  const el = document.getElementById(id);
+  const show = el.type === 'password';
+  el.type = show ? 'text' : 'password';
+  btn.textContent = show ? '🙈' : '👁';
+  btn.setAttribute('aria-label', show ? 'Hide' : 'Show');
 }
 
 async function doSignIn(btn) {
