@@ -130,7 +130,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="card">
     <div class="card-title"><span>💳</span> Students &amp; Fees</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-      <input id="sSearch" class="search" style="flex:1;min-width:160px;margin:0" type="text" placeholder="Search student…" oninput="applyStudentFilter()">
+      <input id="sSearch" class="search" style="flex:1;min-width:140px;margin:0" type="text" placeholder="Search student…" oninput="applyStudentFilter()">
+      <select id="grpFilter" class="fee-in" style="min-width:150px" onchange="applyStudentFilter()">
+        <option value="">👥 All students</option>
+        <option value="madrasah">🕌 Madrasah only</option>
+        <option value="online">🌐 Online course only</option>
+      </select>
       <select id="clsFilter" class="fee-in" style="min-width:170px" onchange="applyStudentFilter()"><option value="">All classes / courses</option></select>
     </div>
     <div id="sCount" style="font-size:12px;color:#666;margin-bottom:8px"></div>
@@ -194,7 +199,7 @@ function renderStudents(list){
     const ps=s.payment_status||'pending';
     return `<div class="frow">
       <div class="s-av">${ini(s)}</div>
-      <div class="fmeta"><div class="s-name">${s.name}</div><div class="s-meta">${s.course||'Quran Hifz'}${s.email?' · '+s.email:''}</div></div>
+      <div class="fmeta"><div class="s-name">${s.name} <span style="font-size:11px;font-weight:700;padding:1px 7px;border-radius:20px;${s.is_roster?'background:#e7f3ec;color:#1a6b3a':'background:#eaf1fb;color:#2156a8'}">${s.is_roster?'🕌 Madrasah':'🌐 Online'}</span></div><div class="s-meta">${s.course||'Quran Hifz'}${s.email?' · '+s.email:''}</div></div>
       <div class="fee-wrap"><small>Class</small><input class="fee-in cls-in" type="text" value="${s.class_name||''}" placeholder="e.g. Hifz L1" onchange="saveClass('${s.id}',this)"></div>
       <div class="fee-wrap"><small>Fee</small><input class="fee-in" type="number" value="${s.monthly_fee||0}" onchange="saveFee('${s.id}',this)"></div>
       <select class="stat-sel ${statusBadgeClass(ps)}" onchange="saveStatus('${s.id}',this)">
@@ -210,7 +215,8 @@ function fillClassFilter(){
   const el=document.getElementById('clsFilter'); if(!el)return;
   const cur=el.value;
   const base=['Hifz','Nazra A','Nazra B','Nazra','Fahm-ul-Quran','Tajweed','Tafseer','Seerah-tun-Nabi','Selected Ahadith','Arabic Language','English Language'];
-  const extra=[...new Set((students||[]).map(s=>(s.class_name||'').trim()).filter(Boolean))];
+  // Include both the madrasah classes and the online course names students carry.
+  const extra=[...new Set((students||[]).flatMap(s=>[(s.class_name||'').trim(),(s.course||'').trim()]).filter(Boolean))];
   const all=[...new Set([...base,...extra])].sort();
   el.innerHTML='<option value="">All classes / courses</option>'+all.map(c=>`<option value="${c}">${c}</option>`).join('');
   el.value=cur;
@@ -218,13 +224,17 @@ function fillClassFilter(){
 function applyStudentFilter(){
   const q=(document.getElementById('sSearch')?.value||'').toLowerCase();
   const cls=document.getElementById('clsFilter')?.value||'';
+  const grp=document.getElementById('grpFilter')?.value||'';
   let list=students;
-  if(cls) list=list.filter(s=>(s.class_name||'')===cls);
+  if(grp==='madrasah') list=list.filter(s=>s.is_roster);
+  else if(grp==='online') list=list.filter(s=>!s.is_roster);
+  if(cls) list=list.filter(s=>(s.class_name||'')===cls||(s.course||'')===cls);
   if(q) list=list.filter(s=>(s.name||'').toLowerCase().includes(q));
   renderStudents(list);
   const paid=list.filter(s=>s.payment_status==='paid').length;
+  const mad=list.filter(s=>s.is_roster).length;
   const c=document.getElementById('sCount');
-  if(c) c.textContent=list.length+' student'+(list.length===1?'':'s')+(cls?(' · '+cls):'')+' · '+paid+' paid';
+  if(c) c.textContent=list.length+' student'+(list.length===1?'':'s')+(cls?(' · '+cls):'')+' · 🕌 '+mad+' madrasah · 🌐 '+(list.length-mad)+' online';
 }
 
 async function saveFee(uid,input){
