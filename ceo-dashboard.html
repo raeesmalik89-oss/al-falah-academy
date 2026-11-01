@@ -135,6 +135,17 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
   <div class="card">
     <div class="card-title"><span>👥</span> Staff &amp; Roles — Full Access</div>
+    <div style="background:#f6faf7;border:1px solid #e3ede6;border-radius:12px;padding:14px;margin-bottom:14px">
+      <div style="font-weight:700;color:#14532d;margin-bottom:8px;font-size:14px">➕ Add a teacher login</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <input id="tnName" class="fee-in" style="flex:1;min-width:140px" type="text" placeholder="Teacher name (e.g. Ahmad Sahib)">
+        <input id="tnCode" class="fee-in" style="flex:1;min-width:120px" type="text" placeholder="Login code (e.g. ahmad)">
+        <input id="tnClass" class="fee-in" style="flex:1;min-width:110px" type="text" placeholder="Class (Hifz / Nazra A / Nazra B)">
+        <input id="tnPass" class="fee-in" style="flex:1;min-width:120px" type="text" placeholder="Password (blank = auto)">
+        <button onclick="addTeacher(this)" style="background:#1a6b3a;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer;font-family:inherit">Create</button>
+      </div>
+      <div style="font-size:12px;color:#5b7566;margin-top:6px">The teacher logs in with the login code + password you set — no email inbox needed. Share those with them.</div>
+    </div>
     <input class="search" type="text" placeholder="Search staff…" oninput="filterStaff(this.value)">
     <div id="staffList"><div class="no-s">No staff yet</div></div>
   </div>
@@ -231,6 +242,26 @@ async function saveTeacherClass(uid,input){
   await _sb.from('profiles').update({class_name:cls}).eq('id',uid);
   const s=staff.find(x=>x.id===uid); if(s)s.class_name=cls;
   toast(cls?('✓ Teacher assigned to '+cls):'✓ Teacher class cleared (sees all)');
+}
+async function addTeacher(btn){
+  const name=document.getElementById('tnName').value.trim();
+  const code=document.getElementById('tnCode').value.trim();
+  const cls=document.getElementById('tnClass').value.trim();
+  const pass=document.getElementById('tnPass').value.trim();
+  if(!name){toast('Enter the teacher name');return;}
+  btn.disabled=true;const old=btn.textContent;btn.textContent='Creating…';
+  const resp=await _sb.functions.invoke('create-teacher',{body:{name,login_code:code||name,class_name:cls,password:pass}});
+  btn.disabled=false;btn.textContent=old;
+  if(resp.error){
+    let msg=resp.error.message||'unknown error';
+    try{ if(resp.error.context&&resp.error.context.json){ const b=await resp.error.context.json(); if(b&&b.error) msg=b.error; } }catch(_){}
+    alert('Could not create teacher:\n'+msg);return;
+  }
+  const d=resp.data;
+  if(!d||d.error){alert('Could not create teacher:\n'+((d&&d.error)||'unknown error'));return;}
+  alert('✅ Teacher login created!\n\nName: '+d.name+'\nLogin code: '+d.login+'\nPassword: '+d.password+(d.class_name?'\nClass: '+d.class_name:'\n\n(No class set yet — set it from the staff list.)')+'\n\nShare the login code + password with the teacher. They sign in at the website and will see only their class.');
+  document.getElementById('tnName').value='';document.getElementById('tnCode').value='';document.getElementById('tnClass').value='';document.getElementById('tnPass').value='';
+  await reloadProfiles();
 }
 async function saveRole(uid,sel){
   const newRole=sel.value;
