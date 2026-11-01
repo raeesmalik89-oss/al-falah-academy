@@ -157,10 +157,12 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <textarea id="annB" rows="3" dir="auto" placeholder="Write your message… / پیغام لکھیں…"></textarea>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
         <select id="annAud" class="fee-in" style="min-width:170px">
-          <option value="all">📣 Everyone (students + teachers)</option>
+          <option value="all">📣 Everyone (students, teachers, admins)</option>
           <option value="teachers">👨‍🏫 Teachers only</option>
+          <option value="admins">👔 Admins only</option>
           <option value="students">🎓 Students only</option>
         </select>
+        <span id="akbMount"></span>
         <button class="btn-p" onclick="postAnn(this)">Post</button>
       </div>
     </div>
@@ -338,10 +340,15 @@ async function postAnn(btn){
   if(!title||!body)return toast('Fill in both fields');
   btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Posting…';
   const audience=document.getElementById('annAud')?.value||'all';
-  await _sb.from('announcements').insert({title,body,teacher_name:aName,audience});
+  const {error}=await _sb.from('announcements').insert({title,body,teacher_name:aName,audience});
+  if(error){
+    const miss=/audience/.test(error.message||'');
+    alert('Could not post:\n'+error.message+(miss?'\n\n➡ Run the setup SQL in Supabase to add the "audience" column (it enables targeting messages).':''));
+    btn.disabled=false;btn.textContent='Post';return;
+  }
   document.getElementById('annT').value='';document.getElementById('annB').value='';
-  toast('✓ Posted — '+(audience==='teachers'?'to teachers':audience==='students'?'to students':'to everyone'));loadAnns();
-  btn.disabled=false;btn.textContent='Post Announcement';
+  toast('✓ Posted — '+(audience==='teachers'?'to teachers':audience==='admins'?'to admins':audience==='students'?'to students':'to everyone'));loadAnns();
+  btn.disabled=false;btn.textContent='Post';
 }
 async function delAnn(id){
   if(!confirm('Delete this announcement?'))return;
