@@ -111,6 +111,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="nav-right"><span class="nav-name" id="navName"></span><button class="nav-logout" onclick="logout()">Logout</button></div>
 </nav>
 <div class="main">
+  <div id="classBanner" style="margin-bottom:16px;padding:12px 16px;border-radius:12px;background:linear-gradient(135deg,#1a6b3a,#14532d);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px"><span>🎓</span><span id="classBannerText">Loading your class…</span></div>
   <div class="stats">
     <div class="stat"><div class="stat-icon">👥</div><div><div class="stat-val" id="stTotal">0</div><div class="stat-label">Total Students</div></div></div>
     <div class="stat"><div class="stat-icon">📅</div><div><div class="stat-val" id="stDate">—</div><div class="stat-label">Today</div></div></div>
@@ -365,9 +366,18 @@ function updateAvgHifz(){
   document.getElementById('navName').textContent=tName;
   document.getElementById('stDate').textContent=new Date().toLocaleDateString('en-PK',{day:'numeric',month:'short'});
 
-  const {data:studs}=await _sb.from('profiles').select('*').eq('role','student');
+  // Each teacher sees ONLY the class assigned to them (profiles.class_name on
+  // their own account). Admin/CEO set this from their dashboard. If no class is
+  // assigned yet, fall back to showing all students so the dashboard isn't empty.
+  const myClass=(auth.profile.class_name||'').trim();
+  let sq=_sb.from('profiles').select('*').eq('role','student');
+  if(myClass) sq=sq.eq('class_name',myClass);
+  const {data:studs}=await sq;
   students=studs||[];
   document.getElementById('stTotal').textContent=students.length;
+  document.getElementById('classBannerText').textContent = myClass
+    ? ('Your class: '+myClass+'  ·  '+students.length+' student'+(students.length===1?'':'s'))
+    : 'No class assigned yet — showing all students. Ask the admin to assign your class.';
 
   // Load progress for avg hifz — one batched query instead of one round-trip per student
   if(students.length){
