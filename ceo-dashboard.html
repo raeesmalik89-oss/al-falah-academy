@@ -314,7 +314,12 @@ async function reloadProfiles(){
   const {data:profiles}=await _sb.from('profiles').select('*');
   const all=profiles||[];
   students=all.filter(p=>p.role==='student');
-  staff=all.filter(p=>p.role!=='student');
+  // Order staff by rank: CEO first, then Admin, then Teachers (name within rank).
+  const rank={ceo:0,admin:1,teacher:2};
+  staff=all.filter(p=>p.role!=='student').sort((a,b)=>{
+    const d=(rank[a.role]??9)-(rank[b.role]??9);
+    return d||(a.name||'').localeCompare(b.name||'');
+  });
   refreshStats();
   renderStudents(students);
   renderStaff(staff);
