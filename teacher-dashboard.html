@@ -184,6 +184,7 @@ async function selStudent(uid){
     </div>
     <div class="dtabs">
       <button class="dtab active" onclick="tab('hifz',this)">📗 Hifz</button>
+      <button class="dtab" onclick="tab('sabaq',this)">📖 Sabaq</button>
       <button class="dtab" onclick="tab('att',this)">📋 Attendance</button>
       <button class="dtab" onclick="tab('notes',this)">📝 Notes</button>
       <button class="dtab" onclick="tab('exams',this)">📄 Exams</button>
@@ -196,6 +197,7 @@ async function selStudent(uid){
 function tab(t,btn){
   document.querySelectorAll('.dtab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');
   if(t==='hifz') _sb.from('progress').select('*').eq('id',selUid).single().then(({data})=>renderHifz(selUid,data));
+  else if(t==='sabaq') _sb.from('progress').select('portion,marks').eq('id',selUid).single().then(({data})=>renderSabaq(selUid,data||{}));
   else if(t==='att') _sb.from('attendance').select('*').eq('student_id',selUid).order('date',{ascending:false}).limit(20).then(({data})=>renderAtt(selUid,data||[]));
   else if(t==='notes') _sb.from('progress').select('notes').eq('id',selUid).single().then(({data})=>renderNotes(selUid,data?.notes||''));
   else if(t==='exams') renderExams(selUid);
@@ -247,6 +249,22 @@ async function markAtt(uid,btn){
   renderAtt(uid,data||[]);
 }
 
+function renderSabaq(uid,p){
+  const portion=(p.portion||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;').replace(/</g,'&lt;');
+  document.getElementById('dContent').innerHTML=`
+    <p style="font-size:13px;color:#666;margin-bottom:10px">Record what the student is currently reading (sabaq) and their latest marks. The student sees this in their portal.</p>
+    <div class="form-row"><label>Current Sabaq / Portion</label><input type="text" id="sPortion" value="${portion}" placeholder="e.g. Para 5, or Noorani Qaida Lesson 10"></div>
+    <div class="form-row"><label>Latest Marks (0–100)</label><input type="number" id="sMarks" min="0" max="100" value="${p.marks??''}" placeholder="e.g. 85"></div>
+    <button class="btn-p" onclick="saveSabaq('${uid}',this)">💾 Save Sabaq</button>`;
+}
+async function saveSabaq(uid,btn){
+  const portion=document.getElementById('sPortion').value.trim();
+  let marks=parseInt(document.getElementById('sMarks').value,10);
+  if(isNaN(marks))marks=null; else marks=Math.max(0,Math.min(100,marks));
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving…';
+  await _sb.from('progress').upsert({id:uid,portion:portion||null,marks,last_updated:new Date().toISOString()});
+  toast('✓ Sabaq saved');btn.disabled=false;btn.textContent='💾 Save Sabaq';
+}
 function renderNotes(uid,notes){
   document.getElementById('dContent').innerHTML=`
     <p style="font-size:12px;color:#666;margin-bottom:10px">Notes are visible to the student in their portal.</p>
