@@ -201,11 +201,11 @@
     {src:'assets/campus/campus-library.jpg',       cap:'📚 Our Library'},
     {src:'assets/campus/campus-study.jpg',         cap:'📿 Personal Study'},
     {src:'assets/campus/campus-dars2.jpg',         cap:'🧑‍🏫 With Scholars'},
-    {src:'assets/campus/campus-grid.jpg',          cap:'🕌 Al-Falah Islamic Academy'}
+    {src:'assets/campus/campus-grid.jpg',          cap:''}
   ];
   var logo='assets/logo-icon.png';
   function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
-  function block(){var h='';for(var k=0;k<slides.length;k++){h+='<div class="film-item"><img src="'+slides[k].src+'" alt="Al-Falah Academy campus" loading="lazy"><div class="film-cap">'+esc(slides[k].cap)+'</div></div>';}return h;}
+  function block(){var h='';for(var k=0;k<slides.length;k++){var cap=slides[k].cap?('<div class="film-cap">'+esc(slides[k].cap)+'</div>'):'';h+='<div class="film-item"><img src="'+slides[k].src+'" alt="Al-Falah Academy campus" loading="lazy">'+cap+'</div>';}return h;}
   track.innerHTML=block()+block();
 })();
 </script>
