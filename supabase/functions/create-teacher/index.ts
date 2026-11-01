@@ -38,6 +38,21 @@ function genPassword(): string {
   return "Alf-" + p;
 }
 
+// Find an existing auth user by email (paginate — small project, few pages).
+// deno-lint-ignore no-explicit-any
+async function findUserByEmail(admin: any, email: string) {
+  const target = email.toLowerCase();
+  for (let page = 1; page <= 20; page++) {
+    const { data, error } = await admin.auth.admin.listUsers({ page, perPage: 200 });
+    if (error) return null;
+    const users = data?.users || [];
+    const hit = users.find((u: { email?: string }) => (u.email || "").toLowerCase() === target);
+    if (hit) return hit;
+    if (users.length < 200) break;
+  }
+  return null;
+}
+
 // Turn "Ahmad Sahib" or "ahmad" into a clean login slug "ahmad-sahib".
 function slug(s: string): string {
   return String(s).toLowerCase().trim()
@@ -92,14 +107,28 @@ Deno.serve(async (req) => {
       email_confirm: true,
       user_metadata: { name },
     });
+
+    // If the login already exists, UPDATE its password/name instead of failing,
+    // so an admin can reset a teacher's password by re-submitting the same code.
     if (cErr || !created?.user) {
-      const msg = (cErr?.message || "").toLowerCase().includes("already")
-        ? "That login code is already taken — pick a different one."
-        : (cErr?.message || "unknown error");
-      return json({ error: "Could not create teacher: " + msg }, 400);
+      const already = (cErr?.message || "").toLowerCase().includes("already") ||
+                      (cErr?.message || "").toLowerCase().includes("registered");
+      if (!already) {
+        return json({ error: "Could not create teacher: " + (cErr?.message || "unknown error") }, 400);
+      }
+      const existing = await findUserByEmail(admin, loginEmail);
+      if (!existing) {
+        return json({ error: "That login code exists but could not be loaded to update." }, 400);
+      }
+      await admin.auth.admin.updateUserById(existing.id, { password, user_metadata: { name } });
+      // Keep the profile in step (name/role, and class only if one was given).
+      const prof: Record<string, unknown> = { id: existing.id, name, role: "teacher" };
+      if (className) prof.class_name = className;
+      await admin.from("profiles").upsert(prof);
+      return json({ ok: true, updated: true, name, login: loginEmail, password, class_name: className });
     }
 
-    // 6) Create the teacher profile (class optional — admin can set/change later).
+    // 6) New teacher — create the profile (class optional; admin can set it later).
     await admin.from("profiles").insert({
       id: created.user.id,
       name,
