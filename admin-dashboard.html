@@ -130,16 +130,20 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </div>
 
   <div class="card">
+    <div class="card-title"><span>📩</span> Messages from CEO</div>
+    <div id="mgmtList" style="margin-bottom:16px"><div class="no-s" style="color:#999;text-align:center;padding:12px;font-size:13px">No messages yet</div></div>
     <div class="card-title"><span>📢</span> Announcements &amp; Messages</div>
     <div class="ann-form">
       <input type="text" id="annT" dir="auto" placeholder="Title / عنوان (Urdu, Arabic or English)">
       <textarea id="annB" rows="3" dir="auto" placeholder="Write your message… / پیغام لکھیں…"></textarea>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
         <select id="annAud" class="fee-in" style="min-width:170px">
-          <option value="all">📣 Everyone (students + teachers)</option>
+          <option value="all">📣 Everyone (students, teachers, admins)</option>
           <option value="teachers">👨‍🏫 Teachers only</option>
+          <option value="admins">👔 Admins only</option>
           <option value="students">🎓 Students only</option>
         </select>
+        <span id="akbMount"></span>
         <button class="btn-p" onclick="postAnn(this)">Post</button>
       </div>
     </div>
@@ -264,10 +268,21 @@ async function postAnn(btn){
   if(!title||!body)return toast('Fill in both fields');
   btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Posting…';
   const audience=document.getElementById('annAud')?.value||'all';
-  await _sb.from('announcements').insert({title,body,teacher_name:aName,audience});
+  const {error}=await _sb.from('announcements').insert({title,body,teacher_name:aName,audience});
+  if(error){
+    const miss=/audience/.test(error.message||'');
+    alert('Could not post:\n'+error.message+(miss?'\n\n➡ Run the setup SQL in Supabase to add the "audience" column.':''));
+    btn.disabled=false;btn.textContent='Post';return;
+  }
   document.getElementById('annT').value='';document.getElementById('annB').value='';
-  toast('✓ Posted — '+(audience==='teachers'?'to teachers':audience==='students'?'to students':'to everyone'));loadAnns();
-  btn.disabled=false;btn.textContent='Post Announcement';
+  toast('✓ Posted — '+(audience==='teachers'?'to teachers':audience==='admins'?'to admins':audience==='students'?'to students':'to everyone'));loadAnns();
+  btn.disabled=false;btn.textContent='Post';
+}
+async function loadMgmtMsgs(){
+  const {data}=await _sb.from('announcements').select('*').in('audience',['admins','all']).order('created_at',{ascending:false}).limit(15);
+  const el=document.getElementById('mgmtList'); if(!el)return;
+  if(!data?.length){el.innerHTML='<div style="color:#999;text-align:center;padding:12px;font-size:13px">No messages yet</div>';return;}
+  el.innerHTML=data.map(a=>`<div class="ann-item"><div class="ann-t" dir="auto">${a.title}</div><div class="ann-b" dir="auto">${a.body}</div><div class="ann-m"><span>${fmtDate(a.created_at)} · ${a.teacher_name||'Management'}</span></div></div>`).join('');
 }
 async function delAnn(id){
   if(!confirm('Delete this announcement?'))return;
@@ -365,6 +380,7 @@ async function makeStudent(id){
   document.getElementById('stToday').textContent=marked.length?`${present}/${marked.length}`:'0';
 
   await loadAnns();
+  loadMgmtMsgs();
   await loadEnrollments();
   document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';
