@@ -89,6 +89,7 @@
     // Nastaliq for right-to-left (Urdu/Arabic) content; Latin uses the fallback.
     '[dir="auto"],.ann-t,.ann-b,.ann-title,.ann-body,#annT,#annB,#sPortion{font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",system-ui,"Segoe UI",Tahoma,sans-serif;line-height:2.2}',
     '#akbBar{position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a6b3a;color:#fff;border-radius:50px;padding:8px 10px 8px 16px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-family:inherit;font-size:14px}',
+    '#akbBar.inline{position:static;right:auto;bottom:auto;box-shadow:none;padding:6px 8px 6px 14px}',
     '#akbBar label{font-weight:700;white-space:nowrap;font-family:inherit}',
     '#akbSel{border:none;border-radius:50px;padding:7px 12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;background:#fff;color:#14532d}',
     '#akbHint{position:fixed;right:16px;bottom:64px;z-index:9999;background:#0f2e1e;color:#cfe8d8;border-radius:10px;padding:8px 12px;font-size:12px;max-width:230px;box-shadow:0 4px 14px rgba(0,0,0,.25);display:none;font-family:inherit}',
@@ -103,7 +104,11 @@
   sel.id = 'akbSel';
   sel.innerHTML = '<option value="en">English</option><option value="ur">اردو</option><option value="ar">عربی</option>';
   bar.appendChild(sel);
-  document.body.appendChild(bar);
+  // Mount inline next to the Post button if the page provides a spot;
+  // otherwise float it in the bottom-right corner.
+  var mount = document.getElementById('akbMount');
+  if (mount) { bar.classList.add('inline'); mount.appendChild(bar); }
+  else { document.body.appendChild(bar); }
 
   var hint = document.createElement('div');
   hint.id = 'akbHint';

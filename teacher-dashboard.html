@@ -137,7 +137,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="ann-form">
       <input type="text" id="annT" dir="auto" placeholder="Title / عنوان (Urdu, Arabic or English)">
       <textarea id="annB" rows="3" dir="auto" placeholder="Write your message… / پیغام لکھیں…"></textarea>
-      <div><button class="btn-p" onclick="postAnn(this)">Post Announcement</button></div>
+      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="akbMount"></span><button class="btn-p" onclick="postAnn(this)">Post Announcement</button></div>
     </div>
     <div id="annList"></div>
   </div>
@@ -359,7 +359,12 @@ async function postAnn(btn){
   const body=document.getElementById('annB').value.trim();
   if(!title||!body)return toast('Fill in both fields');
   btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Posting…';
-  await _sb.from('announcements').insert({title,body,teacher_name:tName,audience:'students'});
+  const {error}=await _sb.from('announcements').insert({title,body,teacher_name:tName,audience:'students'});
+  if(error){
+    const miss=/audience/.test(error.message||'');
+    alert('Could not post:\n'+error.message+(miss?'\n\n➡ Ask your admin to run the setup SQL (adds the "audience" column).':''));
+    btn.disabled=false;btn.textContent='Post Announcement';return;
+  }
   document.getElementById('annT').value='';document.getElementById('annB').value='';
   toast('✓ Announcement posted');loadAnns();
   btn.disabled=false;btn.textContent='Post Announcement';
