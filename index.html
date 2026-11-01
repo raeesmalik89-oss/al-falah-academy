@@ -176,6 +176,10 @@
 .campus-dots{display:flex;gap:8px;justify-content:center;margin-top:18px}
 .campus-dot{width:10px;height:10px;border-radius:50%;background:#cdd8d1;border:none;cursor:pointer;transition:all .25s;padding:0}
 .campus-dot.active{background:#1a6b3a;width:26px;border-radius:6px}
+.campus-slide video{width:100%;height:100%;object-fit:cover;display:block}
+.campus-tag{position:absolute;top:14px;left:14px;background:rgba(13,40,24,.58);color:#fff;font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid rgba(201,168,76,.65);z-index:2;display:inline-flex;align-items:center;gap:6px}
+.campus-cap .campus-quote{margin-top:9px;font-size:13.5px;font-style:italic;color:#ffe3a8;line-height:1.45;max-width:660px}
+.campus-cap .campus-quote span{display:block;font-style:normal;font-size:11px;opacity:.82;margin-top:3px;color:#fff}
 </style>
 <section class="section bg-light" id="campus">
   <div class="container">
@@ -187,9 +191,36 @@
     <div class="campus-wrap">
       <div class="campus-slider" id="campusSlider">
         <div class="campus-track" id="campusTrack">
-          <div class="campus-slide"><img src="assets/campus/campus-masjid.jpg" alt="Al-Falah Academy masjid prayer hall" loading="lazy"><div class="campus-cap"><h4>🕌 Our Masjid</h4><p>A spacious, peaceful prayer hall at the heart of the academy</p></div></div>
-          <div class="campus-slide"><img src="assets/campus/campus-library.jpg" alt="Al-Falah Academy Islamic library" loading="lazy"><div class="campus-cap"><h4>📚 Our Library</h4><p>Shelves of Qur'an, Tafseer and Hadith books for every learner</p></div></div>
-          <div class="campus-slide"><img src="assets/campus/campus-prayer.jpg" alt="Al-Falah Academy study and dars hall" loading="lazy"><div class="campus-cap"><h4>📖 Study &amp; Dars Hall</h4><p>Where daily lessons and Darse Quran take place</p></div></div>
+          <div class="campus-slide">
+            <video src="assets/campus/campus-tour.mp4" poster="assets/campus/campus-tour-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
+            <span class="campus-tag">🎥 Al-Falah Islamic Academy</span>
+            <div class="campus-cap"><h4>🎥 A Glimpse Inside</h4><p>A short tour of our masjid and daily dars</p><div class="campus-quote">“Whoever treads a path seeking knowledge, Allah makes easy for him a path to Paradise.”<span>— Sahih Muslim</span></div></div>
+          </div>
+          <div class="campus-slide">
+            <img src="assets/campus/campus-masjid.jpg" alt="Al-Falah Academy masjid prayer hall" loading="lazy">
+            <span class="campus-tag">🕌 Al-Falah Islamic Academy</span>
+            <div class="campus-cap"><h4>🕌 Our Masjid</h4><p>A spacious, peaceful prayer hall at the heart of the academy</p><div class="campus-quote">“The most beloved of places to Allah are the mosques.”<span>— Sahih Muslim</span></div></div>
+          </div>
+          <div class="campus-slide">
+            <img src="assets/campus/campus-students-dars.jpg" alt="Students in a Quran dars with their teacher at Al-Falah Academy" loading="lazy">
+            <span class="campus-tag">📖 Al-Falah Islamic Academy</span>
+            <div class="campus-cap"><h4>📖 Daily Dars</h4><p>Students learning the Qur'an with their teacher, every day</p><div class="campus-quote">“The best among you are those who learn the Qur'an and teach it.”<span>— Sahih al-Bukhari</span></div></div>
+          </div>
+          <div class="campus-slide">
+            <img src="assets/campus/campus-students.jpg" alt="Students reciting the Quran at Al-Falah Academy" loading="lazy">
+            <span class="campus-tag">🧒 Al-Falah Islamic Academy</span>
+            <div class="campus-cap"><h4>🧒 Our Students</h4><p>Young learners reciting and memorising the Qur'an</p><div class="campus-quote">“And We have certainly made the Qur'an easy to remember.”<span>— Qur'an 54:17</span></div></div>
+          </div>
+          <div class="campus-slide">
+            <img src="assets/campus/campus-class.jpg" alt="Hifz and Nazra class at Al-Falah Academy" loading="lazy">
+            <span class="campus-tag">👥 Al-Falah Islamic Academy</span>
+            <div class="campus-cap"><h4>👥 Hifz &amp; Nazra Classes</h4><p>Group lessons in recitation and memorisation</p><div class="campus-quote">“Read the Qur'an, for it will come as an intercessor for its companions.”<span>— Sahih Muslim</span></div></div>
+          </div>
+          <div class="campus-slide">
+            <img src="assets/campus/campus-library.jpg" alt="Al-Falah Academy Islamic library" loading="lazy">
+            <span class="campus-tag">📚 Al-Falah Islamic Academy</span>
+            <div class="campus-cap"><h4>📚 Our Library</h4><p>Shelves of Qur'an, Tafseer and Hadith books for every learner</p><div class="campus-quote">“My Lord, increase me in knowledge.”<span>— Qur'an 20:114</span></div></div>
+          </div>
         </div>
         <button class="campus-arrow campus-prev" onclick="campusGo(-1)" aria-label="Previous slide">‹</button>
         <button class="campus-arrow campus-next" onclick="campusGo(1)" aria-label="Next slide">›</button>
