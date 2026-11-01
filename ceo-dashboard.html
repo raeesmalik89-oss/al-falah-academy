@@ -140,7 +140,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
         <input id="tnName" class="fee-in" style="flex:1;min-width:140px" type="text" placeholder="Teacher name (e.g. Ahmad Sahib)">
         <input id="tnCode" class="fee-in" style="flex:1;min-width:120px" type="text" placeholder="Login code (e.g. ahmad)">
-        <input id="tnClass" class="fee-in" style="flex:1;min-width:110px" type="text" placeholder="Class (Hifz / Nazra A / Nazra B)">
+        <select id="tnClass" class="fee-in" style="flex:1;min-width:150px"><option value="">— Select class —</option></select>
         <input id="tnPass" class="fee-in" style="flex:1;min-width:120px" type="text" placeholder="Password (blank = auto)">
         <button onclick="addTeacher(this)" style="background:#1a6b3a;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer;font-family:inherit">Create</button>
       </div>
@@ -214,7 +214,20 @@ async function saveClass(uid,input){
 }
 
 // ---- Staff & role management (CEO-only, full access) ----
+// Class options = site courses + classes students are actually tagged with.
+function classOpts(sel){
+  const base=['Hifz','Nazra A','Nazra B','Nazra','Fahm-ul-Quran','Tajweed','Tafseer','Seerah-tun-Nabi','Selected Ahadith','Arabic Language','English Language'];
+  const extra=[...new Set((students||[]).map(s=>(s.class_name||'').trim()).filter(Boolean))];
+  const all=[...new Set([...base,...extra])].sort();
+  let o='<option value="">— Select class —</option>';
+  for(const c of all) o+=`<option value="${c}"${c===sel?' selected':''}>${c}</option>`;
+  return o;
+}
+function fillAddTeacherClasses(){
+  const tn=document.getElementById('tnClass'); if(tn) tn.innerHTML=classOpts(tn.value||'');
+}
 function renderStaff(list){
+  fillAddTeacherClasses();
   const el=document.getElementById('staffList');
   if(!list.length){el.innerHTML='<div class="no-s">No teachers, admins or CEOs yet</div>';return;}
   el.innerHTML=list.map(t=>{
@@ -224,7 +237,7 @@ function renderStaff(list){
       <div class="s-av">${ini(t)}</div>
       <div class="fmeta"><div class="s-name">${t.name}${isMe?' <span class="s-meta">(you)</span>':''}</div><div class="s-meta">${t.email||r}</div></div>
       <span class="role-tag ${r}">${r}</span>
-      ${r==='teacher'?`<div class="fee-wrap"><small>Teaches class</small><input class="fee-in cls-in" type="text" value="${t.class_name||''}" placeholder="e.g. Hifz" onchange="saveTeacherClass('${t.id}',this)" title="This teacher will see only students in this class"></div>`:''}
+      ${r==='teacher'?`<div class="fee-wrap"><small>Teaches class</small><select class="fee-in cls-in" onchange="saveTeacherClass('${t.id}',this)" title="This teacher will see only students in this class">${classOpts(t.class_name||'')}</select></div>`:''}
       <select class="role-sel" onchange="saveRole('${t.id}',this)" ${isMe?'disabled title="You cannot change your own role"':''}>
         <option value="student" ${r==='student'?'selected':''}>Student</option>
         <option value="teacher" ${r==='teacher'?'selected':''}>Teacher</option>
