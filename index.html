@@ -160,94 +160,52 @@
   </div>
 </div>
 
-<!-- OUR CAMPUS SLIDER -->
+<!-- OUR CAMPUS — moving filmstrip -->
 <style>
-.campus-wrap{max-width:1180px;margin:0 auto}
-.campus-slider{position:relative;border-radius:20px;overflow:hidden;box-shadow:0 20px 50px rgba(13,40,24,.18);background:#0d2818}
-.campus-track{display:flex;transition:transform .6s cubic-bezier(.4,0,.2,1)}
-.campus-slide{min-width:100%;position:relative;aspect-ratio:16/9}
-.campus-slide img{width:100%;height:100%;object-fit:cover;display:block}
-.campus-cap{position:absolute;left:0;right:0;bottom:0;padding:48px 26px 22px;background:linear-gradient(transparent,rgba(13,40,24,.9));color:#fff;text-align:left}
-.campus-cap h4{font-size:clamp(17px,2.4vw,23px);font-weight:800;margin:0 0 4px}
-.campus-cap p{font-size:13px;opacity:.92;margin:0}
-.campus-arrow{position:absolute;top:50%;transform:translateY(-50%);width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.92);border:none;cursor:pointer;font-size:24px;line-height:1;color:#1a4030;display:flex;align-items:center;justify-content:center;z-index:2;transition:background .2s,color .2s}
-.campus-arrow:hover{background:#c9a84c;color:#fff}
-.campus-prev{left:14px}.campus-next{right:14px}
-.campus-dots{display:flex;gap:8px;justify-content:center;margin-top:18px}
-.campus-dot{width:10px;height:10px;border-radius:50%;background:#cdd8d1;border:none;cursor:pointer;transition:all .25s;padding:0}
-.campus-dot.active{background:#1a6b3a;width:26px;border-radius:6px}
-.campus-slide video{width:100%;height:100%;object-fit:cover;display:block}
-.campus-tag{position:absolute;top:14px;left:14px;background:rgba(13,40,24,.58);color:#fff;font-size:12px;font-weight:700;padding:6px 12px;border-radius:999px;border:1px solid rgba(201,168,76,.65);z-index:2;display:inline-flex;align-items:center;gap:6px}
-.campus-cap .campus-quote{margin-top:9px;font-size:13.5px;font-style:italic;color:#ffe3a8;line-height:1.45;max-width:660px}
-.campus-cap .campus-quote span{display:block;font-style:normal;font-size:11px;opacity:.82;margin-top:3px;color:#fff}
+#campus .filmstrip{position:relative;overflow:hidden;border-radius:16px;box-shadow:0 16px 40px rgba(13,40,24,.12);
+  -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+          mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent)}
+#campus .film-track{display:flex;align-items:center;width:max-content;animation:campusScroll 60s linear infinite}
+#campus .filmstrip:hover .film-track{animation-play-state:paused}
+#campus .film-item{flex:0 0 auto;height:300px;position:relative}
+#campus .film-item img{height:300px;width:auto;display:block;object-fit:cover}
+#campus .film-cap{position:absolute;left:0;right:0;bottom:0;padding:26px 14px 10px;background:linear-gradient(transparent,rgba(13,40,24,.82));color:#fff;font-size:13px;font-weight:700}
+#campus .film-logo{flex:0 0 auto;height:300px;width:170px;display:flex;align-items:center;justify-content:center;background:#fff;border-left:1px solid #eadfbf;border-right:1px solid #eadfbf}
+#campus .film-logo img{height:150px;width:auto}
+@keyframes campusScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@media(max-width:640px){
+  #campus .film-item,#campus .film-item img,#campus .film-logo{height:190px}
+  #campus .film-logo{width:120px}#campus .film-logo img{height:92px}
+  #campus .film-cap{font-size:11px;padding:20px 10px 8px}
+}
 </style>
 <section class="section bg-light" id="campus">
   <div class="container">
     <div class="section-header">
       <div class="section-badge">🏛️ Our Campus</div>
       <h2>Inside Al-Falah Academy</h2>
-      <p>A glimpse of our masjid, library and learning spaces — where students connect with the Quran and the Sunnah.</p>
+      <p>A glimpse of our masjid, library and daily dars — where students connect with the Quran and the Sunnah.</p>
     </div>
-    <div class="campus-wrap">
-      <div class="campus-slider" id="campusSlider">
-        <div class="campus-track" id="campusTrack">
-          <div class="campus-slide">
-            <video src="assets/campus/campus-tour.mp4" poster="assets/campus/campus-tour-poster.jpg" autoplay muted loop playsinline preload="metadata"></video>
-            <span class="campus-tag">🎥 Al-Falah Islamic Academy</span>
-            <div class="campus-cap"><h4>🎥 A Glimpse Inside</h4><p>A short tour of our masjid and daily dars</p><div class="campus-quote">“Whoever treads a path seeking knowledge, Allah makes easy for him a path to Paradise.”<span>— Sahih Muslim</span></div></div>
-          </div>
-          <div class="campus-slide">
-            <img src="assets/campus/campus-masjid.jpg" alt="Al-Falah Academy masjid prayer hall" loading="lazy">
-            <span class="campus-tag">🕌 Al-Falah Islamic Academy</span>
-            <div class="campus-cap"><h4>🕌 Our Masjid</h4><p>A spacious, peaceful prayer hall at the heart of the academy</p><div class="campus-quote">“The most beloved of places to Allah are the mosques.”<span>— Sahih Muslim</span></div></div>
-          </div>
-          <div class="campus-slide">
-            <img src="assets/campus/campus-students-dars.jpg" alt="Students in a Quran dars with their teacher at Al-Falah Academy" loading="lazy">
-            <span class="campus-tag">📖 Al-Falah Islamic Academy</span>
-            <div class="campus-cap"><h4>📖 Daily Dars</h4><p>Students learning the Qur'an with their teacher, every day</p><div class="campus-quote">“The best among you are those who learn the Qur'an and teach it.”<span>— Sahih al-Bukhari</span></div></div>
-          </div>
-          <div class="campus-slide">
-            <img src="assets/campus/campus-students.jpg" alt="Students reciting the Quran at Al-Falah Academy" loading="lazy">
-            <span class="campus-tag">🧒 Al-Falah Islamic Academy</span>
-            <div class="campus-cap"><h4>🧒 Our Students</h4><p>Young learners reciting and memorising the Qur'an</p><div class="campus-quote">“And We have certainly made the Qur'an easy to remember.”<span>— Qur'an 54:17</span></div></div>
-          </div>
-          <div class="campus-slide">
-            <img src="assets/campus/campus-class.jpg" alt="Hifz and Nazra class at Al-Falah Academy" loading="lazy">
-            <span class="campus-tag">👥 Al-Falah Islamic Academy</span>
-            <div class="campus-cap"><h4>👥 Hifz &amp; Nazra Classes</h4><p>Group lessons in recitation and memorisation</p><div class="campus-quote">“Read the Qur'an, for it will come as an intercessor for its companions.”<span>— Sahih Muslim</span></div></div>
-          </div>
-          <div class="campus-slide">
-            <img src="assets/campus/campus-library.jpg" alt="Al-Falah Academy Islamic library" loading="lazy">
-            <span class="campus-tag">📚 Al-Falah Islamic Academy</span>
-            <div class="campus-cap"><h4>📚 Our Library</h4><p>Shelves of Qur'an, Tafseer and Hadith books for every learner</p><div class="campus-quote">“My Lord, increase me in knowledge.”<span>— Qur'an 20:114</span></div></div>
-          </div>
-          <div class="campus-slide">
-            <img src="assets/campus/campus-study.jpg" alt="Personal Quran study at Al-Falah Academy" loading="lazy">
-            <span class="campus-tag">📿 Al-Falah Islamic Academy</span>
-            <div class="campus-cap"><h4>📿 Personal Study</h4><p>Quiet spaces for reflection, recitation and revision</p><div class="campus-quote">“So remember Me; I will remember you.”<span>— Qur'an 2:152</span></div></div>
-          </div>
-          <div class="campus-slide">
-            <img src="assets/campus/campus-dars2.jpg" alt="Students learning with a scholar at Al-Falah Academy" loading="lazy">
-            <span class="campus-tag">🧑‍🏫 Al-Falah Islamic Academy</span>
-            <div class="campus-cap"><h4>🧑‍🏫 Learning with Scholars</h4><p>Guided sessions with qualified, caring teachers</p><div class="campus-quote">“Whoever Allah wishes good for, He gives him understanding of the religion.”<span>— Sahih al-Bukhari</span></div></div>
-          </div>
-        </div>
-        <button class="campus-arrow campus-prev" onclick="campusGo(-1)" aria-label="Previous slide">‹</button>
-        <button class="campus-arrow campus-next" onclick="campusGo(1)" aria-label="Next slide">›</button>
-      </div>
-      <div class="campus-dots" id="campusDots"></div>
-    </div>
+    <div class="filmstrip"><div class="film-track" id="filmTrack"></div></div>
   </div>
 </section>
 <script>
 (function(){
-  var track=document.getElementById('campusTrack'); if(!track) return;
-  var slides=track.children, dotsWrap=document.getElementById('campusDots'), i=0, timer;
-  for(var d=0; d<slides.length; d++){ var b=document.createElement('button'); b.className='campus-dot'+(d===0?' active':''); b.setAttribute('aria-label','Go to slide '+(d+1)); b.onclick=(function(n){return function(){campusSet(n);};})(d); dotsWrap.appendChild(b); }
-  window.campusSet=function(n){ i=(n+slides.length)%slides.length; track.style.transform='translateX(-'+(i*100)+'%)'; var dots=dotsWrap.children; for(var k=0;k<dots.length;k++){ dots[k].className='campus-dot'+(k===i?' active':''); } restart(); };
-  window.campusGo=function(dir){ campusSet(i+dir); };
-  function restart(){ clearInterval(timer); timer=setInterval(function(){ campusGo(1); }, 4500); }
-  restart();
+  var track=document.getElementById('filmTrack'); if(!track) return;
+  var slides=[
+    {src:'assets/campus/campus-tour-poster.jpg',   cap:'🎥 Campus Tour'},
+    {src:'assets/campus/campus-masjid.jpg',        cap:'🕌 Our Masjid'},
+    {src:'assets/campus/campus-students-dars.jpg', cap:'📖 Daily Dars'},
+    {src:'assets/campus/campus-students.jpg',      cap:'🧒 Our Students'},
+    {src:'assets/campus/campus-class.jpg',         cap:'👥 Hifz & Nazra'},
+    {src:'assets/campus/campus-library.jpg',       cap:'📚 Our Library'},
+    {src:'assets/campus/campus-study.jpg',         cap:'📿 Personal Study'},
+    {src:'assets/campus/campus-dars2.jpg',         cap:'🧑‍🏫 With Scholars'}
+  ];
+  var logo='assets/logo-icon.png';
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+  function block(){var h='';for(var k=0;k<slides.length;k++){h+='<div class="film-item"><img src="'+slides[k].src+'" alt="Al-Falah Academy campus" loading="lazy"><div class="film-cap">'+esc(slides[k].cap)+'</div></div>';h+='<div class="film-logo"><img src="'+logo+'" alt="Al-Falah Islamic Academy"></div>';}return h;}
+  track.innerHTML=block()+block();
 })();
 </script>
 
