@@ -74,13 +74,24 @@
   // Reset digraph state when the user clicks elsewhere.
   document.addEventListener('click', function (e) { if (isTextField(e.target)) e.target._akbLast = ''; }, true);
 
+  // ---- Nastaliq font for Urdu/Arabic text --------------------------------
+  // Loaded from Google Fonts; Latin characters fall back to the site font.
+  var pc1 = document.createElement('link'); pc1.rel = 'preconnect'; pc1.href = 'https://fonts.googleapis.com'; document.head.appendChild(pc1);
+  var pc2 = document.createElement('link'); pc2.rel = 'preconnect'; pc2.href = 'https://fonts.gstatic.com'; pc2.crossOrigin = 'anonymous'; document.head.appendChild(pc2);
+  var font = document.createElement('link');
+  font.rel = 'stylesheet';
+  font.href = 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;700&display=swap';
+  document.head.appendChild(font);
+
   // ---- Floating language dropdown ----------------------------------------
   var style = document.createElement('style');
   style.textContent = [
+    // Nastaliq for right-to-left (Urdu/Arabic) content; Latin uses the fallback.
+    '[dir="auto"],.ann-t,.ann-b,.ann-title,.ann-body,#annT,#annB,#sPortion{font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",system-ui,"Segoe UI",Tahoma,sans-serif;line-height:2.2}',
     '#akbBar{position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a6b3a;color:#fff;border-radius:50px;padding:8px 10px 8px 16px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-family:inherit;font-size:14px}',
-    '#akbBar label{font-weight:700;white-space:nowrap}',
+    '#akbBar label{font-weight:700;white-space:nowrap;font-family:inherit}',
     '#akbSel{border:none;border-radius:50px;padding:7px 12px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;background:#fff;color:#14532d}',
-    '#akbHint{position:fixed;right:16px;bottom:64px;z-index:9999;background:#0f2e1e;color:#cfe8d8;border-radius:10px;padding:8px 12px;font-size:12px;max-width:230px;box-shadow:0 4px 14px rgba(0,0,0,.25);display:none}',
+    '#akbHint{position:fixed;right:16px;bottom:64px;z-index:9999;background:#0f2e1e;color:#cfe8d8;border-radius:10px;padding:8px 12px;font-size:12px;max-width:230px;box-shadow:0 4px 14px rgba(0,0,0,.25);display:none;font-family:inherit}',
     '#akbHint.show{display:block}'
   ].join('');
   document.head.appendChild(style);
