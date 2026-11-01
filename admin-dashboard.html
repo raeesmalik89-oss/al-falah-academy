@@ -234,7 +234,7 @@ async function addTeacher(btn){
   }
   const d=resp.data;
   if(!d||d.error){alert('Could not create teacher:\n'+((d&&d.error)||'unknown error'));return;}
-  alert('✅ Teacher login created!\n\nName: '+d.name+'\nLogin code: '+d.login+'\nPassword: '+d.password+(d.class_name?'\nClass: '+d.class_name:'\n\n(No class set yet — set it from the Teachers list.)')+'\n\nShare the login code + password with the teacher. They sign in at the website and will see only their class.');
+  alert('✅ Teacher login '+(d.updated?'updated':'created')+'!\n\nName: '+d.name+'\nLogin code: '+d.login+'\nPassword: '+d.password+(d.class_name?'\nClass: '+d.class_name:(d.updated?'':'\n\n(No class set yet — set it from the Teachers list.)'))+'\n\nShare the login code + password with the teacher. They sign in at the website and will see only their class.');
   document.getElementById('tnName').value='';document.getElementById('tnCode').value='';document.getElementById('tnClass').value='';document.getElementById('tnPass').value='';
   // Refresh the teacher list.
   const {data:profiles}=await _sb.from('profiles').select('*');
