@@ -191,7 +191,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   const [{data:prog},{data:att},{data:anns},{data:exams}]=await Promise.all([
     _sb.from('progress').select('*').eq('id',uid).single(),
     _sb.from('attendance').select('*').eq('student_id',uid).order('date',{ascending:false}).limit(10),
-    _sb.from('announcements').select('*').order('created_at',{ascending:false}).limit(5),
+    _sb.from('announcements').select('*').in('audience',['students','all']).order('created_at',{ascending:false}).limit(5),
     _sb.from('exam_results').select('*').eq('student_id',uid).order('exam_date',{ascending:false})
   ]);
 
@@ -228,7 +228,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   attEl.innerHTML=(att&&att.length)?att.map(renderAttendanceRow).join(''):'<div class="empty">No attendance records yet</div>';
 
   const annEl=document.getElementById('annList');
-  annEl.innerHTML=(anns&&anns.length)?anns.map(a=>`<div class="ann-item"><div class="ann-title">${a.title}</div><div class="ann-body">${a.body}</div><div class="ann-date">${fmtDate(a.created_at)} · ${a.teacher_name||'Dr Raees'}</div></div>`).join(''):'<div class="empty">No announcements yet</div>';
+  annEl.innerHTML=(anns&&anns.length)?anns.map(a=>`<div class="ann-item"><div class="ann-title" dir="auto">${a.title}</div><div class="ann-body" dir="auto">${a.body}</div><div class="ann-date">${fmtDate(a.created_at)} · ${a.teacher_name||'Dr Raees'}</div></div>`).join(''):'<div class="empty">No announcements yet</div>';
 
   const examEl=document.getElementById('examList');
   examEl.innerHTML=(exams&&exams.length)?exams.map(e=>{
