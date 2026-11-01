@@ -129,7 +129,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
   <div class="card">
     <div class="card-title"><span>💳</span> Students &amp; Fees</div>
-    <input class="search" type="text" placeholder="Search student…" oninput="filterS(this.value)">
+    <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
+      <input id="sSearch" class="search" style="flex:1;min-width:160px;margin:0" type="text" placeholder="Search student…" oninput="applyStudentFilter()">
+      <select id="clsFilter" class="fee-in" style="min-width:170px" onchange="applyStudentFilter()"><option value="">All classes / courses</option></select>
+    </div>
+    <div id="sCount" style="font-size:12px;color:#666;margin-bottom:8px"></div>
     <div id="sList"><div class="no-s">No students yet</div></div>
   </div>
 
@@ -183,6 +187,7 @@ const money=n=>'PKR '+(n||0).toLocaleString('en-PK');
 function statusBadgeClass(ps){return ps==='paid'?'paid':ps==='overdue'?'overdue':'pending';}
 
 function renderStudents(list){
+  fillClassFilter();
   const el=document.getElementById('sList');
   if(!list.length){el.innerHTML='<div class="no-s">No students enrolled yet</div>';return;}
   el.innerHTML=list.map(s=>{
@@ -201,6 +206,26 @@ function renderStudents(list){
   }).join('');
 }
 function filterS(q){renderStudents(q?students.filter(s=>(s.name||'').toLowerCase().includes(q.toLowerCase())):students);}
+function fillClassFilter(){
+  const el=document.getElementById('clsFilter'); if(!el)return;
+  const cur=el.value;
+  const base=['Hifz','Nazra A','Nazra B','Nazra','Fahm-ul-Quran','Tajweed','Tafseer','Seerah-tun-Nabi','Selected Ahadith','Arabic Language','English Language'];
+  const extra=[...new Set((students||[]).map(s=>(s.class_name||'').trim()).filter(Boolean))];
+  const all=[...new Set([...base,...extra])].sort();
+  el.innerHTML='<option value="">All classes / courses</option>'+all.map(c=>`<option value="${c}">${c}</option>`).join('');
+  el.value=cur;
+}
+function applyStudentFilter(){
+  const q=(document.getElementById('sSearch')?.value||'').toLowerCase();
+  const cls=document.getElementById('clsFilter')?.value||'';
+  let list=students;
+  if(cls) list=list.filter(s=>(s.class_name||'')===cls);
+  if(q) list=list.filter(s=>(s.name||'').toLowerCase().includes(q));
+  renderStudents(list);
+  const paid=list.filter(s=>s.payment_status==='paid').length;
+  const c=document.getElementById('sCount');
+  if(c) c.textContent=list.length+' student'+(list.length===1?'':'s')+(cls?(' · '+cls):'')+' · '+paid+' paid';
+}
 
 async function saveFee(uid,input){
   const fee=parseInt(input.value)||0;
@@ -330,7 +355,7 @@ async function reloadProfiles(){
     return d||(a.name||'').localeCompare(b.name||'');
   });
   refreshStats();
-  renderStudents(students);
+  applyStudentFilter();
   renderStaff(staff);
 }
 
