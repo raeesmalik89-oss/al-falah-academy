@@ -184,7 +184,13 @@ async function saveClass(uid,input){
 function renderTeachers(){
   const el=document.getElementById('tList');
   if(!teachers.length){el.innerHTML='<div class="no-s">No teachers yet</div>';return;}
-  el.innerHTML=teachers.map(t=>`<div class="tch"><div class="s-av">${ini(t)}</div><div><div class="s-name">${t.name}</div><div class="s-meta">${t.email||'Teacher'}</div></div></div>`).join('');
+  el.innerHTML=teachers.map(t=>`<div class="tch"><div class="s-av">${ini(t)}</div><div style="flex:1"><div class="s-name">${t.name}</div><div class="s-meta">${t.email||'Teacher'}</div></div><div class="fee-wrap"><small>Teaches class</small><input class="fee-in cls-in" type="text" value="${t.class_name||''}" placeholder="e.g. Hifz" onchange="saveTeacherClass('${t.id}',this)" title="This teacher will see only students in this class"></div></div>`).join('');
+}
+async function saveTeacherClass(uid,input){
+  const cls=input.value.trim();
+  await _sb.from('profiles').update({class_name:cls}).eq('id',uid);
+  const t=teachers.find(x=>x.id===uid); if(t)t.class_name=cls;
+  toast(cls?('✓ Teacher assigned to '+cls):'✓ Teacher class cleared (sees all)');
 }
 
 function refreshStats(){
