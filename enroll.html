@@ -860,6 +860,7 @@ First trial class requested - Jazak Allah Khayran!`
   // Send via FormSubmit.co (email delivery, no backend needed)
   const formData = new FormData();
   formData.append('_subject', `New Enrollment — Al-Falah Islamic Academy — ${data.name}`);
+  formData.append('_cc', 'raees.malik89@gmail.com');
   formData.append('_captcha', 'false');
   formData.append('_template', 'table');
   // Auto-reply sent to the applicant's email (only if they provided one).
