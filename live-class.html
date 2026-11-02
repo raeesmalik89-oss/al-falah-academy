@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Live Class — Al-Falah Academy</title>
+<link rel="icon" href="assets/favicon.png">
+<style>
+  :root{ --g:#1a6b3a; --gd:#0f2e1e; }
+  *{box-sizing:border-box}
+  html,body{margin:0;height:100%;font-family:system-ui,"Segoe UI",Tahoma,sans-serif;background:#0f2e1e;color:#fff}
+  #bar{height:54px;display:flex;align-items:center;gap:10px;padding:0 14px;background:var(--gd);border-bottom:1px solid #1c4a33}
+  #bar .ttl{font-weight:800;font-size:15px}
+  #bar .sp{flex:1}
+  .btn{border:none;border-radius:8px;padding:9px 14px;font-weight:700;font-size:14px;cursor:pointer;font-family:inherit}
+  .rec{background:#b32424;color:#fff}
+  .rec.on{background:#ff5252;animation:blink 1.2s infinite}
+  @keyframes blink{50%{opacity:.6}}
+  .leave{background:#355; color:#fff}
+  #meet{height:calc(100% - 54px)}
+  #msg{padding:24px;text-align:center;color:#cfe8d8}
+  a{color:#9fe0b8}
+</style>
+</head>
+<body>
+  <div id="bar">
+    <span class="ttl">🕌 Al-Falah — Live Class</span>
+    <span id="room" style="color:#9ccbb2;font-size:13px"></span>
+    <span class="sp"></span>
+    <button id="recBtn" class="btn rec" onclick="toggleRec()">⏺ Record</button>
+    <button class="btn leave" onclick="leave()">Leave</button>
+  </div>
+  <div id="meet"><div id="msg">Loading class…</div></div>
+
+<script src="https://meet.jit.si/external_api.js"></script>
+<script>
+  var params = new URLSearchParams(location.search);
+  var room = (params.get('room') || 'alfalah-class').replace(/[^a-zA-Z0-9\-]/g, '');
+  var name = params.get('name') || 'Guest';
+  document.getElementById('room').textContent = 'Room: ' + room;
+
+  var api = null;
+  function startMeet() {
+    if (typeof JitsiMeetExternalAPI === 'undefined') {
+      document.getElementById('meet').innerHTML =
+        '<div id="msg">Could not load the video service. Check your internet connection and reload.</div>';
+      return;
+    }
+    document.getElementById('meet').innerHTML = '';
+    api = new JitsiMeetExternalAPI('meet.jit.si', {
+      roomName: room,
+      parentNode: document.getElementById('meet'),
+      width: '100%', height: '100%',
+      userInfo: { displayName: name },
+      configOverwrite: {
+        prejoinPageEnabled: true,
+        disableDeepLinking: true,
+        toolbarButtons: ['microphone','camera','desktop','chat','raisehand','tileview',
+                         'whiteboard','fullscreen','hangup','settings','participants-pane']
+      }
+    });
+    api.addListener('readyToClose', leave);
+  }
+  startMeet();
+
+  // ---- Local recording (screen + audio) → downloads to this device --------
+  var rec = null, chunks = [];
+  async function toggleRec() {
+    var btn = document.getElementById('recBtn');
+    if (rec && rec.state === 'recording') { rec.stop(); return; }
+    try {
+      var stream = await navigator.mediaDevices.getDisplayMedia({
+        video: { frameRate: 15 },
+        audio: true   // tick "Share tab audio" in the picker to capture voices
+      });
+      rec = new MediaRecorder(stream, { mimeType: MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm' });
+      chunks = [];
+      rec.ondataavailable = function (e) { if (e.data && e.data.size) chunks.push(e.data); };
+      rec.onstop = function () {
+        stream.getTracks().forEach(function (t) { t.stop(); });
+        var blob = new Blob(chunks, { type: 'video/webm' });
+        var a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'alfalah-' + room + '-' + new Date().toISOString().slice(0, 16).replace(/[:T]/g, '-') + '.webm';
+        a.click();
+        btn.textContent = '⏺ Record'; btn.classList.remove('on');
+      };
+      // If the teacher stops sharing from the browser bar, finish the recording.
+      stream.getVideoTracks()[0].addEventListener('ended', function () { if (rec && rec.state === 'recording') rec.stop(); });
+      rec.start();
+      btn.textContent = '⏹ Stop & Save'; btn.classList.add('on');
+    } catch (e) {
+      alert('Recording was not started. When the share dialog opens, choose "This Tab" and tick "Share tab audio", then allow.');
+    }
+  }
+
+  function leave() {
+    try { if (rec && rec.state === 'recording') rec.stop(); } catch (e) {}
+    try { if (api) api.dispose(); } catch (e) {}
+    // Teachers return to their dashboard; students to theirs.
+    window.location.href = (params.get('back') || 'index.html');
+  }
+</script>
+</body>
+</html>

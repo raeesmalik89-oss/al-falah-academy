@@ -112,6 +112,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 </nav>
 <div class="main">
   <div id="classBanner" style="margin-bottom:16px;padding:12px 16px;border-radius:12px;background:linear-gradient(135deg,#1a6b3a,#14532d);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px"><span>🎓</span><span id="classBannerText">Loading your class…</span></div>
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title"><span>🎥</span> Live Class</div>
+    <div id="liveBtns" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="font-size:12px;color:#999">Loading…</span></div>
+  </div>
   <div class="stats">
     <div class="stat"><div class="stat-icon">👥</div><div><div class="stat-val" id="stTotal">0</div><div class="stat-label">Total Students</div></div></div>
     <div class="stat"><div class="stat-icon">📅</div><div><div class="stat-val" id="stDate">—</div><div class="stat-label">Today</div></div></div>
@@ -148,7 +152,42 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <script src="supabase-config.js"></script>
 <script src="assets/dashboard-shared.js"></script>
 <script>
-let students=[], selUid=null, tName='Dr Raees';
+let students=[], selUid=null, tName='Dr Raees', tClass='', tId=null, liveRow=null;
+function slugClass(c){return 'alfalah-'+String(c||'class').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+async function refreshLiveState(){
+  const card=document.getElementById('liveBtns'); if(!card)return;
+  const {data}=await _sb.from('live_sessions').select('*').eq('teacher_id',tId).eq('active',true).order('started_at',{ascending:false}).limit(1);
+  liveRow=(data&&data[0])||null;
+  if(liveRow){
+    card.innerHTML='<span style="color:#ff5252;font-weight:800">🔴 LIVE now</span>'
+      +'<button class="btn-p btn-sm" onclick="joinClass()" style="background:#1a6b3a">Join / Re-open</button>'
+      +'<button class="btn-o btn-sm" onclick="endClass(this)">⏹ End Class</button>';
+  } else {
+    card.innerHTML='<button class="btn-p btn-sm" onclick="startClass(this)" style="background:#1a6b3a">🟢 Start Class</button>'
+      +'<span style="font-size:12px;color:#5b7566">Starts a live video class with whiteboard for your students.</span>';
+  }
+}
+async function startClass(btn){
+  if(!tClass){ if(!confirm('You have no class assigned, so students won\'t see a join button. Start anyway?'))return; }
+  btn.disabled=true;btn.textContent='Starting…';
+  const room=slugClass(tClass||tId);
+  const {data,error}=await _sb.from('live_sessions').insert({teacher_id:tId,teacher_name:tName,class_name:tClass||null,room,active:true}).select().single();
+  if(error){ alert('Could not start class:\n'+error.message+(/live_sessions/.test(error.message)?'\n\n➡ Run the live-classes SQL in Supabase first.':'')); btn.disabled=false;btn.textContent='🟢 Start Class'; return; }
+  liveRow=data;
+  toast('✓ Class is live — students can join now');
+  await refreshLiveState();
+  joinClass();
+}
+async function endClass(btn){
+  if(!confirm('End the live class?'))return;
+  btn.disabled=true;
+  if(liveRow) await _sb.from('live_sessions').update({active:false,ended_at:new Date().toISOString()}).eq('id',liveRow.id);
+  liveRow=null; toast('Class ended'); refreshLiveState();
+}
+function joinClass(){
+  const room=liveRow?liveRow.room:slugClass(tClass||tId);
+  window.open('live-class.html?room='+encodeURIComponent(room)+'&name='+encodeURIComponent(tName)+'&back=teacher-dashboard.html','_blank');
+}
 const toast=msg=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);};
 const ini=s=>s.name.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
 function courseResourceLink(course){
@@ -398,6 +437,7 @@ function updateAvgHifz(){
   const auth = await requireSession('teacher');
   if(!auth) return;
   tName=auth.profile.name||'Dr Raees';
+  tId=auth.profile.id||auth.session.user.id;
   document.getElementById('navName').textContent=tName;
   document.getElementById('stDate').textContent=new Date().toLocaleDateString('en-PK',{day:'numeric',month:'short'});
 
@@ -405,6 +445,7 @@ function updateAvgHifz(){
   // their own account). Admin/CEO set this from their dashboard. If no class is
   // assigned yet, fall back to showing all students so the dashboard isn't empty.
   const myClass=(auth.profile.class_name||'').trim();
+  tClass=myClass;
   let sq=_sb.from('profiles').select('*').eq('role','student');
   if(myClass) sq=sq.eq('class_name',myClass);
   const {data:studs}=await sq;
@@ -425,6 +466,7 @@ function updateAvgHifz(){
   renderStudents(students);
   await loadAnns();
   loadMgmtMsgs();
+  refreshLiveState();
   document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';
 })();
