@@ -236,6 +236,7 @@ function sendQuery(){
   var data={ Name:name.value.trim(), Email:email.value.trim(), Phone:(phone.value.trim()||'—'), Message:msg.value.trim() };
   var fd=new FormData();
   fd.append('_subject','New Query — Al-Falah Islamic Academy — '+data.Name);
+  fd.append('_cc','raees.malik89@gmail.com');
   fd.append('_captcha','false');
   fd.append('_template','table');
   // Auto-reply sent back to the person who messaged (FormSubmit reads the 'email' field).
