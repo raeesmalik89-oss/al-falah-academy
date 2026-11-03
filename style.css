@@ -57,32 +57,16 @@ img { max-width: 100%; }
   font-weight: 700 !important; padding: 7px 15px !important; border-radius: 24px !important; font-size: 12.5px !important;
 }
 .nav-cta:hover { background: #e8b84b !important; transform: translateY(-1px); }
-.nav-donate {
-  background: transparent !important; color: var(--gold) !important;
-  font-weight: 700 !important; padding: 6px 13px !important; border-radius: 24px !important;
-  border: 1.5px solid var(--gold) !important; font-size: 12.5px !important;
-  transition: background 0.2s, color 0.2s !important;
-}
-.nav-donate:hover, .nav-donate.active { background: var(--gold) !important; color: #1a1a1a !important; }
-/* Always-visible Donate button that appears in the bar when the full nav
-   collapses into the hamburger (so Donate is never hidden). */
-.nav-donate-compact {
-  display: none; align-items: center; gap: 5px;
-  background: var(--gold); color: #1a1a1a; font-weight: 700; font-size: 13px;
-  padding: 8px 16px; border-radius: 24px; white-space: nowrap;
-}
-.nav-donate-compact:hover { background: #e8b84b; color: #1a1a1a; }
 .hamburger { display: none; background: none; border: none; color: #fff; font-size: 22px; cursor: pointer; margin-left: auto; }
 .mobile-menu { display: none; flex-direction: column; padding: 12px 24px 16px; gap: 4px; }
 .mobile-menu.open { display: flex; }
 .mobile-menu a { color: rgba(255,255,255,0.9); padding: 10px 12px; font-size: 15px; border-radius: 8px; }
 .mobile-menu a:hover { background: rgba(255,255,255,0.1); color: #fff; }
 /* Switch to the hamburger menu before the full nav can overflow (keeps the
-   Donate/Enroll buttons from being clipped on small laptops). */
+   Enroll button from being clipped on small laptops). */
 @media (max-width: 1150px) {
   .nav-links { display: none; }
   .hamburger { display: block; margin-left: 14px; }
-  .nav-donate-compact { display: inline-flex; margin-left: auto; }
 }
 
 /* ── HERO ─────────────────────────────────────────────────────────────── */
