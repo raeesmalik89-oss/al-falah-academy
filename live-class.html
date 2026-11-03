@@ -32,7 +32,8 @@
   </div>
   <div id="meet"><div id="msg">Loading class…</div></div>
 
-<script src="https://meet.jit.si/external_api.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="supabase-config.js"></script>
 <script>
   var params = new URLSearchParams(location.search);
   var room = (params.get('room') || 'alfalah-class').replace(/[^a-zA-Z0-9\-]/g, '');
@@ -40,15 +41,21 @@
   document.getElementById('room').textContent = 'Room: ' + room;
 
   var api = null;
-  function startMeet() {
-    if (typeof JitsiMeetExternalAPI === 'undefined') {
-      document.getElementById('meet').innerHTML =
-        '<div id="msg">Could not load the video service. Check your internet connection and reload.</div>';
-      return;
-    }
+
+  function loadScript(src) {
+    return new Promise(function (res, rej) {
+      var s = document.createElement('script');
+      s.src = src; s.async = true;
+      s.onload = res;
+      s.onerror = function () { rej(new Error('load failed: ' + src)); };
+      document.head.appendChild(s);
+    });
+  }
+
+  function initJitsi(domain, roomName, jwt) {
     document.getElementById('meet').innerHTML = '';
-    api = new JitsiMeetExternalAPI('meet.jit.si', {
-      roomName: room,
+    var opts = {
+      roomName: roomName,
       parentNode: document.getElementById('meet'),
       width: '100%', height: '100%',
       userInfo: { displayName: name },
@@ -58,8 +65,51 @@
         toolbarButtons: ['microphone','camera','desktop','chat','raisehand','tileview',
                          'whiteboard','fullscreen','hangup','settings','participants-pane']
       }
-    });
+    };
+    if (jwt) opts.jwt = jwt;
+    api = new JitsiMeetExternalAPI(domain, opts);
     api.addListener('readyToClose', leave);
+  }
+
+  async function getAccessToken() {
+    try {
+      if (typeof _sb === 'undefined' || !_sb) return null;
+      var r = await _sb.auth.getSession();
+      return (r && r.data && r.data.session && r.data.session.access_token) || null;
+    } catch (e) { return null; }
+  }
+
+  async function startMeet() {
+    // Prefer JaaS (8x8): the teacher is a moderator and the class starts with no
+    // login wall. If the token function isn't configured, fall back to the free
+    // public meet.jit.si so the page keeps working either way.
+    try {
+      if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL) {
+        var token = await getAccessToken();
+        var headers = { 'Content-Type': 'application/json' };
+        if (token) headers['Authorization'] = 'Bearer ' + token;
+        var resp = await fetch(SUPABASE_URL + '/functions/v1/jaas-token', {
+          method: 'POST', headers: headers, body: JSON.stringify({ room: room, name: name })
+        });
+        if (resp.ok) {
+          var d = await resp.json();
+          if (d && d.jwt && d.appId) {
+            await loadScript('https://8x8.vc/' + d.appId + '/external_api.js');
+            initJitsi('8x8.vc', d.appId + '/' + room, d.jwt);
+            return;
+          }
+        }
+      }
+    } catch (e) { /* fall through to the public server */ }
+
+    // Fallback: public meet.jit.si (note: now requires a moderator to log in).
+    try {
+      await loadScript('https://meet.jit.si/external_api.js');
+      initJitsi('meet.jit.si', room, null);
+    } catch (e) {
+      document.getElementById('meet').innerHTML =
+        '<div id="msg">Could not load the video service. Check your internet connection and reload.</div>';
+    }
   }
   startMeet();
 
