@@ -817,20 +817,7 @@ function submitForm() {
     notes:     document.getElementById('f_notes').value.trim()
   };
 
-  // Save the enrollment into Supabase so it shows up in the Admin/CEO dashboards.
-  // Email is optional — a phone-only enrollment saves fine (empty fields become null).
-  if (typeof _sb !== 'undefined' && _sb) {
-    _sb.from('enrollments').insert({
-      name: data.name || null, enroll_for: data.enrollFor || null, age: data.age || null,
-      gender: data.gender || null, country: data.country || null, city: data.city || null,
-      level: data.level || null, course: data.course || null, lang: data.lang || null,
-      teacher_pref: data.tgender || null, pref_time: data.time || null, freq: data.freq || null,
-      phone: data.phone || null, email: data.email || null, parent: data.parent || null,
-      notes: data.notes || null
-    }).then(({ error }) => { if (error) console.warn('Enrollment DB save failed:', error.message); });
-  }
-
-  // Build WhatsApp message
+  // Build WhatsApp message (used by the success-screen "message us" button)
   const waMsg = encodeURIComponent(
 `Assalamu Alaikum! New Enrollment Request
 
@@ -857,37 +844,34 @@ First trial class requested - Jazak Allah Khayran!`
 
   const waLink = `https://wa.me/923168818693?text=${waMsg}`;
 
-  // Send via FormSubmit.co (email delivery, no backend needed)
-  const formData = new FormData();
-  formData.append('_subject', `New Enrollment — Al-Falah Islamic Academy — ${data.name}`);
-  formData.append('_cc', 'raees.malik89@gmail.com');
-  formData.append('_captcha', 'false');
-  formData.append('_template', 'table');
-  // Auto-reply sent to the applicant's email (only if they provided one).
-  formData.append('_autoresponse', 'Assalamu Alaikum! Thank you for your interest in Al-Falah Islamic Academy. We have received your enrollment request and our team will contact you shortly to arrange your free trial class.\n\n— Al-Falah Islamic Academy');
-  Object.entries(data).forEach(([k,v]) => formData.append(k, v || '—'));
-
-  fetch('https://formsubmit.co/ajax/7f31dcca8379e7f68922a87cbe85b8c5', {
-    method: 'POST',
-    body: formData,
-    headers: { 'Accept': 'application/json' }
-  })
-  .then(r => r.json())
-  .catch(() => ({ success: 'true' }))  // show success even if formsubmit needs activation
-  .finally(() => {
-    // Generate ref number
+  function showSuccess() {
     const ref = 'ALF-' + Date.now().toString(36).toUpperCase().slice(-6);
-
-    // Show success
     document.querySelectorAll('.step-panel').forEach(p => p.classList.remove('active'));
     document.querySelector('.progress-header').style.display = 'none';
     document.getElementById('successScreen').classList.add('show');
     document.getElementById('waConfirmBtn').href = waLink;
     document.getElementById('refNum').textContent = 'Reference: ' + ref;
-
-    // Auto-scroll to top of card
     document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
+  }
+
+  // Save the enrollment into Supabase so it shows up in the Admin/CEO dashboards.
+  // A database trigger then emails the academy (Edge Function → Resend), so no
+  // client-side email call is needed. Email is optional — a phone-only enrollment
+  // saves fine (empty fields become null).
+  if (typeof _sb !== 'undefined' && _sb) {
+    _sb.from('enrollments').insert({
+      name: data.name || null, enroll_for: data.enrollFor || null, age: data.age || null,
+      gender: data.gender || null, country: data.country || null, city: data.city || null,
+      level: data.level || null, course: data.course || null, lang: data.lang || null,
+      teacher_pref: data.tgender || null, pref_time: data.time || null, freq: data.freq || null,
+      phone: data.phone || null, email: data.email || null, parent: data.parent || null,
+      notes: data.notes || null
+    })
+      .then(({ error }) => { if (error) console.warn('Enrollment DB save failed:', error.message); })
+      .finally(showSuccess);
+  } else {
+    showSuccess();
+  }
 }
 
 // ── CLEAR ERRORS ON INPUT ─────────────────────────────────────────────
