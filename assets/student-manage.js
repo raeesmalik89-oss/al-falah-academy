@@ -137,7 +137,10 @@
     var res = await _sb.from('profiles').select('name,email,course,class_name').eq('id', uid).single();
     var u = res.data || {};
     if (u.name) { sname = u.name; document.getElementById('sm-name').textContent = u.name; document.getElementById('sm-av').textContent = initials(u.name); }
-    document.getElementById('sm-sub').textContent = (u.course || 'Quran Hifz') + (u.class_name ? ' · ' + u.class_name : '') + (u.email ? ' · ' + u.email : '');
+    var parts = [u.course || 'Quran Hifz'];
+    if (u.class_name && u.class_name !== u.course) parts.push(u.class_name);
+    if (u.email) parts.push(u.email);
+    document.getElementById('sm-sub').textContent = parts.join(' · ');
     SM.renderHifz();
   };
 
