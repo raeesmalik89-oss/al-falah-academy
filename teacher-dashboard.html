@@ -446,14 +446,29 @@ function updateAvgHifz(){
   // assigned yet, fall back to showing all students so the dashboard isn't empty.
   const myClass=(auth.profile.class_name||'').trim();
   tClass=myClass;
-  let sq=_sb.from('profiles').select('*').eq('role','student');
-  if(myClass) sq=sq.eq('class_name',myClass);
-  const {data:studs}=await sq;
+  // Show students assigned directly to this teacher (profiles.teacher_id) and/or
+  // in this teacher's class. A teacher with neither falls back to all students.
+  const conds=['teacher_id.eq.'+tId];
+  if(myClass) conds.push('class_name.eq.'+myClass);
+  let r=await _sb.from('profiles').select('*').eq('role','student').or(conds.join(','));
+  if(r.error){
+    // teacher_id column not added yet → fall back to class-only matching.
+    let sq=_sb.from('profiles').select('*').eq('role','student');
+    if(myClass) sq=sq.eq('class_name',myClass);
+    r=await sq;
+  }
+  let studs=r.data;
+  let showingAll=false;
+  if((!studs||!studs.length) && !myClass){
+    const rr=await _sb.from('profiles').select('*').eq('role','student');
+    studs=rr.data; showingAll=true;
+  }
   students=studs||[];
   document.getElementById('stTotal').textContent=students.length;
-  document.getElementById('classBannerText').textContent = myClass
-    ? ('Your class: '+myClass+'  ·  '+students.length+' student'+(students.length===1?'':'s'))
-    : 'No class assigned yet — showing all students. Ask the admin to assign your class.';
+  document.getElementById('classBannerText').textContent =
+    showingAll ? 'No class or students assigned yet — showing all students. Ask the admin to assign you.'
+    : (myClass ? ('Your class: '+myClass+'  ·  '+students.length+' student'+(students.length===1?'':'s'))
+               : (students.length+' student'+(students.length===1?'':'s')+' assigned to you'));
 
   // Load progress for avg hifz — one batched query instead of one round-trip per student
   if(students.length){

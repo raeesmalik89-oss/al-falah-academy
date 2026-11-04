@@ -219,9 +219,17 @@ function joinLive(){
   // Live class banner — show if this student's class has an active session.
   sName=name;
   (async()=>{
+    const tid=profile.teacher_id||null;
     const cls=(profile.class_name||'').trim();
-    if(!cls) return;
-    const {data}=await _sb.from('live_sessions').select('*').eq('class_name',cls).eq('active',true).order('started_at',{ascending:false}).limit(1);
+    if(!tid && !cls) return;
+    const conds=[];
+    if(tid) conds.push('teacher_id.eq.'+tid);
+    if(cls) conds.push('class_name.eq.'+cls);
+    let r=await _sb.from('live_sessions').select('*').or(conds.join(',')).eq('active',true).order('started_at',{ascending:false}).limit(1);
+    if(r.error && cls){  // teacher_id column missing → fall back to class-only
+      r=await _sb.from('live_sessions').select('*').eq('class_name',cls).eq('active',true).order('started_at',{ascending:false}).limit(1);
+    }
+    const data=r.data;
     const row=data&&data[0];
     if(row){
       liveRoom=row.room;
