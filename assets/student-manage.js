@@ -244,20 +244,33 @@
   // ---- Attendance ----
   SM.renderAtt = async function () {
     var root = activeRoot, id = uid;
-    var res = await _sb.from('attendance').select('*').eq('student_id', id).order('date', { ascending: false }).limit(20);
+    // Show the last 90 days of attendance (records are kept indefinitely in the
+    // database; this just widens what's displayed). 'limit' is a safety cap.
+    var cutoff = new Date(Date.now() - 90 * 86400000).toISOString().split('T')[0];
+    var res = await _sb.from('attendance').select('*').eq('student_id', id)
+      .gte('date', cutoff).order('date', { ascending: false }).limit(400);
     if (activeRoot !== root || uid !== id) return;
     var recs = res.data || [];
+    var present = recs.filter(function (r) { return r.present; }).length;
+    var tot = recs.length, rate = tot ? Math.round(present / tot * 100) : 0;
+    var summary = tot
+      ? '<div class="sm-rowline" style="background:#f3f8f3;border-color:#dbeadf;font-weight:700">' +
+          '<span>Last 90 days</span>' +
+          '<span><span class="sm-pill">' + present + ' present</span> ' +
+          '<span class="sm-pill" style="background:#fdecea;color:#c0392b">' + (tot - present) + ' absent</span> ' +
+          '<span class="sm-pill" style="background:#eef3ff;color:#2156a8">' + rate + '%</span></span></div>'
+      : '';
     var rows = recs.length ? recs.map(function (r) {
       return '<div class="sm-rowline"><span>' + fmt(r.date) + ' · ' + esc(r.lesson || 'Class') + '</span>' +
         '<span class="sm-pill" style="' + (r.present ? '' : 'background:#fdecea;color:#c0392b') + '">' + (r.present ? 'Present' : 'Absent') + '</span></div>';
-    }).join('') : '<p class="sm-muted">No records yet</p>';
+    }).join('') : '<p class="sm-muted">No records in the last 90 days</p>';
     body().innerHTML =
       '<div class="sm-row"><label>Date</label><input class="sm-f-adate" type="date" value="' + today() + '"></div>' +
       '<div class="sm-row"><label>Lesson / Topic</label><input class="sm-f-alesson" placeholder="e.g. Surah Al-Baqarah revision"></div>' +
       '<div class="sm-row"><label>Status</label><select class="sm-f-astat"><option value="true">✓ Present</option><option value="false">✗ Absent</option></select></div>' +
       '<button class="sm-btn" onclick="SM.markAtt(this)">Mark Attendance</button>' +
       '<div style="margin-top:18px;padding-top:14px;border-top:1px solid #eef3ee">' +
-        '<p style="font-size:12px;font-weight:700;color:#667;margin-bottom:10px">RECENT RECORDS</p>' + rows + '</div>';
+        '<p style="font-size:12px;font-weight:700;color:#667;margin-bottom:10px">ATTENDANCE — LAST 90 DAYS</p>' + summary + rows + '</div>';
   };
   SM.markAtt = async function (btn) {
     activeRoot = btn.closest('.sm-panel');

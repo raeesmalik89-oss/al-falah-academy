@@ -201,7 +201,7 @@ function joinLive(){
 
   const [{data:prog},{data:att},{data:anns},{data:exams}]=await Promise.all([
     _sb.from('progress').select('*').eq('id',uid).single(),
-    _sb.from('attendance').select('*').eq('student_id',uid).order('date',{ascending:false}).limit(10),
+    _sb.from('attendance').select('*').eq('student_id',uid).gte('date',new Date(Date.now()-90*86400000).toISOString().split('T')[0]).order('date',{ascending:false}).limit(400),
     _sb.from('announcements').select('*').in('audience',['students','all']).order('created_at',{ascending:false}).limit(5),
     _sb.from('exam_results').select('*').eq('student_id',uid).order('exam_date',{ascending:false})
   ]);
