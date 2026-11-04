@@ -3,5 +3,7 @@ Allow: /
 Disallow: /login
 Disallow: /student-dashboard
 Disallow: /teacher-dashboard
+Disallow: /admin-dashboard
+Disallow: /ceo-dashboard
 
 Sitemap: https://alfalah-academy.com/sitemap.xml
