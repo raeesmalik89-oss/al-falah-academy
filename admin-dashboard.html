@@ -169,6 +169,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
 <script src="supabase-config.js"></script>
 <script src="assets/dashboard-shared.js"></script>
+<script src="assets/student-manage.js"></script>
 <script>
 let students=[], teachers=[], aName='Admin', myId=null, myLiveRow=null, myClass='';
 const toast=msg=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);};
@@ -188,6 +189,7 @@ function renderStudents(list){
       <div class="fmeta"><div class="s-name">${s.name} <span style="font-size:11px;font-weight:700;padding:1px 7px;border-radius:20px;${s.is_roster?'background:#e7f3ec;color:#1a6b3a':'background:#eaf1fb;color:#2156a8'}">${s.is_roster?'🕌 Madrasah':'🌐 Online'}</span></div><div class="s-meta">${s.course||'Quran Hifz'}${s.email?' · '+s.email:''}</div></div>
       <div class="fee-wrap"><small>Class</small><input class="fee-in cls-in" type="text" value="${s.class_name||''}" placeholder="e.g. Hifz L1" onchange="saveClass('${s.id}',this)"></div>
       <div class="fee-wrap"><small>Fee</small><input class="fee-in" type="number" value="${s.monthly_fee||0}" onchange="saveFee('${s.id}',this)"></div>
+      <button class="fee-in" style="cursor:pointer;background:linear-gradient(135deg,#143024,#1a6b3a);color:#fff;border:none;font-weight:700;white-space:nowrap" onclick="openStudentManager('${s.id}')" title="Open the teacher tools for this student — mark attendance, add exam results, update Hifz, Sabaq and notes">📚 Manage</button>
       <select class="stat-sel ${statusBadgeClass(ps)}" onchange="saveStatus('${s.id}',this)">
         <option value="paid" ${ps==='paid'?'selected':''}>✓ Paid</option>
         <option value="pending" ${ps==='pending'?'selected':''}>⏳ Pending</option>
