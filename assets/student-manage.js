@@ -38,7 +38,12 @@
 
   function writeError(error) {
     var m = (error && error.message) || 'Unknown error';
-    if (/row-level security|violates|permission|not allowed/i.test(m)) {
+    if (/foreign key constraint/i.test(m)) {
+      alert('Could not save:\n' + m +
+        '\n\n➡ This student isn\'t linked correctly in the database. Run ' +
+        'supabase-fix-student-fk.sql once in Supabase → SQL Editor to repoint the ' +
+        'attendance/exams/progress links to the profiles table.');
+    } else if (/row-level security|permission|not allowed/i.test(m)) {
       alert('Could not save:\n' + m +
         '\n\n➡ Run supabase-staff-manage-rls.sql once in Supabase → SQL Editor so staff (CEO/Admin/Teacher) can manage students.');
     } else { alert('Could not save:\n' + m); }
