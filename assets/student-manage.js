@@ -66,6 +66,9 @@
       '.sm-sub{font-size:12px;opacity:.85;margin-top:2px}',
       '.sm-x{margin-left:auto;background:rgba(255,255,255,.15);border:0;color:#fff;width:32px;height:32px;border-radius:8px;font-size:18px;cursor:pointer;flex:none}',
       '.sm-x:hover{background:rgba(255,255,255,.3)}',
+      '.sm-lang{flex:none;margin-left:8px;border:0;border-radius:8px;padding:6px 8px;font-weight:700;font-size:12px;font-family:inherit;cursor:pointer;background:rgba(255,255,255,.92);color:#14532d}',
+      '.sm-f-notelink{direction:ltr}',
+      '.sm-attach{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-size:13px;font-weight:700;color:#1a6b3a;text-decoration:none}',
       '.sm-tabs{display:flex;gap:4px;padding:10px 12px 0;flex-wrap:wrap;border-bottom:1px solid #eef3ee;background:#f8faf8}',
       '.sm-tab{border:0;background:transparent;padding:9px 13px;border-radius:8px 8px 0 0;font-weight:700;font-size:13px;color:#5b7566;cursor:pointer;font-family:inherit}',
       '.sm-tab.active{background:#fff;color:#1a6b3a;box-shadow:0 -2px 0 #1a6b3a inset}',
@@ -95,6 +98,9 @@
       '<div class="sm-hdr">' +
         '<div class="sm-av"></div>' +
         '<div style="flex:1;min-width:0"><div class="sm-name"></div><div class="sm-sub"></div></div>' +
+        '<select class="sm-lang" title="Typing language — for Notes, Sabaq & Exams" onchange="SM.lang(this.value)">' +
+          '<option value="en">⌨ English</option><option value="ur">اردو</option><option value="ar">عربی</option>' +
+        '</select>' +
         (withClose ? '<button class="sm-x" title="Close" onclick="SM.close()">&times;</button>' : '') +
       '</div>' +
       '<div class="sm-tabs">' +
@@ -151,6 +157,9 @@
     ov.classList.add('open');
     load(ov.querySelector('.sm-panel'), studentId);
   };
+  // Switch the roman→Urdu/Arabic typing helper for Notes/Sabaq/Exam fields.
+  SM.lang = function (v) { if (window.AKB && AKB.setMode) AKB.setMode(v); };
+
   SM.close = function () {
     var ov = document.getElementById('sm-ov');
     if (ov) ov.classList.remove('open');
@@ -225,7 +234,7 @@
     var p = res.data || {};
     body().innerHTML =
       '<p class="sm-hint">What the student is currently reading, and their latest marks. Shown in the student portal.</p>' +
-      '<div class="sm-row"><label>Current Sabaq / Portion</label><input class="sm-f-portion" value="' + esc(p.portion) + '" placeholder="e.g. Para 5, or Noorani Qaida Lesson 10"></div>' +
+      '<div class="sm-row"><label>Current Sabaq / Portion</label><input class="sm-f-portion" dir="auto" value="' + esc(p.portion) + '" placeholder="e.g. Para 5, or Noorani Qaida Lesson 10"></div>' +
       '<div class="sm-row"><label>Latest Marks (0–100)</label><input class="sm-f-marks" type="number" min="0" max="100" value="' + (p.marks == null ? '' : p.marks) + '" placeholder="e.g. 85"></div>' +
       '<button class="sm-btn" onclick="SM.saveSabaq(this)">💾 Save Sabaq</button>';
   };
@@ -266,7 +275,7 @@
     }).join('') : '<p class="sm-muted">No records in the last 90 days</p>';
     body().innerHTML =
       '<div class="sm-row"><label>Date</label><input class="sm-f-adate" type="date" value="' + today() + '"></div>' +
-      '<div class="sm-row"><label>Lesson / Topic</label><input class="sm-f-alesson" placeholder="e.g. Surah Al-Baqarah revision"></div>' +
+      '<div class="sm-row"><label>Lesson / Topic</label><input class="sm-f-alesson" dir="auto" placeholder="e.g. Surah Al-Baqarah revision"></div>' +
       '<div class="sm-row"><label>Status</label><select class="sm-f-astat"><option value="true">✓ Present</option><option value="false">✗ Absent</option></select></div>' +
       '<button class="sm-btn" onclick="SM.markAtt(this)">Mark Attendance</button>' +
       '<div style="margin-top:18px;padding-top:14px;border-top:1px solid #eef3ee">' +
@@ -289,20 +298,33 @@
   // ---- Notes ----
   SM.renderNotes = async function () {
     var root = activeRoot, id = uid;
-    var res = await _sb.from('progress').select('notes').eq('id', id).single();
+    var res = await _sb.from('progress').select('notes,note_link').eq('id', id).single();
     if (activeRoot !== root || uid !== id) return;
     var notes = (res.data && res.data.notes) || '';
+    var link = (res.data && res.data.note_link) || '';
     body().innerHTML =
-      '<p class="sm-hint">Notes are visible to the student in their portal.</p>' +
-      '<div class="sm-row"><textarea class="sm-f-notes">' + esc(notes) + '</textarea></div>' +
+      '<p class="sm-hint">Notes are visible to the student in their portal. Use the language selector (top-right) to type in اردو or عربی.</p>' +
+      '<div class="sm-row"><textarea class="sm-f-notes" dir="auto">' + esc(notes) + '</textarea></div>' +
+      '<div class="sm-row"><label>📎 Attachment link (optional) — Google Drive / PDF / video URL</label>' +
+        '<input class="sm-f-notelink" type="url" placeholder="https://… (paste a link to a file or video)" value="' + esc(link) + '"></div>' +
       '<button class="sm-btn" onclick="SM.saveNotes(this)">💾 Save Notes</button>';
   };
   SM.saveNotes = async function (btn) {
     activeRoot = btn.closest('.sm-panel');
+    var link = (f('.sm-f-notelink').value || '').trim();
+    if (link && !/^https?:\/\//i.test(link)) return note('Attachment link must start with http:// or https://');
     btn.disabled = true; btn.textContent = 'Saving…';
-    var r = await _sb.from('progress').upsert({ id: uid, notes: f('.sm-f-notes').value, last_updated: new Date().toISOString() });
+    var r = await _sb.from('progress').upsert({ id: uid, notes: f('.sm-f-notes').value, note_link: link || null, last_updated: new Date().toISOString() });
     btn.disabled = false; btn.textContent = '💾 Save Notes';
-    if (r.error) return writeError(r.error);
+    if (r.error) {
+      // If the note_link column isn't added yet, save the note text alone so work isn't lost.
+      if (/note_link|column/i.test(r.error.message || '')) {
+        var r2 = await _sb.from('progress').upsert({ id: uid, notes: f('.sm-f-notes').value, last_updated: new Date().toISOString() });
+        if (r2.error) return writeError(r2.error);
+        return alert('Note saved, but the attachment link needs a one-time setup.\n\n➡ Run supabase-notes-attachment.sql once in Supabase → SQL Editor to enable attachment links.');
+      }
+      return writeError(r.error);
+    }
     note('✓ Notes saved');
   };
 
@@ -320,12 +342,12 @@
         '<br><span class="sm-del" onclick="SM.delExam(this,\'' + e.id + '\')">Delete</span></span></div>';
     }).join('') : '<p class="sm-muted">No exam results yet</p>';
     body().innerHTML =
-      '<div class="sm-row"><label>Exam Title</label><input class="sm-f-ext" placeholder="e.g. Monthly Test - October"></div>' +
-      '<div class="sm-row"><label>Subject</label><input class="sm-f-exs" placeholder="e.g. Tajweed / Hifz / Nazra"></div>' +
+      '<div class="sm-row"><label>Exam Title</label><input class="sm-f-ext" dir="auto" placeholder="e.g. Monthly Test - October"></div>' +
+      '<div class="sm-row"><label>Subject</label><input class="sm-f-exs" dir="auto" placeholder="e.g. Tajweed / Hifz / Nazra"></div>' +
       '<div style="display:flex;gap:10px"><div class="sm-row" style="flex:1"><label>Obtained</label><input class="sm-f-exo" type="number" placeholder="85"></div>' +
       '<div class="sm-row" style="flex:1"><label>Out of</label><input class="sm-f-extot" type="number" value="100"></div></div>' +
       '<div class="sm-row"><label>Date</label><input class="sm-f-exd" type="date" value="' + today() + '"></div>' +
-      '<div class="sm-row"><label>Remarks (optional)</label><input class="sm-f-exr" placeholder="e.g. Excellent tajweed, revise Surah Yaseen"></div>' +
+      '<div class="sm-row"><label>Remarks (optional)</label><input class="sm-f-exr" dir="auto" placeholder="e.g. Excellent tajweed, revise Surah Yaseen"></div>' +
       '<button class="sm-btn" onclick="SM.addExam(this)">Add Result</button>' +
       '<div style="margin-top:18px;padding-top:14px;border-top:1px solid #eef3ee">' +
         '<p style="font-size:12px;font-weight:700;color:#667;margin-bottom:10px">RESULTS</p>' + rows + '</div>';

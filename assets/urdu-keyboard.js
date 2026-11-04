@@ -114,6 +114,12 @@
   hint.id = 'akbHint';
   document.body.appendChild(hint);
 
+  // Let other scripts (e.g. the student-manage panel) switch typing language.
+  window.AKB = {
+    setMode: function (m) { mode = (m === 'ur' || m === 'ar') ? m : 'en'; if (sel) sel.value = mode; },
+    getMode: function () { return mode; }
+  };
+
   sel.addEventListener('change', function () {
     mode = sel.value;
     if (mode === 'en') { hint.classList.remove('show'); return; }
