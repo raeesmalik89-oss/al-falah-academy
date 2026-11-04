@@ -205,7 +205,7 @@ function renderStudents(list){
     return `<div class="frow">
       <div class="s-av">${ini(s)}</div>
       <div class="fmeta"><div class="s-name">${s.name} <span style="font-size:11px;font-weight:700;padding:1px 7px;border-radius:20px;${s.is_roster?'background:#e7f3ec;color:#1a6b3a':'background:#eaf1fb;color:#2156a8'}">${s.is_roster?'🕌 Madrasah':'🌐 Online'}</span></div><div class="s-meta">${s.course||'Quran Hifz'}${s.email?' · '+s.email:''}</div></div>
-      <div class="fee-wrap"><small>Class</small><input class="fee-in cls-in" type="text" value="${s.class_name||''}" placeholder="e.g. Hifz L1" onchange="saveClass('${s.id}',this)"></div>
+      <div class="fee-wrap"><small>Class</small><select class="fee-in cls-in" onchange="saveClass('${s.id}',this)" title="Assign this student to a class — must match the teacher's class for the live-class join">${classOpts(s.class_name||'')}</select></div>
       <div class="fee-wrap"><small>Fee</small><input class="fee-in" type="number" value="${s.monthly_fee||0}" onchange="saveFee('${s.id}',this)"></div>
       <select class="stat-sel ${statusBadgeClass(ps)}" onchange="saveStatus('${s.id}',this)">
         <option value="paid" ${ps==='paid'?'selected':''}>✓ Paid</option>
@@ -263,10 +263,11 @@ async function saveClass(uid,input){
 }
 
 // ---- Staff & role management (CEO-only, full access) ----
-// Class options = site courses + classes students are actually tagged with.
+// Class options = site courses + any class a student OR a staff member is tagged with,
+// so teacher assignments and student assignments always share the same list.
 function classOpts(sel){
   const base=['Hifz','Nazra A','Nazra B','Nazra','Fahm-ul-Quran','Tajweed','Tafseer','Seerah-tun-Nabi','Selected Ahadith','Arabic Language','English Language'];
-  const extra=[...new Set((students||[]).map(s=>(s.class_name||'').trim()).filter(Boolean))];
+  const extra=[...new Set([...(students||[]),...(staff||[])].map(s=>(s.class_name||'').trim()).filter(Boolean))];
   const all=[...new Set([...base,...extra])].sort();
   let o='<option value="">— Select class —</option>';
   for(const c of all) o+=`<option value="${c}"${c===sel?' selected':''}>${c}</option>`;
