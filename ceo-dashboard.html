@@ -133,6 +133,34 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div id="enrollList"><div class="no-s">No enrollments yet</div></div>
   </div>
 
+  <style>
+    .scope-btn{background:#eef3ee;border:1px solid #dce7e0;color:#4a5e52;padding:8px 14px;border-radius:9px;font-weight:700;font-size:13px;cursor:pointer;font-family:inherit}
+    .scope-btn.active{background:linear-gradient(135deg,#143024,#1a6b3a);color:#fff;border-color:#143024}
+    .tr-cols{display:grid;grid-template-columns:300px 1fr;gap:16px;align-items:start}
+    @media(max-width:800px){.tr-cols{grid-template-columns:1fr}}
+    .tr-list{max-height:62vh;overflow-y:auto;display:flex;flex-direction:column;gap:6px}
+    .tr-item{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid #eef3ee;border-radius:10px;cursor:pointer}
+    .tr-item:hover{background:#f3f8f3}
+    .tr-item.active{background:#eaf4ec;border-color:#1a6b3a}
+    .tr-item .s-av{flex:none;width:34px;height:34px;font-size:12px}
+    .tr-right{min-width:0}
+    .tr-empty{display:flex;align-items:center;justify-content:center;min-height:220px;color:#9aa;border:1px dashed #d6e2da;border-radius:12px;text-align:center;padding:20px}
+  </style>
+  <div class="card">
+    <div class="card-title"><span>👨‍🏫</span> Teacher Room — Mark &amp; View Student Records</div>
+    <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
+      <button id="scopeMine" class="scope-btn active" onclick="setRoomScope('mine',this)">👤 My Students (<span id="cntMine">0</span>)</button>
+      <button id="scopeAll" class="scope-btn" onclick="setRoomScope('all',this)">🏫 All Students (<span id="cntAll">0</span>)</button>
+    </div>
+    <div class="tr-cols">
+      <div>
+        <input class="search" style="margin:0 0 10px;width:100%" type="text" placeholder="Search student…" oninput="filterRoom(this.value)">
+        <div id="roomList" class="tr-list"><div class="no-s">Loading…</div></div>
+      </div>
+      <div id="roomPanel" class="tr-right"><div class="tr-empty">👈 Select a student to view &amp; mark their Hifz, Sabaq, Attendance, Notes &amp; Exams</div></div>
+    </div>
+  </div>
+
   <div class="card">
     <div class="card-title"><span>💳</span> Students &amp; Fees</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
@@ -383,6 +411,36 @@ function refreshStats(){
   document.getElementById('stRevenue').textContent=money(paid.reduce((a,s)=>a+(s.monthly_fee||0),0));
 }
 
+// ── Teacher Room: My Students vs All Students, with teacher-style side panel ──
+let roomScope='mine', roomSel=null;
+function myStudentList(){ return students.filter(s=> s.teacher_id===myId || (myClass && (s.class_name||'')===myClass)); }
+function roomBase(){ return roomScope==='mine'? myStudentList() : students; }
+function roomIni(s){ return String(s.name||'?').trim().split(/\s+/).map(w=>w[0]).join('').slice(0,2).toUpperCase(); }
+function renderRoom(list){
+  const el=document.getElementById('roomList'); if(!el) return;
+  if(!list.length){ el.innerHTML='<div class="no-s">'+(roomScope==='mine'?'No students assigned to you yet':'No students')+'</div>'; return; }
+  el.innerHTML=list.map(s=>{
+    return `<div class="tr-item ${roomSel===s.id?'active':''}" onclick="selectRoom('${s.id}')">
+      <div class="s-av">${roomIni(s)}</div>
+      <div style="flex:1;min-width:0"><div class="s-name" style="font-size:14px">${esc(s.name||'Student')}</div>
+      <div class="s-meta" style="font-size:12px">${esc(s.course||'Quran Hifz')}${s.class_name&&s.class_name!==s.course?' · '+esc(s.class_name):''}</div></div>
+    </div>`;
+  }).join('');
+}
+function filterRoom(q){ q=(q||'').toLowerCase().trim(); renderRoom(q? roomBase().filter(s=>(s.name||'').toLowerCase().includes(q)) : roomBase()); }
+function setRoomScope(sc,btn){
+  roomScope=sc; roomSel=null;
+  document.querySelectorAll('.scope-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active');
+  const rp=document.getElementById('roomPanel'); if(rp) rp.innerHTML='<div class="tr-empty">👈 Select a student to view &amp; mark their Hifz, Sabaq, Attendance, Notes &amp; Exams</div>';
+  renderRoom(roomBase());
+}
+function selectRoom(id){ roomSel=id; renderRoom(roomBase()); if(window.SM) SM.select(document.getElementById('roomPanel'), id); }
+function refreshRoomCounts(){
+  const em=document.getElementById('cntMine'), ea=document.getElementById('cntAll');
+  if(em) em.textContent=myStudentList().length;
+  if(ea) ea.textContent=students.length;
+}
+
 async function reloadProfiles(){
   const {data:profiles}=await _sb.from('profiles').select('*');
   const all=profiles||[];
@@ -396,6 +454,8 @@ async function reloadProfiles(){
   refreshStats();
   applyStudentFilter();
   renderStaff(staff);
+  refreshRoomCounts();
+  renderRoom(roomBase());
 }
 
 async function postAnn(btn){
