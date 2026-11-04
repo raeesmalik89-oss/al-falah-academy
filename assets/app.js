@@ -213,6 +213,10 @@ function renderBooks() {
   const grid   = document.getElementById('booksGrid');
   const noMsg  = document.getElementById('noBooksMsg');
 
+  // Not on the books page (e.g. resources.html has a section id="books" that the
+  // lazy-loader observes, but no grid container) — bail out instead of crashing.
+  if (!grid || !noMsg) return;
+
   let filtered = ALL_BOOKS.filter(b => {
     const matchLang = activeLang === 'all' || b.lang === activeLang;
     const matchCat  = activeCat  === 'all' || b.category === activeCat;
