@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- PWA -->
+  <link rel="manifest" href="/manifest.json">
+  <meta name="theme-color" content="#1a4030">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Al-Falah">
+  <link rel="apple-touch-icon" href="/assets/icon-192.png">
+  <link rel="icon" href="/assets/favicon.png" />
+  <script src="/assets/pwa.js" defer></script>
+  <title>Page Not Found | Al-Falah Islamic Academy</title>
+  <meta name="description" content="Sorry, the page you were looking for could not be found at Al-Falah Islamic Academy." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .nf-wrap { max-width: 640px; margin: 0 auto; padding: 90px 20px 70px; text-align: center; }
+    .nf-code { font-size: clamp(5rem, 18vw, 9rem); font-weight: 800; line-height: 1;
+               color: var(--g, #1a6b3a); letter-spacing: 2px; }
+    .nf-code span { color: var(--gold, #c9a227); }
+    .nf-title { font-size: 1.6rem; font-weight: 700; margin: 10px 0 6px; color: #1a4030; }
+    .nf-text { color: #555; font-size: 1.02rem; margin-bottom: 26px; }
+    .nf-arabic { font-size: 1.3rem; color: var(--g, #1a6b3a); margin: 8px 0 30px; direction: rtl; }
+    .nf-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .nf-links { margin-top: 34px; font-size: 0.95rem; color: #666; }
+    .nf-links a { color: var(--g, #1a6b3a); font-weight: 600; margin: 0 8px; white-space: nowrap; }
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar">
+  <div class="container nav-inner">
+    <a href="index.html" class="logo">
+      <img src="assets/logo-icon.png" alt="Al-Falah Islamic Academy" style="height:40px;width:auto;display:block;margin-right:5px" />
+      <span class="logo-text">Al-Falah <span class="logo-sub">Islamic Academy</span></span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="books.html">Free e-Books</a></li>
+      <li><a href="downloads.html">Downloads</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="events.html">Events</a></li>
+      <li><a href="about.html">About Us</a></li>
+      <li><a href="tools.html">Tools</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a href="enroll.html" class="nav-cta">Enroll Free</a></li>
+      <li><a href="login.html" class="nav-login">🔐 Login</a></li>
+    </ul>
+    <button class="hamburger" onclick="toggleMenu()">☰</button>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html" onclick="toggleMenu()">Home</a>
+    <a href="courses.html" onclick="toggleMenu()">Courses</a>
+    <a href="books.html" onclick="toggleMenu()">Free e-Books</a>
+    <a href="downloads.html" onclick="toggleMenu()">Downloads</a>
+    <a href="resources.html" onclick="toggleMenu()">Resources</a>
+    <a href="gallery.html" onclick="toggleMenu()">Gallery</a>
+    <a href="events.html" onclick="toggleMenu()">Events</a>
+    <a href="about.html" onclick="toggleMenu()">About Us</a>
+    <a href="tools.html" onclick="toggleMenu()">Tools</a>
+    <a href="contact.html" onclick="toggleMenu()">Contact</a>
+    <a href="enroll.html" onclick="toggleMenu()">Enroll Free</a>
+    <a href="login.html" onclick="toggleMenu()">🔐 Login</a>
+  </div>
+</nav>
+
+<main class="nf-wrap">
+  <div class="nf-code">4<span>0</span>4</div>
+  <h1 class="nf-title">Page Not Found</h1>
+  <p class="nf-arabic">إِنَّ مَعَ الْعُسْرِ يُسْرًا</p>
+  <p class="nf-text">The page you were looking for doesn't exist or may have moved.
+     Let's get you back on the right path.</p>
+  <div class="nf-btns">
+    <a href="index.html" class="btn-primary">🏠 Back to Home</a>
+    <a href="courses.html" class="btn-secondary">📚 Browse Courses</a>
+  </div>
+  <p class="nf-links">
+    Popular pages:
+    <a href="books.html">Free e-Books</a>·
+    <a href="resources.html">Resources</a>·
+    <a href="enroll.html">Enroll Free</a>·
+    <a href="contact.html">Contact</a>
+  </p>
+</main>
+
+<script src="/assets/app.js" defer></script>
+</body>
+</html>
