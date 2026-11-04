@@ -122,6 +122,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </div>
 
   <div class="card">
+    <div class="card-title"><span>🔴</span> Live Classes <span id="liveCount" style="font-weight:400;color:#888;font-size:12px"></span></div>
+    <div id="liveList"><div class="no-s">No class is live right now</div></div>
+  </div>
+
+  <div class="card">
     <div class="card-title"><span>📝</span> Website Enrollments <span id="enrollCount" style="font-weight:400;color:#888;font-size:12px"></span></div>
     <input class="search" type="text" placeholder="Search by name or phone…" oninput="filterE(this.value)">
     <div id="enrollList"><div class="no-s">No enrollments yet</div></div>
@@ -474,9 +479,33 @@ async function makeStudent(id){
 
   await loadAnns();
   await loadEnrollments();
+  await loadLive();
+  setInterval(loadLive, 20000);   // refresh the live-class list every 20s
   document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';
 })();
+
+// ── Live Classes monitor ───────────────────────────────────────────────
+function fmtAgo(ts){
+  try{ const m=Math.max(0,Math.round((Date.now()-new Date(ts).getTime())/60000));
+    return m<1?'just now':(m<60?m+' min':Math.floor(m/60)+'h '+(m%60)+'m'); }catch(e){ return ''; }
+}
+async function loadLive(){
+  const el=document.getElementById('liveList'); if(!el) return;
+  const {data}=await _sb.from('live_sessions').select('*').eq('active',true).order('started_at',{ascending:false});
+  const list=data||[];
+  const cnt=document.getElementById('liveCount'); if(cnt) cnt.textContent=list.length?('🔴 '+list.length+' live now'):'';
+  if(!list.length){ el.innerHTML='<div class="no-s">No class is live right now</div>'; return; }
+  el.innerHTML=list.map(s=>`<div class="frow">
+    <div class="s-av" style="background:#b32424;color:#fff">🔴</div>
+    <div class="fmeta"><div class="s-name">${esc(s.teacher_name||'Teacher')}${s.class_name?' · '+esc(s.class_name):''}</div><div class="s-meta">Live for ${fmtAgo(s.started_at)}</div></div>
+    <button onclick="watchLive('${(s.room||'').replace(/'/g,"\\'")}')" style="background:#1a6b3a;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer;font-family:inherit">▶ Watch</button>
+  </div>`).join('');
+}
+function watchLive(room){
+  if(!room) return;
+  window.open('live-class.html?room='+encodeURIComponent(room)+'&name='+encodeURIComponent((aName||'CEO')+' (CEO)')+'&back=ceo-dashboard.html','_blank');
+}
 
 async function logout(){await _sb.auth.signOut();window.location.href='login.html';}
 </script>
