@@ -206,6 +206,7 @@ function renderStudents(list){
       <div class="s-av">${ini(s)}</div>
       <div class="fmeta"><div class="s-name">${s.name} <span style="font-size:11px;font-weight:700;padding:1px 7px;border-radius:20px;${s.is_roster?'background:#e7f3ec;color:#1a6b3a':'background:#eaf1fb;color:#2156a8'}">${s.is_roster?'🕌 Madrasah':'🌐 Online'}</span></div><div class="s-meta">${s.course||'Quran Hifz'}${s.email?' · '+s.email:''}</div></div>
       <div class="fee-wrap"><small>Class</small><select class="fee-in cls-in" onchange="saveClass('${s.id}',this)" title="Assign this student to a class — must match the teacher's class for the live-class join">${classOpts(s.class_name||'')}</select></div>
+      <div class="fee-wrap"><small>Teacher</small><select class="fee-in cls-in" onchange="saveTeacher('${s.id}',this)" title="Assign this student directly to a teacher — they appear in that teacher's dashboard and join that teacher's live class">${teacherOpts(s.teacher_id||'')}</select></div>
       <div class="fee-wrap"><small>Fee</small><input class="fee-in" type="number" value="${s.monthly_fee||0}" onchange="saveFee('${s.id}',this)"></div>
       <select class="stat-sel ${statusBadgeClass(ps)}" onchange="saveStatus('${s.id}',this)">
         <option value="paid" ${ps==='paid'?'selected':''}>✓ Paid</option>
@@ -260,6 +261,25 @@ async function saveClass(uid,input){
   await _sb.from('profiles').update({class_name:cls}).eq('id',uid);
   const s=students.find(x=>x.id===uid); if(s)s.class_name=cls;
   toast(cls?('✓ Class set — '+cls):'✓ Class cleared');
+}
+
+// Teacher options = every teaching staff member (teacher / admin / ceo).
+function teacherOpts(selId){
+  const list=(staff||[]).filter(t=>['teacher','admin','ceo'].includes(t.role));
+  let o='<option value="">— No teacher —</option>';
+  for(const t of list) o+=`<option value="${t.id}"${t.id===selId?' selected':''}>${esc(t.name||'Staff')}</option>`;
+  return o;
+}
+async function saveTeacher(uid,sel){
+  const tid=sel.value||null;
+  const {error}=await _sb.from('profiles').update({teacher_id:tid}).eq('id',uid);
+  if(error){
+    alert('Could not assign teacher:\n'+error.message+(/teacher_id/.test(error.message)?'\n\n➡ Run the one-line SQL to add the "teacher_id" column first.':''));
+    return;
+  }
+  const s=students.find(x=>x.id===uid); if(s)s.teacher_id=tid;
+  const t=(staff||[]).find(x=>x.id===tid);
+  toast(tid?('✓ Assigned to '+(t?t.name:'teacher')):'✓ Teacher cleared');
 }
 
 // ---- Staff & role management (CEO-only, full access) ----
