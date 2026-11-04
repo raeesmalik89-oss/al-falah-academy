@@ -204,6 +204,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
           <option value="teachers">👨‍🏫 Teachers only</option>
           <option value="admins">👔 Admins only</option>
           <option value="students">🎓 Students only</option>
+          <optgroup id="annClassGroup" label="📚 Send to a specific class"></optgroup>
         </select>
         <span id="akbMount"></span>
         <button class="btn-p" onclick="postAnn(this)">Post</button>
@@ -456,6 +457,7 @@ async function reloadProfiles(){
   renderStaff(staff);
   refreshRoomCounts();
   renderRoom(roomBase());
+  fillAnnClasses();
 }
 
 async function postAnn(btn){
@@ -463,16 +465,33 @@ async function postAnn(btn){
   const body=document.getElementById('annB').value.trim();
   if(!title||!body)return toast('Fill in both fields');
   btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Posting…';
-  const audience=document.getElementById('annAud')?.value||'all';
-  const {error}=await _sb.from('announcements').insert({title,body,teacher_name:aName,audience});
+  let audience=document.getElementById('annAud')?.value||'all';
+  let target_class=null;
+  if(audience.indexOf('class:')===0){ target_class=audience.slice(6); audience='students'; }
+  const ins={title,body,teacher_name:aName,audience};
+  if(target_class) ins.target_class=target_class;
+  let {error}=await _sb.from('announcements').insert(ins);
+  if(error && target_class && /target_class|column/i.test(error.message||'')){
+    // target_class column not added yet — post to all students and tell them how to enable class targeting.
+    const r2=await _sb.from('announcements').insert({title,body,teacher_name:aName,audience:'students'});
+    error=r2.error;
+    if(!error) alert('Posted to all students.\n\n➡ To send to a SPECIFIC class, run supabase-class-announcements.sql once in Supabase → SQL Editor.');
+  }
   if(error){
     const miss=/audience/.test(error.message||'');
     alert('Could not post:\n'+error.message+(miss?'\n\n➡ Run the setup SQL in Supabase to add the "audience" column (it enables targeting messages).':''));
     btn.disabled=false;btn.textContent='Post';return;
   }
   document.getElementById('annT').value='';document.getElementById('annB').value='';
-  toast('✓ Posted — '+(audience==='teachers'?'to teachers':audience==='admins'?'to admins':audience==='students'?'to students':'to everyone'));loadAnns();
+  toast('✓ Posted — '+(target_class?('to '+target_class+' class'):(audience==='teachers'?'to teachers':audience==='admins'?'to admins':audience==='students'?'to students':'to everyone')));loadAnns();
   btn.disabled=false;btn.textContent='Post';
+}
+function fillAnnClasses(){
+  const g=document.getElementById('annClassGroup'); if(!g)return;
+  const base=['Hifz','Nazra A','Nazra B','Nazra','Fahm-ul-Quran','Tajweed','Tafseer','Seerah-tun-Nabi','Selected Ahadith','Arabic Language','English Language'];
+  const fromStudents=students.map(s=>(s.class_name||'').trim()).filter(Boolean);
+  const all=[...new Set([...base,...fromStudents])];
+  g.innerHTML=all.map(c=>`<option value="class:${esc(c)}">📚 ${esc(c)} class</option>`).join('');
 }
 async function delAnn(id){
   if(!confirm('Delete this announcement?'))return;
@@ -483,7 +502,7 @@ async function loadAnns(){
   const {data}=await _sb.from('announcements').select('*').order('created_at',{ascending:false}).limit(10);
   const el=document.getElementById('annList');
   if(!data?.length){el.innerHTML='<p style="text-align:center;color:#999;padding:16px;font-size:13px">No announcements yet</p>';return;}
-  el.innerHTML=data.map(a=>{const aud=a.audience||'all';const tag=aud==='teachers'?'👨‍🏫 Teachers':aud==='students'?'🎓 Students':'📣 Everyone';return `<div class="ann-item"><div class="ann-t" dir="auto">${a.title}</div><div class="ann-b" dir="auto">${a.body}</div><div class="ann-m"><span>${fmtDate(a.created_at)} · ${a.teacher_name||''} · ${tag}</span><span class="ann-del" onclick="delAnn('${a.id}')">Delete</span></div></div>`;}).join('');
+  el.innerHTML=data.map(a=>{const aud=a.audience||'all';const tag=a.target_class?('📚 '+esc(a.target_class)+' class'):(aud==='teachers'?'👨‍🏫 Teachers':aud==='admins'?'👔 Admins':aud==='students'?'🎓 Students':'📣 Everyone');return `<div class="ann-item"><div class="ann-t" dir="auto">${a.title}</div><div class="ann-b" dir="auto">${a.body}</div><div class="ann-m"><span>${fmtDate(a.created_at)} · ${a.teacher_name||''} · ${tag}</span><span class="ann-del" onclick="delAnn('${a.id}')">Delete</span></div></div>`;}).join('');
 }
 
 const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));

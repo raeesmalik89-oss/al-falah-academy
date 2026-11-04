@@ -194,6 +194,21 @@ function joinLive(){
   if(!liveRoom)return;
   window.open('live-class.html?room='+encodeURIComponent(liveRoom)+'&name='+encodeURIComponent(sName)+'&back=student-dashboard.html','_blank');
 }
+// Announcements for this student: general student/all messages PLUS any posted
+// to this student's specific class. Falls back if target_class column is absent.
+async function loadStudentAnns(cls){
+  try{
+    const q = cls
+      ? _sb.from('announcements').select('*').or('and(target_class.is.null,audience.in.(students,all)),target_class.eq.'+cls)
+      : _sb.from('announcements').select('*').is('target_class',null).in('audience',['students','all']);
+    const r = await q.order('created_at',{ascending:false}).limit(8);
+    if(r.error) throw r.error;
+    return {data:r.data||[]};
+  }catch(e){
+    const r2 = await _sb.from('announcements').select('*').in('audience',['students','all']).order('created_at',{ascending:false}).limit(8);
+    return {data:r2.data||[]};
+  }
+}
 (async()=>{
   const auth = await requireSession('student');
   if(!auth) return;
@@ -203,7 +218,7 @@ function joinLive(){
   const [{data:prog},{data:att},{data:anns},{data:exams}]=await Promise.all([
     _sb.from('progress').select('*').eq('id',uid).single(),
     _sb.from('attendance').select('*').eq('student_id',uid).gte('date',new Date(Date.now()-90*86400000).toISOString().split('T')[0]).order('date',{ascending:false}).limit(400),
-    _sb.from('announcements').select('*').in('audience',['students','all']).order('created_at',{ascending:false}).limit(5),
+    loadStudentAnns((profile.class_name||'').trim()),
     _sb.from('exam_results').select('*').eq('student_id',uid).order('exam_date',{ascending:false})
   ]);
 
