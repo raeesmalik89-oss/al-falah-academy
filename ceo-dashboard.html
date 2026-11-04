@@ -123,6 +123,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
   <div class="card">
     <div class="card-title"><span>🔴</span> Live Classes <span id="liveCount" style="font-weight:400;color:#888;font-size:12px"></span></div>
+    <div id="myLiveCtrl" style="margin-bottom:12px"></div>
     <div id="liveList"><div class="no-s">No class is live right now</div></div>
   </div>
 
@@ -189,7 +190,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 <script src="supabase-config.js"></script>
 <script src="assets/dashboard-shared.js"></script>
 <script>
-let students=[], staff=[], myId=null, aName='CEO';
+let students=[], staff=[], myId=null, aName='CEO', myLiveRow=null, myClass='';
 const toast=msg=>{const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3000);};
 const ini=s=>(s.name||'?').split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
 const money=n=>'PKR '+(n||0).toLocaleString('en-PK');
@@ -488,6 +489,7 @@ async function makeStudent(id){
   if(!auth) return;
   myId=auth.session.user.id;
   aName=auth.profile.name||'CEO';
+  myClass=(auth.profile.class_name||'').trim();
   document.getElementById('navName').textContent=aName;
 
   await reloadProfiles();
@@ -501,7 +503,8 @@ async function makeStudent(id){
   await loadAnns();
   await loadEnrollments();
   await loadLive();
-  setInterval(loadLive, 20000);   // refresh the live-class list every 20s
+  await refreshMyLive();
+  setInterval(()=>{ loadLive(); refreshMyLive(); }, 20000);   // refresh live state every 20s
   document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';
 })();
@@ -526,6 +529,42 @@ async function loadLive(){
 function watchLive(room){
   if(!room) return;
   window.open('live-class.html?room='+encodeURIComponent(room)+'&name='+encodeURIComponent((aName||'CEO')+' (CEO)')+'&back=ceo-dashboard.html','_blank');
+}
+
+// ── Start / run MY OWN live class (CEO teaches too) ────────────────────
+function slugClass(c){return 'alfalah-'+String(c||'class').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
+async function refreshMyLive(){
+  const el=document.getElementById('myLiveCtrl'); if(!el) return;
+  const {data}=await _sb.from('live_sessions').select('*').eq('teacher_id',myId).eq('active',true).order('started_at',{ascending:false}).limit(1);
+  myLiveRow=(data&&data[0])||null;
+  if(myLiveRow){
+    el.innerHTML='<div class="frow" style="background:#fff5f5;border:1px solid #f3d6d6;border-radius:10px;padding:10px 12px">'
+      +'<div class="s-av" style="background:#b32424;color:#fff">🔴</div>'
+      +'<div class="fmeta"><div class="s-name">Your class is live</div><div class="s-meta">'+(myClass?('Class: '+esc(myClass)):'Your assigned students')+'</div></div>'
+      +'<button onclick="joinMyClass()" style="background:#1a6b3a;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer;font-family:inherit">Join / Re-open</button>'
+      +'<button onclick="endMyClass(this)" style="background:#fff;color:#b32424;border:1px solid #f0c9c9;border-radius:8px;padding:9px 14px;font-weight:700;cursor:pointer;font-family:inherit;margin-left:8px">⏹ End</button></div>';
+  } else {
+    el.innerHTML='<button onclick="startMyClass(this)" style="background:#1a6b3a;color:#fff;border:none;border-radius:10px;padding:11px 22px;font-weight:800;cursor:pointer;font-family:inherit">🟢 Start My Live Class</button>'
+      +'<span style="font-size:12px;color:#5b7566;margin-left:10px">Starts a live video class for the students assigned to you.</span>';
+  }
+}
+function joinMyClass(){
+  const room=myLiveRow?myLiveRow.room:slugClass(myClass||myId);
+  window.open('live-class.html?room='+encodeURIComponent(room)+'&name='+encodeURIComponent(aName||'CEO')+'&back=ceo-dashboard.html','_blank');
+}
+async function startMyClass(btn){
+  btn.disabled=true;btn.textContent='Starting…';
+  const room=slugClass(myClass||myId);
+  const {data,error}=await _sb.from('live_sessions').insert({teacher_id:myId,teacher_name:aName,class_name:myClass||null,room,active:true}).select().single();
+  if(error){ alert('Could not start class:\n'+error.message); btn.disabled=false;btn.textContent='🟢 Start My Live Class'; return; }
+  myLiveRow=data; toast('✓ Your class is live — your students can join now');
+  await refreshMyLive(); await loadLive(); joinMyClass();
+}
+async function endMyClass(btn){
+  if(!confirm('End your live class?'))return;
+  btn.disabled=true;
+  if(myLiveRow) await _sb.from('live_sessions').update({active:false,ended_at:new Date().toISOString()}).eq('id',myLiveRow.id);
+  myLiveRow=null; toast('Class ended'); refreshMyLive(); loadLive();
 }
 
 async function logout(){await _sb.auth.signOut();window.location.href='login.html';}
