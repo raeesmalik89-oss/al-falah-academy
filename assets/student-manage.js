@@ -124,25 +124,43 @@
   // ---- Open ----
   SM.open = async function (studentId, studentName) {
     if (typeof _sb === 'undefined' || !_sb) { alert('Not connected to the database yet — try again in a moment.'); return; }
-    uid = studentId; sname = studentName || '';
+    uid = studentId;
     var ov = shell();
     ov.classList.add('open');
-    document.getElementById('sm-av').textContent = initials(sname);
-    document.getElementById('sm-name').textContent = sname || 'Student';
-    document.getElementById('sm-sub').textContent = 'Loading…';
     // reset tabs to Hifz
-    var tabs = ov.querySelectorAll('.sm-tab');
-    tabs.forEach(function (t) { t.classList.toggle('active', t.getAttribute('data-tab') === 'hifz'); });
+    ov.querySelectorAll('.sm-tab').forEach(function (t) { t.classList.toggle('active', t.getAttribute('data-tab') === 'hifz'); });
     body().innerHTML = spinner;
-    var res = await _sb.from('profiles').select('name,email,course,class_name').eq('id', uid).single();
-    var u = res.data || {};
-    if (u.name) { sname = u.name; document.getElementById('sm-name').textContent = u.name; document.getElementById('sm-av').textContent = initials(u.name); }
+
+    // Prefer the record the dashboard already loaded (global `students` array),
+    // so the name/course show instantly and reliably — no dependency on a
+    // re-fetch that can come back empty. Fall back to the passed name, then DB.
+    var rec = null;
+    try {
+      if (typeof students !== 'undefined' && students && students.length) {
+        rec = students.find(function (x) { return x.id === studentId; }) || null;
+      }
+    } catch (e) {}
+    if (!rec && studentName) rec = { name: studentName };
+    setHeader(rec || {});
+    sname = (rec && rec.name) || studentName || '';
+
+    // If we still don't have a name/course, fetch the profile as a fallback.
+    if (!rec || !rec.name || !rec.course) {
+      var res = await _sb.from('profiles').select('name,email,course,class_name').eq('id', uid).single();
+      if (res && res.data) { rec = Object.assign({}, rec || {}, res.data); setHeader(rec); sname = rec.name || sname; }
+    }
+    SM.renderHifz();
+  };
+
+  function setHeader(u) {
+    var nm = u.name || 'Student';
+    document.getElementById('sm-av').textContent = (u.name ? initials(u.name) : '?');
+    document.getElementById('sm-name').textContent = nm;
     var parts = [u.course || 'Quran Hifz'];
     if (u.class_name && u.class_name !== u.course) parts.push(u.class_name);
     if (u.email) parts.push(u.email);
     document.getElementById('sm-sub').textContent = parts.join(' · ');
-    SM.renderHifz();
-  };
+  }
 
   SM.close = function () {
     var ov = document.getElementById('sm-ov');
