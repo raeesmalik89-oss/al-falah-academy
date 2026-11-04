@@ -281,7 +281,7 @@ function renderStaff(list){
       <div class="s-av">${ini(t)}</div>
       <div class="fmeta"><div class="s-name">${t.name}${isMe?' <span class="s-meta">(you)</span>':''}</div><div class="s-meta">${t.email||r}</div></div>
       <span class="role-tag ${r}">${r}</span>
-      ${r==='teacher'?`<div class="fee-wrap"><small>Teaches class</small><select class="fee-in cls-in" onchange="saveTeacherClass('${t.id}',this)" title="This teacher will see only students in this class">${classOpts(t.class_name||'')}</select></div>`:''}
+      ${['teacher','admin','ceo'].includes(r)?`<div class="fee-wrap"><small>Teaches class</small><select class="fee-in cls-in" onchange="saveTeacherClass('${t.id}',this)" title="Assign a class to see only its students and to run its live class (leave blank if not teaching)">${classOpts(t.class_name||'')}</select></div>`:''}
       <select class="role-sel" onchange="saveRole('${t.id}',this)" ${isMe?'disabled title="You cannot change your own role"':''}>
         <option value="student" ${r==='student'?'selected':''}>Student</option>
         <option value="teacher" ${r==='teacher'?'selected':''}>Teacher</option>
