@@ -1,13 +1,6 @@
-/* Muhammad Raees — portfolio progressive enhancement.
-   The page is fully usable with JavaScript disabled; this only adds:
-   1) an accessible mobile-nav toggle, 2) a light/dark theme toggle
-   (respecting prefers-color-scheme, remembered in localStorage), and
-   3) the current year in the footer. */
-
 (function () {
   'use strict';
 
-  // ---- Mobile navigation ----
   var toggle = document.getElementById('navToggle');
   var menu = document.getElementById('navMenu');
 
@@ -30,19 +23,17 @@
       if (expanded) { closeMenu(); } else { openMenu(); }
     });
 
-    // Close after choosing a link (mobile) and on Escape.
     menu.addEventListener('click', function (e) {
       if (e.target.closest('a')) closeMenu();
     });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape') closeMenu();
     });
-    // Reset to desktop state when the viewport grows past the breakpoint.
+
     var mq = window.matchMedia('(min-width: 761px)');
     (mq.addEventListener ? mq.addEventListener.bind(mq, 'change') : mq.addListener.bind(mq))(closeMenu);
   }
 
-  // ---- Theme toggle ----
   var themeBtn = document.getElementById('themeToggle');
   var root = document.documentElement;
 
@@ -50,7 +41,7 @@
     try { return localStorage.getItem('mr-theme'); } catch (e) { return null; }
   }
   function storeTheme(t) {
-    try { localStorage.setItem('mr-theme', t); } catch (e) { /* private mode: ignore */ }
+    try { localStorage.setItem('mr-theme', t); } catch (e) {  }
   }
   function systemPrefersDark() {
     return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -63,7 +54,6 @@
     }
   }
 
-  // Initialise from stored choice, else leave CSS prefers-color-scheme in control.
   var saved = storedTheme();
   if (saved === 'dark' || saved === 'light') applyTheme(saved);
 
@@ -77,7 +67,6 @@
     });
   }
 
-  // ---- Footer year ----
   var yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = String(new Date().getFullYear());
 })();

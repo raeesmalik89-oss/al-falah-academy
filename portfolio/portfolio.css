@@ -1,19 +1,14 @@
-/* Muhammad Raees — portfolio styles.
-   Static, no build step. Mobile-first. Light + dark themes (prefers-color-scheme,
-   overridable via [data-theme] set by portfolio.js). Palette contrast verified for
-   WCAG 2.1 AA (body text >= 4.5:1, large text/UI >= 3:1) in both themes. */
-
 :root {
   --bg: #f6f9f7;
   --surface: #ffffff;
   --surface-alt: #eef3f0;
-  --text: #13231b;          /* on --bg/--surface: ~14:1 */
-  --muted: #475a51;         /* on --surface: ~7.3:1 */
+  --text: #13231b;
+  --muted: #475a51;
   --border: #d8e2dc;
   --brand: #1a4030;
-  --accent: #0f5a30;        /* link/accent text on light: ~6.4:1 */
-  --accent-strong: #1a6b3a; /* button bg; white text on it: ~5.0:1 */
-  --gold: #8a6d1f;          /* gold text on light: ~5.2:1 */
+  --accent: #0f5a30;
+  --accent-strong: #1a6b3a;
+  --gold: #8a6d1f;
   --on-accent: #ffffff;
   --chip-bg: #e7f0ea;
   --chip-text: #16432b;
@@ -30,13 +25,13 @@
     --bg: #0d1a14;
     --surface: #142a20;
     --surface-alt: #10221a;
-    --text: #e9f1ed;          /* on dark: ~15:1 */
-    --muted: #a6bbb0;         /* on --surface: ~7.2:1 */
+    --text: #e9f1ed;
+    --muted: #a6bbb0;
     --border: #244536;
     --brand: #1a4030;
-    --accent: #5cd08c;        /* accent text on dark: ~8.5:1 */
-    --accent-strong: #2f9e5e; /* button bg; dark text on it */
-    --gold: #d8b968;          /* gold text on dark: ~8:1 */
+    --accent: #5cd08c;
+    --accent-strong: #2f9e5e;
+    --gold: #d8b968;
     --on-accent: #06130c;
     --chip-bg: #16302410;
     --chip-bg: #183526;
@@ -89,7 +84,6 @@ body {
 a { color: var(--accent); text-decoration: none; }
 a:hover { text-decoration: underline; }
 
-/* Visible keyboard focus everywhere */
 :focus-visible {
   outline: 3px solid var(--accent);
   outline-offset: 2px;
@@ -104,7 +98,6 @@ a:hover { text-decoration: underline; }
 }
 .skip-link:focus { top: 8px; text-decoration: none; }
 
-/* ---------- Header / nav ---------- */
 .site-header {
   position: sticky; top: 0; z-index: 100;
   background: color-mix(in srgb, var(--bg) 88%, transparent);
@@ -167,7 +160,6 @@ a:hover { text-decoration: underline; }
   .theme-toggle { align-self: flex-start; }
 }
 
-/* ---------- Hero ---------- */
 .hero {
   background:
     radial-gradient(1000px 420px at 80% -10%, color-mix(in srgb, var(--accent-strong) 18%, transparent), transparent),
@@ -199,7 +191,6 @@ a:hover { text-decoration: underline; }
 .btn-ghost { background: transparent; color: var(--text); border-color: var(--border); }
 .btn-ghost:hover { background: var(--surface-alt); }
 
-/* ---------- Sections ---------- */
 .section { padding: clamp(48px, 8vw, 88px) 0; }
 .section-alt { background: var(--surface-alt); }
 .section-title {
@@ -216,7 +207,6 @@ a:hover { text-decoration: underline; }
 .prose p { color: var(--muted); max-width: 760px; margin-bottom: 16px; font-size: 17px; }
 .prose strong { color: var(--text); }
 
-/* ---------- Skills ---------- */
 .skill-groups { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px 32px; }
 .skill-group { min-width: 0; }
 .skills-group-title { font-size: 16px; margin: 0 0 12px; color: var(--text); }
@@ -233,7 +223,6 @@ a:hover { text-decoration: underline; }
   background: var(--learn-bg); color: var(--learn-text); border-color: var(--learn-border);
 }
 
-/* ---------- Project cards ---------- */
 .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
 .card {
   background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius);
@@ -262,7 +251,6 @@ a:hover { text-decoration: underline; }
 }
 .card-link { font-weight: 700; color: var(--accent); align-self: flex-start; }
 
-/* ---------- Timeline (experience / education) ---------- */
 .timeline { list-style: none; display: grid; gap: 16px; max-width: 820px; }
 .tl-item {
   background: var(--surface); border: 1px solid var(--border);
@@ -284,7 +272,6 @@ a:hover { text-decoration: underline; }
 }
 .note code { background: var(--surface); padding: 1px 6px; border-radius: 6px; }
 
-/* ---------- Contact ---------- */
 .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
 .contact-card {
   display: grid; gap: 4px; padding: 20px; border-radius: var(--radius);
@@ -299,6 +286,5 @@ a:hover { text-decoration: underline; }
 .contact-label { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
 .contact-val { font-weight: 600; word-break: break-word; }
 
-/* ---------- Footer ---------- */
 .site-footer { border-top: 1px solid var(--border); padding: 28px 0; background: var(--surface-alt); }
 .site-footer p { color: var(--muted); font-size: 14px; text-align: center; }

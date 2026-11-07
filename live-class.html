@@ -27,13 +27,13 @@
 </head>
 <body>
   <div id="bar">
-    <span class="ttl">🕌 Al-Falah — Live Class</span>
+    <span class="ttl">🕌 Al-Falah - Live Class</span>
     <span id="room" style="color:#9ccbb2;font-size:13px"></span>
     <span class="sp"></span>
     <button id="recBtn" class="btn rec" onclick="toggleRec()">⏺ Record</button>
     <button class="btn leave" onclick="leave()">Leave</button>
   </div>
-  <div id="meet"><div id="msg">Loading class…</div></div>
+  <div id="meet"><div id="msg">Loading class...</div></div>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="supabase-config.js"></script>
@@ -83,9 +83,7 @@
   }
 
   async function startMeet() {
-    // Prefer JaaS (8x8): the teacher is a moderator and the class starts with no
-    // login wall. If the token function isn't configured, fall back to the free
-    // public meet.jit.si so the page keeps working either way.
+
     try {
       if (typeof SUPABASE_URL !== 'undefined' && SUPABASE_URL) {
         var token = await getAccessToken();
@@ -103,9 +101,8 @@
           }
         }
       }
-    } catch (e) { /* fall through to the public server */ }
+    } catch (e) {  }
 
-    // Fallback: public meet.jit.si (note: now requires a moderator to log in).
     try {
       await loadScript('https://meet.jit.si/external_api.js');
       initJitsi('meet.jit.si', room, null);
@@ -116,7 +113,6 @@
   }
   startMeet();
 
-  // ---- Local recording (screen + audio) → downloads to this device --------
   var rec = null, chunks = [];
   async function toggleRec() {
     var btn = document.getElementById('recBtn');
@@ -124,7 +120,7 @@
     try {
       var stream = await navigator.mediaDevices.getDisplayMedia({
         video: { frameRate: 15 },
-        audio: true   // tick "Share tab audio" in the picker to capture voices
+        audio: true
       });
       rec = new MediaRecorder(stream, { mimeType: MediaRecorder.isTypeSupported('video/webm;codecs=vp9') ? 'video/webm;codecs=vp9' : 'video/webm' });
       chunks = [];
@@ -138,7 +134,7 @@
         a.click();
         btn.textContent = '⏺ Record'; btn.classList.remove('on');
       };
-      // If the teacher stops sharing from the browser bar, finish the recording.
+
       stream.getVideoTracks()[0].addEventListener('ended', function () { if (rec && rec.state === 'recording') rec.stop(); });
       rec.start();
       btn.textContent = '⏹ Stop & Save'; btn.classList.add('on');
@@ -150,7 +146,7 @@
   function leave() {
     try { if (rec && rec.state === 'recording') rec.stop(); } catch (e) {}
     try { if (api) api.dispose(); } catch (e) {}
-    // Teachers return to their dashboard; students to theirs.
+
     window.location.href = (params.get('back') || 'index.html');
   }
 </script>

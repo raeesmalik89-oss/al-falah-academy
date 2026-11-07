@@ -1,7 +1,7 @@
 {
   "name": "Al-Falah Islamic Academy",
   "short_name": "Al-Falah",
-  "description": "Student & Teacher portal for Al-Falah Islamic Academy — attendance, fees, progress and announcements.",
+  "description": "Student & Teacher portal for Al-Falah Islamic Academy - attendance, fees, progress and announcements.",
   "start_url": "/login.html",
   "scope": "/",
   "display": "standalone",

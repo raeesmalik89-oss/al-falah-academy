@@ -1,19 +1,3 @@
-// Al-Falah Academy — Edge Function: mint a JaaS (8x8 Jitsi-as-a-Service) JWT.
-//
-// Called by live-class.html. Teachers / admins / CEOs get a MODERATOR token
-// (they start the class, no "waiting for moderator" wall); students and guests
-// get a non-moderator token. This replaces the free public meet.jit.si, which
-// now forces a moderator to log in before a class can start.
-//
-// Secrets to set (Supabase Dashboard → Edge Functions → jaas-token → Secrets):
-//   JAAS_APP_ID      — your AppID, e.g. "vpaas-magic-cookie-xxxxxxxx" (required)
-//   JAAS_KID         — the API Key id, e.g. "vpaas-magic-cookie-xxxxxxxx/abc123" (required)
-//   JAAS_PRIVATE_KEY — the RSA private key (PKCS#8 PEM, including the
-//                      -----BEGIN PRIVATE KEY----- lines) you downloaded (required)
-// SUPABASE_URL / SUPABASE_ANON_KEY / SUPABASE_SERVICE_ROLE_KEY are auto-injected.
-//
-// Deploy: see supabase/functions/jaas-token/README.md  (deploy with --no-verify-jwt)
-
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 const corsHeaders = {
@@ -29,7 +13,6 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
-// base64url helpers
 function b64url(bytes: Uint8Array): string {
   let s = "";
   for (const b of bytes) s += String.fromCharCode(b);
@@ -74,14 +57,13 @@ Deno.serve(async (req) => {
   const KID = Deno.env.get("JAAS_KID");
   const PRIVATE_KEY = Deno.env.get("JAAS_PRIVATE_KEY");
   if (!APP_ID || !KID || !PRIVATE_KEY) {
-    // Not configured yet → tell the client so it can fall back to meet.jit.si.
+
     return json({ error: "JaaS not configured" }, 501);
   }
 
   try {
     const { room, name } = await req.json().catch(() => ({}));
 
-    // Identify the caller (if logged in) to decide moderator vs guest.
     let isModerator = false;
     let displayName = (name && String(name)) || "Guest";
     let email = "";

@@ -1,6 +1,6 @@
 # Enrollment email notifications (Supabase webhook)
 
-Emails you whenever a new row is inserted into `enrollments` — reliable and independent
+Emails you whenever a new row is inserted into `enrollments` - reliable and independent
 of the old client-side FormSubmit call. Flow:
 
 ```
@@ -10,8 +10,8 @@ enroll.html → INSERT into enrollments → Database Webhook → notify-enrollme
 ## 1. Get a Resend API key (free)
 
 1. Sign up at https://resend.com with **raees.malik89@gmail.com** (use the same address you
-   want notifications sent to — then the test sender works with no domain setup).
-2. **API Keys → Create API Key** → copy it (starts with `re_…`).
+   want notifications sent to - then the test sender works with no domain setup).
+2. **API Keys → Create API Key** → copy it (starts with `re_...`).
 
 > Using the default sender `onboarding@resend.dev`, Resend will only deliver to the email of
 > the Resend account owner. That's fine here. To send from `info@alfalah-academy.com` or to
@@ -19,12 +19,12 @@ enroll.html → INSERT into enrollments → Database Webhook → notify-enrollme
 
 ## 2. Deploy the Edge Function
 
-**Option A — Dashboard (no CLI):** Supabase → **Edge Functions → Create a function** →
+**Option A - Dashboard (no CLI):** Supabase → **Edge Functions → Create a function** →
 name it exactly `notify-enrollment` → paste `index.ts` → **Deploy**. Then disable the JWT
 check: open the function → **Details/Settings → Verify JWT = OFF** (the webhook is not a
 logged-in user; the shared secret below protects it instead).
 
-**Option B — CLI:**
+**Option B - CLI:**
 ```bash
 supabase functions deploy notify-enrollment --no-verify-jwt --project-ref dbvlknklrasuztbicahq
 ```
@@ -35,10 +35,10 @@ Supabase → Edge Functions → `notify-enrollment` → **Secrets** (or via CLI)
 
 | Secret | Value |
 |---|---|
-| `RESEND_API_KEY` | your `re_…` key (required) |
+| `RESEND_API_KEY` | your `re_...` key (required) |
 | `NOTIFY_TO` | `raees.malik89@gmail.com` (comma-separate for more) |
 | `NOTIFY_FROM` | `Al-Falah Academy <onboarding@resend.dev>` (or a verified-domain address) |
-| `WEBHOOK_SECRET` | any long random string — must match the webhook header in step 4 |
+| `WEBHOOK_SECRET` | any long random string - must match the webhook header in step 4 |
 
 ```bash
 supabase secrets set RESEND_API_KEY=re_xxx NOTIFY_TO=raees.malik89@gmail.com \

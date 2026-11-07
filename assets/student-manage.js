@@ -1,25 +1,9 @@
-/* Al-Falah Academy — Student Manager (shared)
- * The teacher's per-student toolkit (Hifz, Sabaq, Attendance, Notes, Exams),
- * usable two ways on the CEO/Admin dashboards WITHOUT touching the teacher page:
- *   • as a pop-up            → openStudentManager(id)           (SM.open)
- *   • as an inline side panel → SM.select(containerEl, id)       (teacher-style)
- *
- * Requires (provided by the dashboards): global `_sb`, plus `SURAHS` and
- * `fmtDate()` from assets/dashboard-shared.js, and ideally the page's global
- * `students` array (so the header fills instantly) and `toast()`.
- *
- * Writes to progress (upsert), attendance (insert), exam_results (insert/delete).
- * If a write is blocked by RLS, it points to supabase-staff-manage-rls.sql.
- *
- * Selectors are scoped to the active panel (a `.sm-panel` root) so the pop-up
- * and an inline panel never collide on element ids.
- */
 (function () {
   'use strict';
 
   var SM = {};
-  var activeRoot = null;   // the .sm-panel currently being interacted with
-  var uid = null;          // current student id (per panel operation)
+  var activeRoot = null;
+  var uid = null;
 
   function note(msg) { if (typeof window.toast === 'function') window.toast(msg); }
   function initials(name) {
@@ -49,7 +33,6 @@
     } else { alert('Could not save:\n' + m); }
   }
 
-  // ---- CSS (injected once; all classes prefixed sm-) ----
   function injectCss() {
     if (document.getElementById('sm-css')) return;
     var css = document.createElement('style');
@@ -92,13 +75,12 @@
     document.head.appendChild(css);
   }
 
-  // ---- panel markup (shared by modal + inline) ----
   function panelInner(withClose) {
     return '' +
       '<div class="sm-hdr">' +
         '<div class="sm-av"></div>' +
         '<div style="flex:1;min-width:0"><div class="sm-name"></div><div class="sm-sub"></div></div>' +
-        '<select class="sm-lang" title="Typing language — for Notes, Sabaq & Exams" onchange="SM.lang(this.value)">' +
+        '<select class="sm-lang" title="Typing language - for Notes, Sabaq & Exams" onchange="SM.lang(this.value)">' +
           '<option value="en">⌨ English</option><option value="ur">اردو</option><option value="ar">عربی</option>' +
         '</select>' +
         (withClose ? '<button class="sm-x" title="Close" onclick="SM.close()">&times;</button>' : '') +
@@ -113,7 +95,7 @@
       '<div class="sm-body"></div>';
   }
 
-  var spinner = '<div class="sm-muted">Loading…</div>';
+  var spinner = '<div class="sm-muted">Loading...</div>';
 
   function setHeader(root, u) {
     root.querySelector('.sm-av').textContent = (u && u.name ? initials(u.name) : '?');
@@ -124,9 +106,8 @@
     root.querySelector('.sm-sub').textContent = parts.join(' · ');
   }
 
-  // Load a student into a given .sm-panel root (shared by modal + inline).
   async function load(root, studentId) {
-    if (typeof _sb === 'undefined' || !_sb) { alert('Not connected to the database yet — try again in a moment.'); return; }
+    if (typeof _sb === 'undefined' || !_sb) { alert('Not connected to the database yet - try again in a moment.'); return; }
     activeRoot = root; uid = studentId;
     root.querySelectorAll('.sm-tab').forEach(function (t) { t.classList.toggle('active', t.getAttribute('data-tab') === 'hifz'); });
     body().innerHTML = spinner;
@@ -139,7 +120,6 @@
     if (activeRoot === root) SM.renderHifz();
   }
 
-  // ---- Pop-up (modal) ----
   function modalShell() {
     var ov = document.getElementById('sm-ov');
     if (ov) return ov;
@@ -157,7 +137,7 @@
     ov.classList.add('open');
     load(ov.querySelector('.sm-panel'), studentId);
   };
-  // Switch the roman→Urdu/Arabic typing helper for Notes/Sabaq/Exam fields.
+
   SM.lang = function (v) { if (window.AKB && AKB.setMode) AKB.setMode(v); };
 
   SM.close = function () {
@@ -165,8 +145,6 @@
     if (ov) ov.classList.remove('open');
   };
 
-  // ---- Inline side panel ----
-  // Build (once) an inline panel inside `container` and load a student into it.
   SM.select = function (container, studentId) {
     injectCss();
     var root = container.querySelector('.sm-panel');
@@ -177,7 +155,6 @@
     load(root, studentId);
   };
 
-  // ---- tab switch ----
   SM.tab = function (t, btn) {
     var root = btn.closest('.sm-panel');
     activeRoot = root;
@@ -191,7 +168,6 @@
     else if (t === 'exams') SM.renderExams();
   };
 
-  // ---- Hifz ----
   SM.renderHifz = async function () {
     var root = activeRoot, id = uid;
     var res = await _sb.from('progress').select('surahs').eq('id', id).single();
@@ -219,14 +195,13 @@
     activeRoot = btn.closest('.sm-panel');
     var mem = [];
     body().querySelectorAll('.sm-hc.done').forEach(function (c) { mem.push(parseInt(c.getAttribute('data-n'), 10)); });
-    btn.disabled = true; btn.textContent = 'Saving…';
+    btn.disabled = true; btn.textContent = 'Saving...';
     var r = await _sb.from('progress').upsert({ id: uid, surahs: mem, last_updated: new Date().toISOString() });
     btn.disabled = false; btn.textContent = '💾 Save Progress';
     if (r.error) return writeError(r.error);
-    note('✓ Saved — ' + mem.length + ' surahs memorized');
+    note('✓ Saved - ' + mem.length + ' surahs memorized');
   };
 
-  // ---- Sabaq ----
   SM.renderSabaq = async function () {
     var root = activeRoot, id = uid;
     var res = await _sb.from('progress').select('portion,marks').eq('id', id).single();
@@ -235,7 +210,7 @@
     body().innerHTML =
       '<p class="sm-hint">What the student is currently reading, and their latest marks. Shown in the student portal.</p>' +
       '<div class="sm-row"><label>Current Sabaq / Portion</label><input class="sm-f-portion" dir="auto" value="' + esc(p.portion) + '" placeholder="e.g. Para 5, or Noorani Qaida Lesson 10"></div>' +
-      '<div class="sm-row"><label>Latest Marks (0–100)</label><input class="sm-f-marks" type="number" min="0" max="100" value="' + (p.marks == null ? '' : p.marks) + '" placeholder="e.g. 85"></div>' +
+      '<div class="sm-row"><label>Latest Marks (0-100)</label><input class="sm-f-marks" type="number" min="0" max="100" value="' + (p.marks == null ? '' : p.marks) + '" placeholder="e.g. 85"></div>' +
       '<button class="sm-btn" onclick="SM.saveSabaq(this)">💾 Save Sabaq</button>';
   };
   SM.saveSabaq = async function (btn) {
@@ -243,18 +218,16 @@
     var portion = f('.sm-f-portion').value.trim();
     var marks = parseInt(f('.sm-f-marks').value, 10);
     if (isNaN(marks)) marks = null; else marks = Math.max(0, Math.min(100, marks));
-    btn.disabled = true; btn.textContent = 'Saving…';
+    btn.disabled = true; btn.textContent = 'Saving...';
     var r = await _sb.from('progress').upsert({ id: uid, portion: portion || null, marks: marks, last_updated: new Date().toISOString() });
     btn.disabled = false; btn.textContent = '💾 Save Sabaq';
     if (r.error) return writeError(r.error);
     note('✓ Sabaq saved');
   };
 
-  // ---- Attendance ----
   SM.renderAtt = async function () {
     var root = activeRoot, id = uid;
-    // Show the last 90 days of attendance (records are kept indefinitely in the
-    // database; this just widens what's displayed). 'limit' is a safety cap.
+
     var cutoff = new Date(Date.now() - 90 * 86400000).toISOString().split('T')[0];
     var res = await _sb.from('attendance').select('*').eq('student_id', id)
       .gte('date', cutoff).order('date', { ascending: false }).limit(400);
@@ -279,7 +252,7 @@
       '<div class="sm-row"><label>Status</label><select class="sm-f-astat"><option value="true">✓ Present</option><option value="false">✗ Absent</option></select></div>' +
       '<button class="sm-btn" onclick="SM.markAtt(this)">Mark Attendance</button>' +
       '<div style="margin-top:18px;padding-top:14px;border-top:1px solid #eef3ee">' +
-        '<p style="font-size:12px;font-weight:700;color:#667;margin-bottom:10px">ATTENDANCE — LAST 90 DAYS</p>' + summary + rows + '</div>';
+        '<p style="font-size:12px;font-weight:700;color:#667;margin-bottom:10px">ATTENDANCE - LAST 90 DAYS</p>' + summary + rows + '</div>';
   };
   SM.markAtt = async function (btn) {
     activeRoot = btn.closest('.sm-panel');
@@ -287,15 +260,14 @@
     var lesson = f('.sm-f-alesson').value.trim();
     var present = f('.sm-f-astat').value === 'true';
     if (!date) return note('Select a date');
-    btn.disabled = true; btn.textContent = 'Saving…';
+    btn.disabled = true; btn.textContent = 'Saving...';
     var r = await _sb.from('attendance').insert({ student_id: uid, date: date, lesson: lesson || 'Class', present: present });
     btn.disabled = false; btn.textContent = 'Mark Attendance';
     if (r.error) return writeError(r.error);
-    note('✓ Attendance marked — ' + (present ? 'Present' : 'Absent'));
+    note('✓ Attendance marked - ' + (present ? 'Present' : 'Absent'));
     SM.renderAtt();
   };
 
-  // ---- Notes ----
   SM.renderNotes = async function () {
     var root = activeRoot, id = uid;
     var res = await _sb.from('progress').select('notes,note_link').eq('id', id).single();
@@ -305,19 +277,19 @@
     body().innerHTML =
       '<p class="sm-hint">Notes are visible to the student in their portal. Use the language selector (top-right) to type in اردو or عربی.</p>' +
       '<div class="sm-row"><textarea class="sm-f-notes" dir="auto">' + esc(notes) + '</textarea></div>' +
-      '<div class="sm-row"><label>📎 Attachment link (optional) — Google Drive / PDF / video URL</label>' +
-        '<input class="sm-f-notelink" type="url" placeholder="https://… (paste a link to a file or video)" value="' + esc(link) + '"></div>' +
+      '<div class="sm-row"><label>📎 Attachment link (optional) - Google Drive / PDF / video URL</label>' +
+        '<input class="sm-f-notelink" type="url" placeholder="https://... (paste a link to a file or video)" value="' + esc(link) + '"></div>' +
       '<button class="sm-btn" onclick="SM.saveNotes(this)">💾 Save Notes</button>';
   };
   SM.saveNotes = async function (btn) {
     activeRoot = btn.closest('.sm-panel');
     var link = (f('.sm-f-notelink').value || '').trim();
     if (link && !/^https?:\/\//i.test(link)) return note('Attachment link must start with http:// or https://');
-    btn.disabled = true; btn.textContent = 'Saving…';
+    btn.disabled = true; btn.textContent = 'Saving...';
     var r = await _sb.from('progress').upsert({ id: uid, notes: f('.sm-f-notes').value, note_link: link || null, last_updated: new Date().toISOString() });
     btn.disabled = false; btn.textContent = '💾 Save Notes';
     if (r.error) {
-      // If the note_link column isn't added yet, save the note text alone so work isn't lost.
+
       if (/note_link|column/i.test(r.error.message || '')) {
         var r2 = await _sb.from('progress').upsert({ id: uid, notes: f('.sm-f-notes').value, last_updated: new Date().toISOString() });
         if (r2.error) return writeError(r2.error);
@@ -328,7 +300,6 @@
     note('✓ Notes saved');
   };
 
-  // ---- Exams ----
   SM.renderExams = async function () {
     var root = activeRoot, id = uid;
     var res = await _sb.from('exam_results').select('*').eq('student_id', id).order('exam_date', { ascending: false });
@@ -337,7 +308,7 @@
     var rows = data.length ? data.map(function (e) {
       var pct = e.total ? Math.round(e.obtained / e.total * 100) : 0;
       return '<div class="sm-rowline"><span><strong>' + esc(e.title) + '</strong>' + (e.subject ? ' · ' + esc(e.subject) : '') +
-        '<br><span style="font-size:11px;color:#778">' + fmt(e.exam_date) + (e.remarks ? ' — ' + esc(e.remarks) : '') + '</span></span>' +
+        '<br><span style="font-size:11px;color:#778">' + fmt(e.exam_date) + (e.remarks ? ' - ' + esc(e.remarks) : '') + '</span></span>' +
         '<span style="text-align:right"><span class="sm-pill">' + e.obtained + '/' + e.total + ' (' + pct + '%)</span>' +
         '<br><span class="sm-del" onclick="SM.delExam(this,\'' + e.id + '\')">Delete</span></span></div>';
     }).join('') : '<p class="sm-muted">No exam results yet</p>';
@@ -362,7 +333,7 @@
     var remarks = f('.sm-f-exr').value.trim();
     if (!title) return note('Enter an exam title');
     if (isNaN(obtained)) return note('Enter marks obtained');
-    btn.disabled = true; btn.textContent = 'Saving…';
+    btn.disabled = true; btn.textContent = 'Saving...';
     var r = await _sb.from('exam_results').insert({ student_id: uid, title: title, subject: subject, obtained: obtained, total: total, exam_date: exam_date, remarks: remarks });
     btn.disabled = false; btn.textContent = 'Add Result';
     if (r.error) return writeError(r.error);

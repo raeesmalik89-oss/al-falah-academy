@@ -1,14 +1,6 @@
-/* Al-Falah Academy — Roman→Urdu / Arabic typing helper.
- * A small floating language dropdown (English / اردو / عربی). Pick Urdu or
- * Arabic and type on your normal keyboard in English letters — it converts to
- * Urdu/Arabic script live, in whatever text box you're typing in. No on-screen
- * keyboard covering the page; you always see what you type. Works on laptop and
- * phone (physical or on-screen Latin keyboard).
- */
 (function () {
   'use strict';
 
-  // Roman → Urdu. Digraphs (two letters) are checked first.
   var UR = {
     di: { kh:'خ', gh:'غ', sh:'ش', ch:'چ', ph:'پھ', th:'تھ', dh:'دھ', bh:'بھ',
           rh:'ڑھ', zh:'ژ', aa:'آ', ee:'ی', oo:'و', ai:'ے', au:'و' },
@@ -16,7 +8,7 @@
            r:'ر', z:'ز', g:'گ', f:'ف', q:'ق', k:'ک', l:'ل', m:'م', n:'ن',
            w:'و', v:'و', o:'و', u:'و', e:'ی', i:'ی', y:'ی', x:'کھ' }
   };
-  // Roman → Arabic.
+
   var AR = {
     di: { kh:'خ', gh:'غ', sh:'ش', th:'ث', dh:'ذ', aa:'ا', ee:'ي', oo:'و' },
     one: { a:'ا', b:'ب', p:'ب', t:'ت', s:'س', j:'ج', c:'ك', h:'ه', d:'د',
@@ -24,7 +16,7 @@
            w:'و', v:'ف', o:'و', u:'و', e:'ي', i:'ي', y:'ي', x:'كس' }
   };
 
-  var mode = 'en'; // 'en' | 'ur' | 'ar'
+  var mode = 'en';
 
   function isTextField(el) {
     if (!el) return false;
@@ -50,7 +42,6 @@
     el.selectionStart = el.selectionEnd = s - n;
   }
 
-  // Intercept letter keys and convert while in Urdu/Arabic mode.
   document.addEventListener('keydown', function (e) {
     if (mode === 'en') return;
     if (e.ctrlKey || e.metaKey || e.altKey) return;
@@ -71,11 +62,9 @@
       el._akbLast = k;
     }
   }, true);
-  // Reset digraph state when the user clicks elsewhere.
+
   document.addEventListener('click', function (e) { if (isTextField(e.target)) e.target._akbLast = ''; }, true);
 
-  // ---- Nastaliq font for Urdu/Arabic text --------------------------------
-  // Loaded from Google Fonts; Latin characters fall back to the site font.
   var pc1 = document.createElement('link'); pc1.rel = 'preconnect'; pc1.href = 'https://fonts.googleapis.com'; document.head.appendChild(pc1);
   var pc2 = document.createElement('link'); pc2.rel = 'preconnect'; pc2.href = 'https://fonts.gstatic.com'; pc2.crossOrigin = 'anonymous'; document.head.appendChild(pc2);
   var font = document.createElement('link');
@@ -83,10 +72,9 @@
   font.href = 'https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;500;700&display=swap';
   document.head.appendChild(font);
 
-  // ---- Floating language dropdown ----------------------------------------
   var style = document.createElement('style');
   style.textContent = [
-    // Nastaliq for right-to-left (Urdu/Arabic) content; Latin uses the fallback.
+
     '[dir="auto"],.ann-t,.ann-b,.ann-title,.ann-body,#annT,#annB,#sPortion{font-family:"Noto Nastaliq Urdu","Jameel Noori Nastaleeq",system-ui,"Segoe UI",Tahoma,sans-serif;line-height:2.2}',
     '#akbBar{position:fixed;right:16px;bottom:16px;z-index:9999;background:#1a6b3a;color:#fff;border-radius:50px;padding:8px 10px 8px 16px;display:flex;align-items:center;gap:8px;box-shadow:0 4px 14px rgba(0,0,0,.25);font-family:inherit;font-size:14px}',
     '#akbBar.inline{position:static;right:auto;bottom:auto;box-shadow:none;padding:6px 8px 6px 14px}',
@@ -104,8 +92,7 @@
   sel.id = 'akbSel';
   sel.innerHTML = '<option value="en">English</option><option value="ur">اردو</option><option value="ar">عربی</option>';
   bar.appendChild(sel);
-  // Mount inline next to the Post button if the page provides a spot;
-  // otherwise float it in the bottom-right corner.
+
   var mount = document.getElementById('akbMount');
   if (mount) { bar.classList.add('inline'); mount.appendChild(bar); }
   else { document.body.appendChild(bar); }
@@ -114,7 +101,6 @@
   hint.id = 'akbHint';
   document.body.appendChild(hint);
 
-  // Let other scripts (e.g. the student-manage panel) switch typing language.
   window.AKB = {
     setMode: function (m) { mode = (m === 'ur' || m === 'ar') ? m : 'en'; if (sel) sel.value = mode; },
     getMode: function () { return mode; }

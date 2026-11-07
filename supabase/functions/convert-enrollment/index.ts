@@ -1,12 +1,3 @@
-// Al-Falah Academy — Edge Function: convert an enrollment lead into a student login.
-//
-// Called from the Admin/CEO dashboard "➕ Student" button. Runs server-side with the
-// service role key (auto-injected by Supabase — never exposed to the browser).
-//
-// Security: the caller must be a signed-in admin or ceo; verified from their JWT.
-// Deploy:  see docs — Supabase Dashboard → Edge Functions → create "convert-enrollment"
-//          → paste this file → Deploy. No secrets to set (Supabase injects them).
-
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 
 const corsHeaders = {
@@ -22,7 +13,6 @@ function json(body: unknown, status = 200): Response {
   });
 }
 
-// Readable temporary password, e.g. "Alf-7Kp9m2Qx".
 function genPassword(): string {
   const chars = "ABCDEFGHJKMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789";
   const arr = new Uint32Array(9);
@@ -41,37 +31,31 @@ Deno.serve(async (req) => {
     const SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
     const authHeader = req.headers.get("Authorization") || "";
 
-    // 1) Identify the caller from their JWT.
     const caller = createClient(SUPABASE_URL, ANON_KEY, {
       global: { headers: { Authorization: authHeader } },
     });
     const { data: { user }, error: uErr } = await caller.auth.getUser();
     if (uErr || !user) return json({ error: "Not signed in." }, 401);
 
-    // 2) Service-role client (full access, server-side only).
     const admin = createClient(SUPABASE_URL, SERVICE_KEY);
 
-    // 3) Only admins/CEOs may convert enrollments.
     const { data: me } = await admin.from("profiles").select("role").eq("id", user.id).single();
     if (!me || !["admin", "ceo"].includes(me.role)) {
       return json({ error: "Only an admin or CEO can do this." }, 403);
     }
 
-    // 4) Load the enrollment.
     const { enrollment_id } = await req.json().catch(() => ({}));
     if (!enrollment_id) return json({ error: "enrollment_id is required." }, 400);
     const { data: enr, error: eErr } = await admin
       .from("enrollments").select("*").eq("id", enrollment_id).single();
     if (eErr || !enr) return json({ error: "Enrollment not found." }, 404);
-    // Use the real email if given; otherwise build a login email from the phone,
-    // so phone-only enrollments can still become student accounts.
+
     const digits = String(enr.phone || "").replace(/\D/g, "");
     const loginEmail = enr.email || (digits ? digits + "@students.alfalah-academy.com" : "");
     if (!loginEmail) {
       return json({ error: "This enrollment has neither an email nor a phone, so a login can't be created." }, 400);
     }
 
-    // 5) Create the auth user (email pre-confirmed) with a temporary password.
     const tempPassword = genPassword();
     const { data: created, error: cErr } = await admin.auth.admin.createUser({
       email: loginEmail,
@@ -84,7 +68,6 @@ Deno.serve(async (req) => {
     }
     const uid = created.user.id;
 
-    // 6) Create the student profile + an empty progress row.
     await admin.from("profiles").insert({
       id: uid,
       name: enr.name,
@@ -96,7 +79,6 @@ Deno.serve(async (req) => {
     });
     await admin.from("progress").insert({ id: uid, surahs: [], notes: "" });
 
-    // 7) Mark the enrollment as enrolled.
     await admin.from("enrollments").update({ status: "enrolled" }).eq("id", enrollment_id);
 
     return json({ ok: true, name: enr.name, email: loginEmail, synthesized: !enr.email, temp_password: tempPassword });

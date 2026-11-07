@@ -1,11 +1,3 @@
-/* Al-Falah Islamic Academy — Service Worker
- * Strategy:
- *  - Only same-origin GET requests are handled here. Supabase (different origin),
- *    Google Fonts, jsDelivr and Analytics pass straight through to the network,
- *    so live auth/data is NEVER served from cache.
- *  - HTML pages: network-first (fresh content when online, cached shell offline).
- *  - Other static assets (css/js/images/icons): cache-first (fast, offline-ready).
- */
 const CACHE = 'alfalah-v6';
 
 const PRECACHE = [
@@ -33,7 +25,7 @@ const PRECACHE = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE)
-      // addAll fails the whole install if one file 404s; add individually instead.
+
       .then((cache) => Promise.allSettled(PRECACHE.map((url) => cache.add(url))))
       .then(() => self.skipWaiting())
   );
@@ -51,15 +43,13 @@ self.addEventListener('fetch', (event) => {
   const req = event.request;
   const url = new URL(req.url);
 
-  // Only handle same-origin GET. Everything else (Supabase, fonts, CDN, analytics,
-  // and all POST/auth requests) goes straight to the network.
   if (req.method !== 'GET' || url.origin !== self.location.origin) return;
 
   const isHTML = req.mode === 'navigate' ||
     (req.headers.get('accept') || '').includes('text/html');
 
   if (isHTML) {
-    // Network-first for pages.
+
     event.respondWith(
       fetch(req)
         .then((res) => {
@@ -72,7 +62,6 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // Cache-first for other static assets.
   event.respondWith(
     caches.match(req).then((cached) => {
       if (cached) return cached;

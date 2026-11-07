@@ -1,18 +1,3 @@
-// Al-Falah Academy — Edge Function: email a notification when a new enrollment arrives.
-//
-// Triggered by a Supabase Database Webhook on INSERT into `enrollments` (see README).
-// Runs server-side; sends email via Resend (https://resend.com). This replaces the
-// unreliable client-side FormSubmit call — enrollments are saved and notified from the
-// database itself, so a notification goes out even if the visitor closes the tab.
-//
-// Secrets to set (Supabase Dashboard → Edge Functions → notify-enrollment → Secrets):
-//   RESEND_API_KEY   — from resend.com (required)
-//   NOTIFY_TO        — comma-separated recipients (default: raees.malik89@gmail.com)
-//   NOTIFY_FROM      — sender (default: "Al-Falah Academy <onboarding@resend.dev>")
-//   WEBHOOK_SECRET   — shared secret; the webhook must send it as header x-webhook-secret
-//
-// Deploy: see supabase/functions/notify-enrollment/README.md
-
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-webhook-secret",
@@ -27,10 +12,9 @@ function json(body: unknown, status = 200): Response {
 }
 
 function esc(s: unknown): string {
-  return String(s ?? "—").replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]!));
+  return String(s ?? " - ").replace(/[<>&]/g, (c) => ({ "<": "&lt;", ">": "&gt;", "&": "&amp;" }[c]!));
 }
 
-// Build a readable HTML table of the enrollment fields.
 function renderEmail(r: Record<string, unknown>): string {
   const rows: [string, unknown][] = [
     ["Student", r.name],
@@ -63,7 +47,7 @@ function renderEmail(r: Record<string, unknown>): string {
   const wa = String(r.phone || "").replace(/\D/g, "");
   return `<div style="font-family:Inter,Arial,sans-serif;max-width:560px;margin:0 auto">
     <div style="background:linear-gradient(135deg,#0d2818,#1a6b3a);color:#fff;padding:20px 24px;border-radius:12px 12px 0 0">
-      <h2 style="margin:0;font-size:18px">📖 New Enrollment — Al-Falah Islamic Academy</h2>
+      <h2 style="margin:0;font-size:18px">📖 New Enrollment - Al-Falah Islamic Academy</h2>
     </div>
     <table style="width:100%;border-collapse:collapse;background:#fff;border:1px solid #e3ecdf;border-top:none;font-size:14px">${trs}</table>
     <div style="padding:16px 24px;background:#f7f9f4;border:1px solid #e3ecdf;border-top:none;border-radius:0 0 12px 12px">
@@ -76,7 +60,6 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
-  // Shared-secret check so only your Supabase webhook can trigger emails.
   const expected = Deno.env.get("WEBHOOK_SECRET");
   if (expected && req.headers.get("x-webhook-secret") !== expected) {
     return json({ error: "Unauthorized" }, 401);
@@ -89,12 +72,12 @@ Deno.serve(async (req) => {
   const from = Deno.env.get("NOTIFY_FROM") || "Al-Falah Academy <onboarding@resend.dev>";
 
   try {
-    // Supabase DB webhook payload: { type, table, record, old_record, schema }.
+
     const body = await req.json().catch(() => ({}));
     const record = (body.record ?? body) as Record<string, unknown>;
     if (!record || typeof record !== "object") return json({ error: "No record in payload" }, 400);
 
-    const subject = `New Enrollment — ${record.name || "Al-Falah"}${record.course ? " · " + record.course : ""}`;
+    const subject = `New Enrollment - ${record.name || "Al-Falah"}${record.course ? " · " + record.course : ""}`;
 
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",

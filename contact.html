@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <!-- PWA -->
+
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1a4030">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,12 +13,12 @@
   <link rel="apple-touch-icon" href="/assets/icon-192.png">
   <script src="/assets/pwa.js" defer></script>
   <title>Contact Us | Al-Falah Islamic Academy</title>
-  <meta name="description" content="Contact Al-Falah Islamic Academy — send us your questions or complaints through our query form, or reach us on WhatsApp and email." />
+  <meta name="description" content="Contact Al-Falah Islamic Academy - send us your questions or complaints through our query form, or reach us on WhatsApp and email." />
   <meta name="robots" content="index, follow" />
   <link rel="canonical" href="https://alfalah-academy.com/contact" />
   <meta property="og:type" content="website" />
   <meta property="og:site_name" content="Al-Falah Islamic Academy" />
-  <meta property="og:title" content="Contact Us — Al-Falah Islamic Academy" />
+  <meta property="og:title" content="Contact Us - Al-Falah Islamic Academy" />
   <meta property="og:description" content="Send us your queries or complaints, or reach us on WhatsApp and email." />
   <meta property="og:url" content="https://alfalah-academy.com/contact" />
   <meta property="og:image" content="https://alfalah-academy.com/assets/logo-full.png" />
@@ -56,7 +56,7 @@
     .ci-row a:hover { text-decoration: underline; }
     .ci-label { display: block; font-size: 12px; color: var(--gold-lt); font-weight: 700; margin-bottom: 2px; }
   </style>
-  <!-- Google Analytics (GA4) -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -112,11 +112,11 @@
     </div>
 
     <div class="contact-wrap">
-      <!-- FORM -->
+
       <div class="query-card">
         <div id="queryForm">
           <h3>Submit Queries</h3>
-          <p class="lead">Students can use this form to send us their queries or complaints directly — we usually reply within one working day.</p>
+          <p class="lead">Students can use this form to send us their queries or complaints directly - we usually reply within one working day.</p>
           <div class="fg">
             <label for="q_name">Full Name <span class="req">*</span></label>
             <input type="text" id="q_name" placeholder="Enter your full name" autocomplete="name" />
@@ -143,7 +143,6 @@
         </div>
       </div>
 
-      <!-- CONTACT INFO -->
       <div class="contact-info">
         <h3>Other ways to reach us</h3>
         <div class="ci-row">
@@ -230,14 +229,14 @@ function sendQuery(){
     if(!el.value.trim()){ el.classList.add('err'); ok=false; } else { el.classList.remove('err'); }
   });
   if(!ok) return;
-  var data={ Name:name.value.trim(), Email:email.value.trim(), Phone:(phone.value.trim()||'—'), Message:msg.value.trim() };
+  var data={ Name:name.value.trim(), Email:email.value.trim(), Phone:(phone.value.trim()||' - '), Message:msg.value.trim() };
   var fd=new FormData();
-  fd.append('_subject','New Query — Al-Falah Islamic Academy — '+data.Name);
+  fd.append('_subject','New Query - Al-Falah Islamic Academy - '+data.Name);
   fd.append('_cc','raees.malik89@gmail.com');
   fd.append('_captcha','false');
   fd.append('_template','table');
-  // Auto-reply sent back to the person who messaged (FormSubmit reads the 'email' field).
-  fd.append('_autoresponse','Assalamu Alaikum! Thank you for contacting Al-Falah Islamic Academy. We have received your message and will get back to you soon, in sha Allah.\n\n— Al-Falah Islamic Academy');
+
+  fd.append('_autoresponse','Assalamu Alaikum! Thank you for contacting Al-Falah Islamic Academy. We have received your message and will get back to you soon, in sha Allah.\n\n - Al-Falah Islamic Academy');
   fd.append('email', data.Email);
   Object.keys(data).forEach(function(k){ fd.append(k,data[k]); });
   fetch('https://formsubmit.co/7f31dcca8379e7f68922a87cbe85b8c5',{ method:'POST', body:fd, headers:{'Accept':'application/json'} })

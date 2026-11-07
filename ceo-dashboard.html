@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="assets/favicon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- PWA -->
+
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1a4030">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -87,7 +87,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .spin-sm{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes sp{to{transform:rotate(360deg)}}
 </style>
-  <!-- Google Analytics (GA4) -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -97,7 +97,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </script>
 </head>
 <body>
-<div class="loading-screen" id="ls"><div class="spin"></div><p style="color:#666;font-size:14px">Loading dashboard…</p></div>
+<div class="loading-screen" id="ls"><div class="spin"></div><p style="color:#666;font-size:14px">Loading dashboard...</p></div>
 <div id="app" style="display:none">
 <nav class="nav">
   <div class="nav-logo"><span>🕌</span><div class="nav-title">Al-Falah Academy<small>CEO Dashboard</small></div></div>
@@ -116,8 +116,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="stat"><div class="stat-icon">🛠️</div><div><div class="stat-val" id="stAdmins">0</div><div class="stat-label">Admins / CEOs</div></div></div>
     <div class="stat"><div class="stat-icon">✅</div><div><div class="stat-val" id="stPaid">0</div><div class="stat-label">Fees Paid</div></div></div>
     <div class="stat"><div class="stat-icon">⚠️</div><div><div class="stat-val" id="stUnpaid">0</div><div class="stat-label">Unpaid</div></div></div>
-    <div class="stat"><div class="stat-icon">💰</div><div><div class="stat-val" id="stRevenue">—</div><div class="stat-label">Collected (PKR)</div></div></div>
-    <div class="stat"><div class="stat-icon">📋</div><div><div class="stat-val" id="stToday">—</div><div class="stat-label">Present Today</div></div></div>
+    <div class="stat"><div class="stat-icon">💰</div><div><div class="stat-val" id="stRevenue"> - </div><div class="stat-label">Collected (PKR)</div></div></div>
+    <div class="stat"><div class="stat-icon">📋</div><div><div class="stat-val" id="stToday"> - </div><div class="stat-label">Present Today</div></div></div>
     <div class="stat"><div class="stat-icon">📝</div><div><div class="stat-val" id="stEnroll">0</div><div class="stat-label">Enrollments</div></div></div>
   </div>
 
@@ -129,7 +129,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 
   <div class="card">
     <div class="card-title"><span>📝</span> Website Enrollments <span id="enrollCount" style="font-weight:400;color:#888;font-size:12px"></span></div>
-    <input class="search" type="text" placeholder="Search by name or phone…" oninput="filterE(this.value)">
+    <input class="search" type="text" placeholder="Search by name or phone..." oninput="filterE(this.value)">
     <div id="enrollList"><div class="no-s">No enrollments yet</div></div>
   </div>
 
@@ -147,15 +147,15 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     .tr-empty{display:flex;align-items:center;justify-content:center;min-height:220px;color:#9aa;border:1px dashed #d6e2da;border-radius:12px;text-align:center;padding:20px}
   </style>
   <div class="card">
-    <div class="card-title"><span>👨‍🏫</span> Teacher Room — Mark &amp; View Student Records</div>
+    <div class="card-title"><span>👨‍🏫</span> Teacher Room - Mark &amp; View Student Records</div>
     <div style="display:flex;gap:6px;margin-bottom:12px;flex-wrap:wrap">
       <button id="scopeMine" class="scope-btn active" onclick="setRoomScope('mine',this)">👤 My Students (<span id="cntMine">0</span>)</button>
       <button id="scopeAll" class="scope-btn" onclick="setRoomScope('all',this)">🏫 All Students (<span id="cntAll">0</span>)</button>
     </div>
     <div class="tr-cols">
       <div>
-        <input class="search" style="margin:0 0 10px;width:100%" type="text" placeholder="Search student…" oninput="filterRoom(this.value)">
-        <div id="roomList" class="tr-list"><div class="no-s">Loading…</div></div>
+        <input class="search" style="margin:0 0 10px;width:100%" type="text" placeholder="Search student..." oninput="filterRoom(this.value)">
+        <div id="roomList" class="tr-list"><div class="no-s">Loading...</div></div>
       </div>
       <div id="roomPanel" class="tr-right"><div class="tr-empty">👈 Select a student to view &amp; mark their Hifz, Sabaq, Attendance, Notes &amp; Exams</div></div>
     </div>
@@ -164,7 +164,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="card">
     <div class="card-title"><span>💳</span> Students &amp; Fees</div>
     <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px">
-      <input id="sSearch" class="search" style="flex:1;min-width:140px;margin:0" type="text" placeholder="Search student…" oninput="applyStudentFilter()">
+      <input id="sSearch" class="search" style="flex:1;min-width:140px;margin:0" type="text" placeholder="Search student..." oninput="applyStudentFilter()">
       <select id="grpFilter" class="fee-in" style="min-width:150px" onchange="applyStudentFilter()">
         <option value="">👥 All students</option>
         <option value="madrasah">🕌 Madrasah only</option>
@@ -177,19 +177,19 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </div>
 
   <div class="card">
-    <div class="card-title"><span>👥</span> Staff &amp; Roles — Full Access</div>
+    <div class="card-title"><span>👥</span> Staff &amp; Roles - Full Access</div>
     <div style="background:#f6faf7;border:1px solid #e3ede6;border-radius:12px;padding:14px;margin-bottom:14px">
       <div style="font-weight:700;color:#14532d;margin-bottom:8px;font-size:14px">➕ Add a teacher login</div>
       <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
         <input id="tnName" class="fee-in" style="flex:1;min-width:140px" type="text" placeholder="Teacher name (e.g. Ahmad Sahib)">
         <input id="tnCode" class="fee-in" style="flex:1;min-width:120px" type="text" placeholder="Login code (e.g. ahmad)">
-        <select id="tnClass" class="fee-in" style="flex:1;min-width:150px"><option value="">— Select class —</option></select>
+        <select id="tnClass" class="fee-in" style="flex:1;min-width:150px"><option value=""> - Select class - </option></select>
         <input id="tnPass" class="fee-in" style="flex:1;min-width:120px" type="text" placeholder="Password (blank = auto)">
         <button onclick="addTeacher(this)" style="background:#1a6b3a;color:#fff;border:none;border-radius:8px;padding:9px 16px;font-weight:700;cursor:pointer;font-family:inherit">Create</button>
       </div>
-      <div style="font-size:12px;color:#5b7566;margin-top:6px">The teacher logs in with the login code + password you set — no email inbox needed. Share those with them.</div>
+      <div style="font-size:12px;color:#5b7566;margin-top:6px">The teacher logs in with the login code + password you set - no email inbox needed. Share those with them.</div>
     </div>
-    <input class="search" type="text" placeholder="Search staff…" oninput="filterStaff(this.value)">
+    <input class="search" type="text" placeholder="Search staff..." oninput="filterStaff(this.value)">
     <div id="staffList"><div class="no-s">No staff yet</div></div>
   </div>
 
@@ -197,7 +197,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="card-title"><span>📢</span> Announcements &amp; Messages</div>
     <div class="ann-form">
       <input type="text" id="annT" dir="auto" placeholder="Title / عنوان (Urdu, Arabic or English)">
-      <textarea id="annB" rows="3" dir="auto" placeholder="Write your message… / پیغام لکھیں…"></textarea>
+      <textarea id="annB" rows="3" dir="auto" placeholder="Write your message... / پیغام لکھیں..."></textarea>
       <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center">
         <select id="annAud" class="fee-in" style="min-width:170px">
           <option value="all">📣 Everyone (students, teachers, admins)</option>
@@ -236,10 +236,10 @@ function renderStudents(list){
     return `<div class="frow">
       <div class="s-av">${ini(s)}</div>
       <div class="fmeta"><div class="s-name">${s.name} <span style="font-size:11px;font-weight:700;padding:1px 7px;border-radius:20px;${s.is_roster?'background:#e7f3ec;color:#1a6b3a':'background:#eaf1fb;color:#2156a8'}">${s.is_roster?'🕌 Madrasah':'🌐 Online'}</span></div><div class="s-meta">${s.course||'Quran Hifz'}${s.email?' · '+s.email:''}</div></div>
-      <div class="fee-wrap"><small>Class</small><select class="fee-in cls-in" onchange="saveClass('${s.id}',this)" title="Assign this student to a class — must match the teacher's class for the live-class join">${classOpts(s.class_name||'')}</select></div>
-      <div class="fee-wrap"><small>Teacher</small><select class="fee-in cls-in" onchange="saveTeacher('${s.id}',this)" title="Assign this student directly to a teacher — they appear in that teacher's dashboard and join that teacher's live class">${teacherOpts(s.teacher_id||'')}</select></div>
+      <div class="fee-wrap"><small>Class</small><select class="fee-in cls-in" onchange="saveClass('${s.id}',this)" title="Assign this student to a class - must match the teacher's class for the live-class join">${classOpts(s.class_name||'')}</select></div>
+      <div class="fee-wrap"><small>Teacher</small><select class="fee-in cls-in" onchange="saveTeacher('${s.id}',this)" title="Assign this student directly to a teacher - they appear in that teacher's dashboard and join that teacher's live class">${teacherOpts(s.teacher_id||'')}</select></div>
       <div class="fee-wrap"><small>Fee</small><input class="fee-in" type="number" value="${s.monthly_fee||0}" onchange="saveFee('${s.id}',this)"></div>
-      <button class="fee-in" style="cursor:pointer;background:linear-gradient(135deg,#143024,#1a6b3a);color:#fff;border:none;font-weight:700;white-space:nowrap" onclick="openStudentManager('${s.id}')" title="Open the teacher tools for this student — mark attendance, add exam results, update Hifz, Sabaq and notes">📚 Manage</button>
+      <button class="fee-in" style="cursor:pointer;background:linear-gradient(135deg,#143024,#1a6b3a);color:#fff;border:none;font-weight:700;white-space:nowrap" onclick="openStudentManager('${s.id}')" title="Open the teacher tools for this student - mark attendance, add exam results, update Hifz, Sabaq and notes">📚 Manage</button>
       <select class="stat-sel ${statusBadgeClass(ps)}" onchange="saveStatus('${s.id}',this)">
         <option value="paid" ${ps==='paid'?'selected':''}>✓ Paid</option>
         <option value="pending" ${ps==='pending'?'selected':''}>⏳ Pending</option>
@@ -253,7 +253,7 @@ function fillClassFilter(){
   const el=document.getElementById('clsFilter'); if(!el)return;
   const cur=el.value;
   const base=['Hifz','Nazra A','Nazra B','Nazra','Fahm-ul-Quran','Tajweed','Tafseer','Seerah-tun-Nabi','Selected Ahadith','Arabic Language','English Language'];
-  // Include both the madrasah classes and the online course names students carry.
+
   const extra=[...new Set((students||[]).flatMap(s=>[(s.class_name||'').trim(),(s.course||'').trim()]).filter(Boolean))];
   const all=[...new Set([...base,...extra])].sort();
   el.innerHTML='<option value="">All classes / courses</option>'+all.map(c=>`<option value="${c}">${c}</option>`).join('');
@@ -279,26 +279,25 @@ async function saveFee(uid,input){
   const fee=parseInt(input.value)||0;
   await _sb.from('profiles').update({monthly_fee:fee}).eq('id',uid);
   const s=students.find(x=>x.id===uid); if(s)s.monthly_fee=fee;
-  refreshStats(); toast('✓ Fee updated — '+money(fee));
+  refreshStats(); toast('✓ Fee updated - '+money(fee));
 }
 async function saveStatus(uid,sel){
   const status=sel.value;
   sel.className='stat-sel '+statusBadgeClass(status);
   await _sb.from('profiles').update({payment_status:status}).eq('id',uid);
   const s=students.find(x=>x.id===uid); if(s)s.payment_status=status;
-  refreshStats(); toast('✓ Status updated — '+status);
+  refreshStats(); toast('✓ Status updated - '+status);
 }
 async function saveClass(uid,input){
   const cls=input.value.trim();
   await _sb.from('profiles').update({class_name:cls}).eq('id',uid);
   const s=students.find(x=>x.id===uid); if(s)s.class_name=cls;
-  toast(cls?('✓ Class set — '+cls):'✓ Class cleared');
+  toast(cls?('✓ Class set - '+cls):'✓ Class cleared');
 }
 
-// Teacher options = every teaching staff member (teacher / admin / ceo).
 function teacherOpts(selId){
   const list=(staff||[]).filter(t=>['teacher','admin','ceo'].includes(t.role));
-  let o='<option value="">— No teacher —</option>';
+  let o='<option value=""> - No teacher - </option>';
   for(const t of list) o+=`<option value="${t.id}"${t.id===selId?' selected':''}>${esc(t.name||'Staff')}</option>`;
   return o;
 }
@@ -314,14 +313,11 @@ async function saveTeacher(uid,sel){
   toast(tid?('✓ Assigned to '+(t?t.name:'teacher')):'✓ Teacher cleared');
 }
 
-// ---- Staff & role management (CEO-only, full access) ----
-// Class options = site courses + any class a student OR a staff member is tagged with,
-// so teacher assignments and student assignments always share the same list.
 function classOpts(sel){
   const base=['Hifz','Nazra A','Nazra B','Nazra','Fahm-ul-Quran','Tajweed','Tafseer','Seerah-tun-Nabi','Selected Ahadith','Arabic Language','English Language'];
   const extra=[...new Set([...(students||[]),...(staff||[])].map(s=>(s.class_name||'').trim()).filter(Boolean))];
   const all=[...new Set([...base,...extra])].sort();
-  let o='<option value="">— Select class —</option>';
+  let o='<option value=""> - Select class - </option>';
   for(const c of all) o+=`<option value="${c}"${c===sel?' selected':''}>${c}</option>`;
   return o;
 }
@@ -364,7 +360,7 @@ async function addTeacher(btn){
   const cls=document.getElementById('tnClass').value.trim();
   const pass=document.getElementById('tnPass').value.trim();
   if(!name){toast('Enter the teacher name');return;}
-  btn.disabled=true;const old=btn.textContent;btn.textContent='Creating…';
+  btn.disabled=true;const old=btn.textContent;btn.textContent='Creating...';
   const resp=await _sb.functions.invoke('create-teacher',{body:{name,login_code:code||name,class_name:cls,password:pass}});
   btn.disabled=false;btn.textContent=old;
   if(resp.error){
@@ -374,7 +370,7 @@ async function addTeacher(btn){
   }
   const d=resp.data;
   if(!d||d.error){alert('Could not create teacher:\n'+((d&&d.error)||'unknown error'));return;}
-  alert('✅ Teacher login '+(d.updated?'updated':'created')+'!\n\nName: '+d.name+'\nLogin code: '+d.login+'\nPassword: '+d.password+(d.class_name?'\nClass: '+d.class_name:(d.updated?'':'\n\n(No class set yet — set it from the staff list.)'))+'\n\nShare the login code + password with the teacher. They sign in at the website and will see only their class.');
+  alert('✅ Teacher login '+(d.updated?'updated':'created')+'!\n\nName: '+d.name+'\nLogin code: '+d.login+'\nPassword: '+d.password+(d.class_name?'\nClass: '+d.class_name:(d.updated?'':'\n\n(No class set yet - set it from the staff list.)'))+'\n\nShare the login code + password with the teacher. They sign in at the website and will see only their class.');
   document.getElementById('tnName').value='';document.getElementById('tnCode').value='';document.getElementById('tnClass').value='';document.getElementById('tnPass').value='';
   await reloadProfiles();
 }
@@ -384,14 +380,14 @@ async function saveRole(uid,sel){
   if(error){toast('✗ '+error.message);return;}
   const s=staff.find(x=>x.id===uid); if(s)s.role=newRole;
   const movedToStudent=newRole==='student';
-  // Re-partition lists so a changed role lands in the correct card.
+
   await reloadProfiles();
   toast('✓ Role changed to '+newRole+(movedToStudent?' (now under Students)':''));
 }
 
 async function delUser(uid,name){
   if(!confirm('Remove '+(name||'this user')+'?\n\nThis deletes their profile and portal data. The underlying auth account must be removed separately in Supabase.'))return;
-  // Clean up dependent rows first (no cascade on these tables).
+
   await _sb.from('progress').delete().eq('id',uid);
   await _sb.from('attendance').delete().eq('student_id',uid);
   const {error}=await _sb.from('profiles').delete().eq('id',uid);
@@ -412,7 +408,6 @@ function refreshStats(){
   document.getElementById('stRevenue').textContent=money(paid.reduce((a,s)=>a+(s.monthly_fee||0),0));
 }
 
-// ── Teacher Room: My Students vs All Students, with teacher-style side panel ──
 let roomScope='mine', roomSel=null;
 function myStudentList(){ return students.filter(s=> s.teacher_id===myId || (myClass && (s.class_name||'')===myClass)); }
 function roomBase(){ return roomScope==='mine'? myStudentList() : students; }
@@ -446,7 +441,7 @@ async function reloadProfiles(){
   const {data:profiles}=await _sb.from('profiles').select('*');
   const all=profiles||[];
   students=all.filter(p=>p.role==='student');
-  // Order staff by rank: CEO first, then Admin, then Teachers (name within rank).
+
   const rank={ceo:0,admin:1,teacher:2};
   staff=all.filter(p=>p.role!=='student').sort((a,b)=>{
     const d=(rank[a.role]??9)-(rank[b.role]??9);
@@ -464,7 +459,7 @@ async function postAnn(btn){
   const title=document.getElementById('annT').value.trim();
   const body=document.getElementById('annB').value.trim();
   if(!title||!body)return toast('Fill in both fields');
-  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Posting…';
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Posting...';
   let audience=document.getElementById('annAud')?.value||'all';
   let target_class=null;
   if(audience.indexOf('class:')===0){ target_class=audience.slice(6); audience='students'; }
@@ -472,7 +467,7 @@ async function postAnn(btn){
   if(target_class) ins.target_class=target_class;
   let {error}=await _sb.from('announcements').insert(ins);
   if(error && target_class && /target_class|column/i.test(error.message||'')){
-    // target_class column not added yet — post to all students and tell them how to enable class targeting.
+
     const r2=await _sb.from('announcements').insert({title,body,teacher_name:aName,audience:'students'});
     error=r2.error;
     if(!error) alert('Posted to all students.\n\n➡ To send to a SPECIFIC class, run supabase-class-announcements.sql once in Supabase → SQL Editor.');
@@ -483,7 +478,7 @@ async function postAnn(btn){
     btn.disabled=false;btn.textContent='Post';return;
   }
   document.getElementById('annT').value='';document.getElementById('annB').value='';
-  toast('✓ Posted — '+(target_class?('to '+target_class+' class'):(audience==='teachers'?'to teachers':audience==='admins'?'to admins':audience==='students'?'to students':'to everyone')));loadAnns();
+  toast('✓ Posted - '+(target_class?('to '+target_class+' class'):(audience==='teachers'?'to teachers':audience==='admins'?'to admins':audience==='students'?'to students':'to everyone')));loadAnns();
   btn.disabled=false;btn.textContent='Post';
 }
 function fillAnnClasses(){
@@ -519,7 +514,7 @@ function renderEnrollments(list){
     const selcls=st==='enrolled'?'paid':st==='contacted'?'pending':'';
     return `<div class="frow">
       <div class="s-av">${esc(ini(e))}</div>
-      <div class="fmeta"><div class="s-name">${esc(e.name)||'—'}</div><div class="s-meta">${meta||'—'}</div><div class="s-meta">${contact||'no email'} · ${fmtDate(e.created_at)}</div></div>
+      <div class="fmeta"><div class="s-name">${esc(e.name)||' - '}</div><div class="s-meta">${meta||' - '}</div><div class="s-meta">${contact||'no email'} · ${fmtDate(e.created_at)}</div></div>
       <select class="stat-sel ${selcls}" onchange="saveEnrollStatus('${e.id}',this)">
         <option value="new" ${st==='new'?'selected':''}>🆕 New</option>
         <option value="contacted" ${st==='contacted'?'selected':''}>📞 Contacted</option>
@@ -551,7 +546,7 @@ async function makeStudent(id){
   if(!e){ return; }
   if(!e.email && !e.phone){ toast('This lead has no email or phone'); return; }
   if(!confirm('Create a student login for '+(e.name||'this lead')+' ('+(e.email||e.phone||'')+')?')) return;
-  toast('Creating account…');
+  toast('Creating account...');
   const resp=await _sb.functions.invoke('convert-enrollment',{ body:{ enrollment_id:id } });
   let data=resp.data;
   if(resp.error){
@@ -575,7 +570,6 @@ async function makeStudent(id){
 
   await reloadProfiles();
 
-  // Today's attendance summary
   const today=new Date().toISOString().split('T')[0];
   const {data:att}=await _sb.from('attendance').select('present').eq('date',today);
   const marked=att||[]; const present=marked.filter(a=>a.present).length;
@@ -585,12 +579,11 @@ async function makeStudent(id){
   await loadEnrollments();
   await loadLive();
   await refreshMyLive();
-  setInterval(()=>{ loadLive(); refreshMyLive(); }, 20000);   // refresh live state every 20s
+  setInterval(()=>{ loadLive(); refreshMyLive(); }, 20000);
   document.getElementById('ls').style.display='none';
   document.getElementById('app').style.display='block';
 })();
 
-// ── Live Classes monitor ───────────────────────────────────────────────
 function fmtAgo(ts){
   try{ const m=Math.max(0,Math.round((Date.now()-new Date(ts).getTime())/60000));
     return m<1?'just now':(m<60?m+' min':Math.floor(m/60)+'h '+(m%60)+'m'); }catch(e){ return ''; }
@@ -612,7 +605,6 @@ function watchLive(room){
   window.open('live-class.html?room='+encodeURIComponent(room)+'&name='+encodeURIComponent((aName||'CEO')+' (CEO)')+'&back=ceo-dashboard.html','_blank');
 }
 
-// ── Start / run MY OWN live class (CEO teaches too) ────────────────────
 function slugClass(c){return 'alfalah-'+String(c||'class').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');}
 async function refreshMyLive(){
   const el=document.getElementById('myLiveCtrl'); if(!el) return;
@@ -634,11 +626,11 @@ function joinMyClass(){
   window.open('live-class.html?room='+encodeURIComponent(room)+'&name='+encodeURIComponent(aName||'CEO')+'&back=ceo-dashboard.html','_blank');
 }
 async function startMyClass(btn){
-  btn.disabled=true;btn.textContent='Starting…';
+  btn.disabled=true;btn.textContent='Starting...';
   const room=slugClass(myClass||myId);
   const {data,error}=await _sb.from('live_sessions').insert({teacher_id:myId,teacher_name:aName,class_name:myClass||null,room,active:true}).select().single();
   if(error){ alert('Could not start class:\n'+error.message); btn.disabled=false;btn.textContent='🟢 Start My Live Class'; return; }
-  myLiveRow=data; toast('✓ Your class is live — your students can join now');
+  myLiveRow=data; toast('✓ Your class is live - your students can join now');
   await refreshMyLive(); await loadLive(); joinMyClass();
 }
 async function endMyClass(btn){

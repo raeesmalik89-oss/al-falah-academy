@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="assets/favicon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- PWA -->
+
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1a4030">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -86,7 +86,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .spin{width:40px;height:40px;border:3px solid #e0e0e0;border-top-color:#1a6b3a;border-radius:50%;animation:sp .8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
 </style>
-  <!-- Google Analytics (GA4) -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -96,7 +96,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </script>
 </head>
 <body>
-<div class="loading-screen" id="ls"><div class="spin"></div><p style="color:#666;font-size:14px">Loading your portal…</p></div>
+<div class="loading-screen" id="ls"><div class="spin"></div><p style="color:#666;font-size:14px">Loading your portal...</p></div>
 <div id="app" style="display:none">
 <nav class="nav">
   <div class="nav-logo"><span>🕌</span><div class="nav-title">Al-Falah Academy<small>Student Portal</small></div></div>
@@ -111,7 +111,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </div>
   <div class="welcome">
     <div><h2 id="wName">Assalamu Alaikum!</h2><p id="wSub">Welcome back to Al-Falah Islamic Academy</p></div>
-    <div class="welcome-ayah">اقْرَأْ بِاسْمِ رَبِّكَ<small>Read in the name of your Lord — 96:1</small></div>
+    <div class="welcome-ayah">اقْرَأْ بِاسْمِ رَبِّكَ<small>Read in the name of your Lord - 96:1</small></div>
   </div>
   <div class="stats">
     <div class="stat"><div class="stat-icon">📖</div><div class="stat-val" id="sSurahs">0</div><div class="stat-label">Surahs Memorized</div></div>
@@ -120,8 +120,8 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div class="stat"><div class="stat-icon">🏆</div><div class="stat-val" id="sPct">0%</div><div class="stat-label">Quran Progress</div></div>
   </div>
   <div class="card hifz-card">
-    <div class="card-title"><span>📗</span> Quran Hifz Progress — All 114 Surahs</div>
-    <div class="hifz-label">Memorized <strong id="hCount">0</strong> of <strong>114</strong> Surahs — click any surah below to listen</div>
+    <div class="card-title"><span>📗</span> Quran Hifz Progress - All 114 Surahs</div>
+    <div class="hifz-label">Memorized <strong id="hCount">0</strong> of <strong>114</strong> Surahs - click any surah below to listen</div>
     <div class="hifz-bar"><div class="hifz-fill" id="hFill" style="width:0%"></div></div>
     <div class="surah-grid" id="sGrid"></div>
     <div class="hifz-legend">
@@ -134,11 +134,11 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   <div class="grid">
     <div class="card">
       <div class="card-title"><span>🎓</span> My Enrollment</div>
-      <div class="enroll-row"><span class="enroll-key">Course</span><span class="enroll-val" id="eCourse">—</span></div>
-      <div class="enroll-row"><span class="enroll-key">Class</span><span class="enroll-val" id="eClass">—</span></div>
+      <div class="enroll-row"><span class="enroll-key">Course</span><span class="enroll-val" id="eCourse"> - </span></div>
+      <div class="enroll-row"><span class="enroll-key">Class</span><span class="enroll-val" id="eClass"> - </span></div>
       <div class="enroll-row"><span class="enroll-key">Teacher</span><span class="enroll-val">Dr. Muhammad Naeem</span></div>
       <div class="enroll-row"><span class="enroll-key">Status</span><span class="enroll-val"><span class="badge bg">Active</span></span></div>
-      <div class="enroll-row"><span class="enroll-key">Enrolled Since</span><span class="enroll-val" id="eSince">—</span></div>
+      <div class="enroll-row"><span class="enroll-key">Enrolled Since</span><span class="enroll-val" id="eSince"> - </span></div>
     </div>
     <div class="card">
       <div class="card-title"><span>💳</span> Monthly Fee</div>
@@ -173,7 +173,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <a id="tNoteLink" href="#" target="_blank" rel="noopener" style="display:none;align-items:center;gap:6px;margin-top:10px;font-size:14px;font-weight:700;color:#1a6b3a;text-decoration:none">📎 Open attachment</a>
   </div>
   <div class="card" style="margin-bottom:24px">
-    <div class="card-title"><span>📄</span> Report Card — Exam Results</div>
+    <div class="card-title"><span>📄</span> Report Card - Exam Results</div>
     <div id="examList"><div class="empty">No exam results yet</div></div>
   </div>
   <div class="card" style="margin-bottom:24px">
@@ -194,8 +194,7 @@ function joinLive(){
   if(!liveRoom)return;
   window.open('live-class.html?room='+encodeURIComponent(liveRoom)+'&name='+encodeURIComponent(sName)+'&back=student-dashboard.html','_blank');
 }
-// Announcements for this student: general student/all messages PLUS any posted
-// to this student's specific class. Falls back if target_class column is absent.
+
 async function loadStudentAnns(cls){
   try{
     const q = cls
@@ -232,7 +231,6 @@ async function loadStudentAnns(cls){
   document.getElementById('wName').textContent=`Assalamu Alaikum, ${name.split(' ')[0]}!`;
   document.getElementById('wSub').textContent=`Continue your journey in ${profile.course||'Islamic Studies'}`;
 
-  // Live class banner — show if this student's class has an active session.
   sName=name;
   (async()=>{
     const tid=profile.teacher_id||null;
@@ -242,7 +240,7 @@ async function loadStudentAnns(cls){
     if(tid) conds.push('teacher_id.eq.'+tid);
     if(cls) conds.push('class_name.eq.'+cls);
     let r=await _sb.from('live_sessions').select('*').or(conds.join(',')).eq('active',true).order('started_at',{ascending:false}).limit(1);
-    if(r.error && cls){  // teacher_id column missing → fall back to class-only
+    if(r.error && cls){
       r=await _sb.from('live_sessions').select('*').eq('class_name',cls).eq('active',true).order('started_at',{ascending:false}).limit(1);
     }
     const data=r.data;
@@ -273,7 +271,7 @@ async function loadStudentAnns(cls){
   document.getElementById('pBadge').innerHTML=`<span class="badge ${ps==='paid'?'bg':ps==='overdue'?'br':'by'}">${ps==='paid'?'✓ Paid':ps==='overdue'?'⚠ Overdue':'⏳ Due'}</span>`;
 
   const set=new Set(mem);
-  document.getElementById('sGrid').innerHTML=SURAHS.map((n,i)=>`<button type="button" class="surah-cell ${set.has(i+1)?'done':''}" title="${i+1}. ${n} — click to listen" onclick="playSurah(${i+1},'${n}')">${i+1}</button>`).join('');
+  document.getElementById('sGrid').innerHTML=SURAHS.map((n,i)=>`<button type="button" class="surah-cell ${set.has(i+1)?'done':''}" title="${i+1}. ${n} - click to listen" onclick="playSurah(${i+1},'${n}')">${i+1}</button>`).join('');
 
   const attEl=document.getElementById('attList');
   attEl.innerHTML=(att&&att.length)?att.map(renderAttendanceRow).join(''):'<div class="empty">No attendance records yet</div>';
@@ -288,7 +286,7 @@ async function loadStudentAnns(cls){
     return `<div class="att-row" style="flex-wrap:wrap;gap:2px">
       <span style="font-weight:600">${e.title}${e.subject?' · '+e.subject:''}</span>
       <span style="font-weight:700;color:${col}">${e.obtained}/${e.total} (${pct}%)</span>
-      <span style="font-size:12px;color:#777;width:100%">${fmtDate(e.exam_date)}${e.remarks?' — '+e.remarks:''}</span>
+      <span style="font-size:12px;color:#777;width:100%">${fmtDate(e.exam_date)}${e.remarks?' - '+e.remarks:''}</span>
     </div>`;
   }).join(''):'<div class="empty">No exam results yet</div>';
 
@@ -301,7 +299,7 @@ function playSurah(num,name){
   const status=document.getElementById('hifzNowPlaying');
   audio.style.display='block';
   audio.src=surahAudioUrl(num);
-  status.textContent=`▶ Playing Surah ${num}. ${name}…`;
+  status.textContent=`▶ Playing Surah ${num}. ${name}...`;
   audio.play().catch(()=>{status.textContent=`⚠️ Audio unavailable for Surah ${name} right now. Try again shortly.`;});
 }
 

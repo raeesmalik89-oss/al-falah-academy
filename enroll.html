@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="assets/favicon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- PWA -->
+
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1a4030">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -13,17 +13,17 @@
   <meta name="apple-mobile-web-app-title" content="Al-Falah">
   <link rel="apple-touch-icon" href="/assets/icon-192.png">
   <script src="/assets/pwa.js" defer></script>
-  <!-- Supabase client: lets the enrollment save into the database (Admin/CEO dashboards). -->
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-config.js"></script>
 <title>Enroll Free | Al-Falah Islamic Academy</title>
-<meta name="description" content="Enroll in Al-Falah Islamic Academy — free trial class. Learn Quran, Tajweed, Hadith and Arabic with certified scholars online.">
+<meta name="description" content="Enroll in Al-Falah Islamic Academy - free trial class. Learn Quran, Tajweed, Hadith and Arabic with certified scholars online.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://alfalah-academy.com/enroll">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Al-Falah Islamic Academy">
-<meta property="og:title" content="Enroll Free — Your First Quran Class is Free">
-<meta property="og:description" content="Enroll at Al-Falah Islamic Academy — free trial class. Learn Quran, Tajweed, Hadith and Arabic with certified scholars online.">
+<meta property="og:title" content="Enroll Free - Your First Quran Class is Free">
+<meta property="og:description" content="Enroll at Al-Falah Islamic Academy - free trial class. Learn Quran, Tajweed, Hadith and Arabic with certified scholars online.">
 <meta property="og:url" content="https://alfalah-academy.com/enroll">
 <meta property="og:image" content="https://alfalah-academy.com/assets/logo-full.png">
 <meta name="twitter:card" content="summary_large_image">
@@ -53,7 +53,6 @@ html { scroll-behavior: smooth; }
 body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; min-height: 100vh; }
 a { text-decoration: none; color: inherit; }
 
-/* ── HEADER ── */
 .site-header {
   background: linear-gradient(135deg, var(--green-dark) 0%, var(--green) 100%);
   padding: 14px 24px;
@@ -67,7 +66,6 @@ a { text-decoration: none; color: inherit; }
 .header-back { color: rgba(255,255,255,0.8); font-size: 0.88rem; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
 .header-back:hover { color: #fff; }
 
-/* ── HERO STRIP ── */
 .hero-strip {
   background: linear-gradient(135deg, var(--green-dark), var(--green));
   color: #fff;
@@ -90,11 +88,9 @@ a { text-decoration: none; color: inherit; }
 .hero-badges { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
 .hbadge { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 20px; padding: 5px 14px; font-size: 0.82rem; }
 
-/* ── MAIN LAYOUT ── */
 .main-wrap { max-width: 1060px; margin: 0 auto; padding: 36px 20px 60px; display: grid; grid-template-columns: 1fr 340px; gap: 28px; }
 @media (max-width: 860px) { .main-wrap { grid-template-columns: 1fr; } .side-col { order: -1; } }
 
-/* ── FORM CARD ── */
 .form-card {
   background: var(--white);
   border-radius: 20px;
@@ -103,7 +99,6 @@ a { text-decoration: none; color: inherit; }
   overflow: hidden;
 }
 
-/* PROGRESS BAR */
 .progress-header { padding: 20px 28px 0; }
 .progress-steps { display: flex; align-items: center; gap: 0; margin-bottom: 20px; }
 .pstep {
@@ -127,14 +122,12 @@ a { text-decoration: none; color: inherit; }
 .progress-bar-track { height: 4px; background: #e8e8e0; border-radius: 4px; margin-bottom: 4px; }
 .progress-bar-fill { height: 100%; background: var(--green); border-radius: 4px; transition: width 0.4s ease; }
 
-/* STEP PANELS */
 .step-panel { display: none; padding: 24px 28px 28px; animation: fadeIn 0.3s ease; }
 .step-panel.active { display: block; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 .step-title { font-size: 1.2rem; font-weight: 700; color: var(--green-dark); margin-bottom: 4px; }
 .step-desc { font-size: 0.88rem; color: var(--text-sm); margin-bottom: 22px; }
 
-/* FORM ELEMENTS */
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 @media (max-width: 540px) { .form-row { grid-template-columns: 1fr; } }
 .form-group { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
@@ -165,7 +158,6 @@ a { text-decoration: none; color: inherit; }
 .field-error.show { display: block; }
 .form-group textarea { resize: vertical; min-height: 80px; }
 
-/* COURSE SELECTOR CARDS */
 .course-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
 @media (max-width: 480px) { .course-grid { grid-template-columns: 1fr; } }
 .course-opt { display: none; }
@@ -180,7 +172,6 @@ a { text-decoration: none; color: inherit; }
 .course-name { font-size: 0.88rem; font-weight: 600; color: var(--green-dark); }
 .course-desc { font-size: 0.76rem; color: var(--text-sm); margin-top: 2px; line-height: 1.4; }
 
-/* SCHEDULE CHIPS */
 .chip-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
 .chip-opt { display: none; }
 .chip-label {
@@ -191,7 +182,6 @@ a { text-decoration: none; color: inherit; }
 .chip-label:hover { border-color: var(--green-mid); background: var(--green-lt); }
 .chip-opt:checked + .chip-label { border-color: var(--green); background: var(--green); color: #fff; }
 
-/* LEVEL RADIO CARDS */
 .level-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 14px; }
 @media (max-width: 480px) { .level-grid { grid-template-columns: 1fr 1fr; } }
 .level-opt { display: none; }
@@ -205,10 +195,8 @@ a { text-decoration: none; color: inherit; }
 .level-icon { font-size: 1.5rem; }
 .level-name { font-size: 0.8rem; font-weight: 600; color: var(--green-dark); }
 
-/* SECTION DIVIDER */
 .form-divider { font-size: 0.78rem; font-weight: 700; color: var(--green); background: var(--green-lt); border-radius: 6px; padding: 5px 12px; display: inline-block; margin-bottom: 14px; }
 
-/* STEP NAV BUTTONS */
 .step-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 8px; padding-top: 20px; border-top: 1px solid #eef3ea; }
 .btn-prev { background: transparent; border: 1.5px solid var(--border); color: var(--text-sm); padding: 11px 24px; border-radius: 10px; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
 .btn-prev:hover { border-color: var(--green); color: var(--green); }
@@ -218,7 +206,6 @@ a { text-decoration: none; color: inherit; }
 .btn-submit:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(26,107,58,0.35); }
 .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
 
-/* SUCCESS SCREEN */
 .success-screen {
   display: none; padding: 48px 28px; text-align: center;
 }
@@ -234,7 +221,6 @@ a { text-decoration: none; color: inherit; }
 .btn-wa-success:hover { background: #1da851; transform: translateY(-2px); }
 .success-ref { font-size: 0.82rem; color: #aaa; margin-top: 12px; }
 
-/* ── SIDEBAR ── */
 .side-col { display: flex; flex-direction: column; gap: 16px; }
 .side-card {
   background: var(--white); border-radius: 16px; border: 1.5px solid var(--border);
@@ -267,31 +253,26 @@ a { text-decoration: none; color: inherit; }
 .cm-name { font-size: 0.84rem; font-weight: 600; color: var(--green-dark); }
 .cm-level { font-size: 0.74rem; color: var(--green-mid); }
 
-/* ── FOOTER ── */
 .site-footer {
   background: var(--green-dark); color: rgba(255,255,255,.7);
   text-align: center; padding: 22px; font-size: 0.84rem;
 }
 .site-footer strong { color: var(--gold-border); }
 
-/* ── CHECKBOX ── */
 .check-group { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 14px; }
 .check-group input[type=checkbox] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--green); flex-shrink: 0; }
 .check-group label { font-size: 0.85rem; color: var(--text-sm); line-height: 1.5; cursor: pointer; }
 
-/* ── PHONE INPUT ── */
 .phone-wrap { display: flex; gap: 0; }
 .phone-code { border: 1.5px solid #d8e8d8; border-right: none; border-radius: 10px 0 0 10px; padding: 10px 12px; font-size: 0.88rem; color: #444; background: #f0f5f0; min-width: 66px; }
 .phone-wrap input { border-radius: 0 10px 10px 0 !important; }
 
-/* TOOLTIP HINT */
 .field-hint { font-size: 0.74rem; color: #999; margin-top: 2px; }
 
-/* Spinner */
 .spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.4); border-top-color: #fff; border-radius: 50%; animation: spin 0.7s linear infinite; vertical-align: middle; margin-left: 8px; }
 @keyframes spin { to { transform: rotate(360deg); } }
 </style>
-  <!-- Google Analytics (GA4) -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -302,7 +283,6 @@ a { text-decoration: none; color: inherit; }
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="site-header">
   <div class="logo">
     <img src="assets/logo-icon.png" alt="Al-Falah Islamic Academy" style="height:40px;width:auto;display:block;margin-right:5px" />
@@ -311,10 +291,9 @@ a { text-decoration: none; color: inherit; }
   <a href="index.html" class="header-back">← Back to Website</a>
 </header>
 
-<!-- HERO -->
 <div class="hero-strip">
   <div class="hero-bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</div>
-  <h1 class="hero-title">Enroll — Your First Class is Free</h1>
+  <h1 class="hero-title">Enroll - Your First Class is Free</h1>
   <p class="hero-sub">Take 2 minutes to fill this form. A scholar coordinator will WhatsApp you within 24 hours to schedule your free trial class.</p>
   <div class="hero-badges">
     <span class="hbadge">🎓 Certified Scholars</span>
@@ -324,14 +303,11 @@ a { text-decoration: none; color: inherit; }
   </div>
 </div>
 
-<!-- MAIN -->
 <div class="main-wrap">
 
-  <!-- FORM COLUMN -->
   <div>
     <div class="form-card" id="formCard">
 
-      <!-- PROGRESS -->
       <div class="progress-header">
         <div class="progress-steps">
           <div class="pstep active" id="ps1">
@@ -352,7 +328,6 @@ a { text-decoration: none; color: inherit; }
         </div>
       </div>
 
-      <!-- ══ STEP 1: About You ══ -->
       <div class="step-panel active" id="step1">
         <div class="step-title">Tell us about the student</div>
         <div class="step-desc">This helps us match you with the right scholar and course level.</div>
@@ -380,12 +355,12 @@ a { text-decoration: none; color: inherit; }
             <label>Age Group <span class="req">*</span></label>
             <select id="f_age">
               <option value="">Select Age</option>
-              <option>4–6 years</option>
-              <option>7–10 years</option>
-              <option>11–15 years</option>
-              <option>16–20 years</option>
-              <option>21–35 years</option>
-              <option>36–55 years</option>
+              <option>4-6 years</option>
+              <option>7-10 years</option>
+              <option>11-15 years</option>
+              <option>16-20 years</option>
+              <option>21-35 years</option>
+              <option>36-55 years</option>
               <option>55+ years</option>
             </select>
             <span class="field-error" id="e_age">Please select age group</span>
@@ -431,7 +406,7 @@ a { text-decoration: none; color: inherit; }
         <div class="form-group">
           <label>Current Level <span class="req">*</span></label>
           <div class="level-grid">
-            <input type="radio" name="level" id="lv1" value="Complete Beginner — Never read Arabic" class="level-opt">
+            <input type="radio" name="level" id="lv1" value="Complete Beginner - Never read Arabic" class="level-opt">
             <label for="lv1" class="level-label"><span class="level-icon">🌱</span><span class="level-name">Complete Beginner</span></label>
 
             <input type="radio" name="level" id="lv2" value="Can read basic Arabic letters" class="level-opt">
@@ -446,7 +421,7 @@ a { text-decoration: none; color: inherit; }
             <input type="radio" name="level" id="lv5" value="Hifz in progress" class="level-opt">
             <label for="lv5" class="level-label"><span class="level-icon">🧠</span><span class="level-name">Memorizing</span></label>
 
-            <input type="radio" name="level" id="lv6" value="Not sure — need guidance" class="level-opt">
+            <input type="radio" name="level" id="lv6" value="Not sure - need guidance" class="level-opt">
             <label for="lv6" class="level-label"><span class="level-icon">❓</span><span class="level-name">Not Sure</span></label>
           </div>
           <span class="field-error" id="e_level">Please select a level</span>
@@ -458,63 +433,62 @@ a { text-decoration: none; color: inherit; }
         </div>
       </div>
 
-      <!-- ══ STEP 2: Course ══ -->
       <div class="step-panel" id="step2">
         <div class="step-title">Which course interests you?</div>
-        <div class="step-desc">You can discuss this further with your scholar — we'll guide you to the perfect course.</div>
+        <div class="step-desc">You can discuss this further with your scholar - we'll guide you to the perfect course.</div>
 
         <div class="course-grid">
           <div>
-            <input type="radio" name="course" id="c1" value="Quran Recitation (Nazra) — Read fluently with correct pronunciation" class="course-opt">
+            <input type="radio" name="course" id="c1" value="Quran Recitation (Nazra) - Read fluently with correct pronunciation" class="course-opt">
             <label for="c1" class="course-label">
               <span class="course-icon">📖</span>
-              <div><div class="course-name">Quran Recitation</div><div class="course-desc">Read Quran fluently — for beginners and improvers</div></div>
+              <div><div class="course-name">Quran Recitation</div><div class="course-desc">Read Quran fluently - for beginners and improvers</div></div>
             </label>
           </div>
           <div>
-            <input type="radio" name="course" id="c2" value="Tajweed — Quran recitation with correct pronunciation rules" class="course-opt">
+            <input type="radio" name="course" id="c2" value="Tajweed - Quran recitation with correct pronunciation rules" class="course-opt">
             <label for="c2" class="course-label">
               <span class="course-icon">🎵</span>
               <div><div class="course-name">Tajweed</div><div class="course-desc">Correct pronunciation rules of the Quran</div></div>
             </label>
           </div>
           <div>
-            <input type="radio" name="course" id="c3" value="Quran Memorization (Hifz) — Full or partial memorization" class="course-opt">
+            <input type="radio" name="course" id="c3" value="Quran Memorization (Hifz) - Full or partial memorization" class="course-opt">
             <label for="c3" class="course-label">
               <span class="course-icon">🧠</span>
               <div><div class="course-name">Hifz (Memorization)</div><div class="course-desc">Full or partial Quran memorization</div></div>
             </label>
           </div>
           <div>
-            <input type="radio" name="course" id="c4" value="Hadith Studies — 40 Nawawi / Riyadh us-Saliheen" class="course-opt">
+            <input type="radio" name="course" id="c4" value="Hadith Studies - 40 Nawawi / Riyadh us-Saliheen" class="course-opt">
             <label for="c4" class="course-label">
               <span class="course-icon">📚</span>
               <div><div class="course-name">Hadith Studies</div><div class="course-desc">40 Nawawi / Riyadh us-Saliheen</div></div>
             </label>
           </div>
           <div>
-            <input type="radio" name="course" id="c5" value="Arabic Language — Beginner to Intermediate" class="course-opt">
+            <input type="radio" name="course" id="c5" value="Arabic Language - Beginner to Intermediate" class="course-opt">
             <label for="c5" class="course-label">
               <span class="course-icon">🌍</span>
               <div><div class="course-name">Arabic Language</div><div class="course-desc">Understand the Quran in its own language</div></div>
             </label>
           </div>
           <div>
-            <input type="radio" name="course" id="c6" value="Islamic Studies — Aqeedah, Fiqh, Seerah" class="course-opt">
+            <input type="radio" name="course" id="c6" value="Islamic Studies - Aqeedah, Fiqh, Seerah" class="course-opt">
             <label for="c6" class="course-label">
               <span class="course-icon">🕌</span>
               <div><div class="course-name">Islamic Studies</div><div class="course-desc">Aqeedah, Fiqh, Seerah, and more</div></div>
             </label>
           </div>
           <div>
-            <input type="radio" name="course" id="c7" value="Noorani Qaida — Learn to read Arabic from scratch" class="course-opt">
+            <input type="radio" name="course" id="c7" value="Noorani Qaida - Learn to read Arabic from scratch" class="course-opt">
             <label for="c7" class="course-label">
               <span class="course-icon">✏️</span>
-              <div><div class="course-name">Noorani Qaida</div><div class="course-desc">Start from absolute zero — Arabic letters</div></div>
+              <div><div class="course-name">Noorani Qaida</div><div class="course-desc">Start from absolute zero - Arabic letters</div></div>
             </label>
           </div>
           <div>
-            <input type="radio" name="course" id="c8" value="Help me choose — Not sure yet" class="course-opt">
+            <input type="radio" name="course" id="c8" value="Help me choose - Not sure yet" class="course-opt">
             <label for="c8" class="course-label">
               <span class="course-icon">💬</span>
               <div><div class="course-name">Help Me Choose</div><div class="course-desc">We'll recommend the right course for you</div></div>
@@ -551,26 +525,25 @@ a { text-decoration: none; color: inherit; }
         </div>
       </div>
 
-      <!-- ══ STEP 3: Schedule & Contact ══ -->
       <div class="step-panel" id="step3">
         <div class="step-title">Schedule & Contact</div>
-        <div class="step-desc">Tell us when you're available — we'll match a scholar around your timezone.</div>
+        <div class="step-desc">Tell us when you're available - we'll match a scholar around your timezone.</div>
 
         <div class="form-divider">🕐 Preferred Class Time</div>
         <div class="chip-row">
-          <input type="radio" name="time" id="t1" value="Morning (6am–12pm)" class="chip-opt">
-          <label for="t1" class="chip-label">🌅 Morning (6am–12pm)</label>
+          <input type="radio" name="time" id="t1" value="Morning (6am-12pm)" class="chip-opt">
+          <label for="t1" class="chip-label">🌅 Morning (6am-12pm)</label>
 
-          <input type="radio" name="time" id="t2" value="Afternoon (12pm–5pm)" class="chip-opt">
-          <label for="t2" class="chip-label">☀️ Afternoon (12pm–5pm)</label>
+          <input type="radio" name="time" id="t2" value="Afternoon (12pm-5pm)" class="chip-opt">
+          <label for="t2" class="chip-label">☀️ Afternoon (12pm-5pm)</label>
 
-          <input type="radio" name="time" id="t3" value="Evening (5pm–9pm)" class="chip-opt">
-          <label for="t3" class="chip-label">🌆 Evening (5pm–9pm)</label>
+          <input type="radio" name="time" id="t3" value="Evening (5pm-9pm)" class="chip-opt">
+          <label for="t3" class="chip-label">🌆 Evening (5pm-9pm)</label>
 
-          <input type="radio" name="time" id="t4" value="Night (9pm–12am)" class="chip-opt">
-          <label for="t4" class="chip-label">🌙 Night (9pm–12am)</label>
+          <input type="radio" name="time" id="t4" value="Night (9pm-12am)" class="chip-opt">
+          <label for="t4" class="chip-label">🌙 Night (9pm-12am)</label>
 
-          <input type="radio" name="time" id="t5" value="Flexible — Any Time" class="chip-opt">
+          <input type="radio" name="time" id="t5" value="Flexible - Any Time" class="chip-opt">
           <label for="t5" class="chip-label">⚡ Flexible</label>
         </div>
         <span class="field-error" id="e_time">Please select a preferred time</span>
@@ -629,11 +602,10 @@ a { text-decoration: none; color: inherit; }
           <div></div>
         </div>
         <button class="btn-submit" id="btnSubmit" onclick="submitForm()">
-          📖 Submit Enrollment — First Class Free
+          📖 Submit Enrollment - First Class Free
         </button>
       </div>
 
-      <!-- SUCCESS SCREEN -->
       <div class="success-screen" id="successScreen">
         <div class="success-icon">✅</div>
         <h2 class="success-title">JazakAllahu Khayran!</h2>
@@ -645,20 +617,19 @@ a { text-decoration: none; color: inherit; }
         <p style="margin-top:20px"><a href="index.html" style="color:var(--green);font-weight:600;">← Return to Al-Falah Academy Website</a></p>
       </div>
 
-    </div><!-- end form-card -->
+    </div>
   </div>
 
-  <!-- SIDEBAR COLUMN -->
   <aside class="side-col">
 
     <div class="side-card">
       <h4>🕌 What Happens After You Enroll?</h4>
       <div class="next-steps">
-        <div class="ns-item"><div class="ns-num">1</div><div class="ns-text"><strong>Instant confirmation</strong> — Your form arrives with us immediately</div></div>
+        <div class="ns-item"><div class="ns-num">1</div><div class="ns-text"><strong>Instant confirmation</strong> - Your form arrives with us immediately</div></div>
         <div class="ns-item"><div class="ns-num">2</div><div class="ns-text"><strong>We review</strong> your level and course selection</div></div>
-        <div class="ns-item"><div class="ns-num">3</div><div class="ns-text"><strong>WhatsApp in 24 hrs</strong> — A coordinator contacts you</div></div>
+        <div class="ns-item"><div class="ns-num">3</div><div class="ns-text"><strong>WhatsApp in 24 hrs</strong> - A coordinator contacts you</div></div>
         <div class="ns-item"><div class="ns-num">4</div><div class="ns-text"><strong>Free trial class</strong> is scheduled at your preferred time</div></div>
-        <div class="ns-item"><div class="ns-num">5</div><div class="ns-text"><strong>Start learning!</strong> — Your Islamic journey begins 🌙</div></div>
+        <div class="ns-item"><div class="ns-num">5</div><div class="ns-text"><strong>Start learning!</strong> - Your Islamic journey begins 🌙</div></div>
       </div>
     </div>
 
@@ -674,8 +645,8 @@ a { text-decoration: none; color: inherit; }
     <div class="side-card">
       <h4>✨ Why Al-Falah Academy?</h4>
       <ul class="feature-list">
-        <li>Certified scholars with 10–25 years experience</li>
-        <li>Flexible scheduling — any timezone</li>
+        <li>Certified scholars with 10-25 years experience</li>
+        <li>Flexible scheduling - any timezone</li>
         <li>One-on-one personal attention</li>
         <li>Separate male &amp; female teachers available</li>
         <li>Children from age 4+ welcome</li>
@@ -692,15 +663,15 @@ a { text-decoration: none; color: inherit; }
 
   </aside>
 
-</div><!-- end main-wrap -->
+</div>
 
 <footer class="site-footer">
-  <strong>AL-FALAH ISLAMIC ACADEMY</strong> — اسلامی تعلیم کی بہترین درسگاہ<br>
+  <strong>AL-FALAH ISLAMIC ACADEMY</strong> - اسلامی تعلیم کی بہترین درسگاہ<br>
   <span style="opacity:.6">📱 +92 316 8818693 · ✉️ info@alfalah-academy.com</span>
 </footer>
 
 <script>
-// ── STEP MANAGEMENT ──────────────────────────────────────────────────
+
 let currentStep = 1;
 
 function updateProgress(step) {
@@ -723,7 +694,6 @@ function goStep(n) {
   document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-// ── VALIDATION ───────────────────────────────────────────────────────
 function setErr(id, show) {
   const el = document.getElementById('e_' + id);
   if (el) el.classList.toggle('show', show);
@@ -740,7 +710,7 @@ function radioVal(name) {
 function validateStep(step) {
   let ok = true;
   if (step === 1) {
-    // Name: at least 2 chars and contains a letter (Latin or Arabic/Urdu)
+
     const nameVal = document.getElementById('f_name').value.trim();
     const nameOk = nameVal.length >= 2 && /[a-zA-Z؀-ۿ]/.test(nameVal);
     setErr('name', !nameOk);
@@ -762,20 +732,18 @@ function validateStep(step) {
     if (!radioVal('time')) { setErr('time', true); ok = false; }
     else setErr('time', false);
 
-    // Phone: Pakistani mobile — 10 digits starting with 3 (after +92 prefix)
     const phRaw = document.getElementById('f_phone').value.trim().replace(/[\s\-]/g, '');
     const phoneEl = document.getElementById('e_phone');
     if (!phRaw) {
       phoneEl.textContent = 'Please enter your WhatsApp number';
       setErr('phone', true); ok = false;
     } else if (!/^3[0-9]{9}$/.test(phRaw)) {
-      phoneEl.textContent = 'Enter a valid number (e.g. 3XX XXXXXXX — 10 digits after +92)';
+      phoneEl.textContent = 'Enter a valid number (e.g. 3XX XXXXXXX - 10 digits after +92)';
       setErr('phone', true); ok = false;
     } else {
       setErr('phone', false);
     }
 
-    // Email: optional — validate format only if provided
     const emailVal = document.getElementById('f_email').value.trim();
     if (emailVal && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailVal)) {
       setErr('email', true); ok = false;
@@ -789,7 +757,6 @@ function validateStep(step) {
   return ok;
 }
 
-// ── FORM SUBMIT ──────────────────────────────────────────────────────
 function submitForm() {
   if (!validateStep(3)) return;
 
@@ -797,7 +764,6 @@ function submitForm() {
   btn.disabled = true;
   btn.innerHTML = 'Submitting<span class="spinner"></span>';
 
-  // Gather all data
   const data = {
     name:      document.getElementById('f_name').value.trim(),
     enrollFor: document.getElementById('f_for').value,
@@ -817,7 +783,6 @@ function submitForm() {
     notes:     document.getElementById('f_notes').value.trim()
   };
 
-  // Build WhatsApp message (used by the success-screen "message us" button)
   const waMsg = encodeURIComponent(
 `Assalamu Alaikum! New Enrollment Request
 
@@ -854,10 +819,6 @@ First trial class requested - Jazak Allah Khayran!`
     document.getElementById('formCard').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  // Save the enrollment into Supabase so it shows up in the Admin/CEO dashboards.
-  // A database trigger then emails the academy (Edge Function → Resend), so no
-  // client-side email call is needed. Email is optional — a phone-only enrollment
-  // saves fine (empty fields become null).
   if (typeof _sb !== 'undefined' && _sb) {
     _sb.from('enrollments').insert({
       name: data.name || null, enroll_for: data.enrollFor || null, age: data.age || null,
@@ -874,7 +835,6 @@ First trial class requested - Jazak Allah Khayran!`
   }
 }
 
-// ── CLEAR ERRORS ON INPUT ─────────────────────────────────────────────
 document.querySelectorAll('input, select, textarea').forEach(el => {
   el.addEventListener('change', () => {
     const id = el.id ? el.id.replace('f_','') : '';

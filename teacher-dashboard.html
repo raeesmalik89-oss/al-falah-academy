@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
   <link rel="icon" type="image/png" href="assets/favicon.png" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- PWA -->
+
   <link rel="manifest" href="/manifest.json">
   <meta name="theme-color" content="#1a4030">
   <meta name="apple-mobile-web-app-capable" content="yes">
@@ -94,7 +94,7 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
 .spin-sm{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite;vertical-align:middle;margin-right:6px}
 @keyframes sp{to{transform:rotate(360deg)}}
 </style>
-  <!-- Google Analytics (GA4) -->
+
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9KM8FWM46X"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -104,28 +104,28 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
   </script>
 </head>
 <body>
-<div class="loading-screen" id="ls"><div class="spin"></div><p style="color:#666;font-size:14px">Loading dashboard…</p></div>
+<div class="loading-screen" id="ls"><div class="spin"></div><p style="color:#666;font-size:14px">Loading dashboard...</p></div>
 <div id="app" style="display:none">
 <nav class="nav">
   <div class="nav-logo"><span>🕌</span><div class="nav-title">Al-Falah Academy<small>Teacher Dashboard</small></div></div>
   <div class="nav-right"><span class="nav-name" id="navName"></span><button class="nav-logout" onclick="logout()">Logout</button></div>
 </nav>
 <div class="main">
-  <div id="classBanner" style="margin-bottom:16px;padding:12px 16px;border-radius:12px;background:linear-gradient(135deg,#1a6b3a,#14532d);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px"><span>🎓</span><span id="classBannerText">Loading your class…</span></div>
+  <div id="classBanner" style="margin-bottom:16px;padding:12px 16px;border-radius:12px;background:linear-gradient(135deg,#1a6b3a,#14532d);color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;gap:8px"><span>🎓</span><span id="classBannerText">Loading your class...</span></div>
   <div class="card" style="margin-bottom:16px">
     <div class="card-title"><span>🎥</span> Live Class</div>
-    <div id="liveBtns" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="font-size:12px;color:#999">Loading…</span></div>
+    <div id="liveBtns" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap"><span style="font-size:12px;color:#999">Loading...</span></div>
   </div>
   <div class="stats">
     <div class="stat"><div class="stat-icon">👥</div><div><div class="stat-val" id="stTotal">0</div><div class="stat-label">Total Students</div></div></div>
-    <div class="stat"><div class="stat-icon">📅</div><div><div class="stat-val" id="stDate">—</div><div class="stat-label">Today</div></div></div>
+    <div class="stat"><div class="stat-icon">📅</div><div><div class="stat-val" id="stDate"> - </div><div class="stat-label">Today</div></div></div>
     <div class="stat"><div class="stat-icon">📢</div><div><div class="stat-val" id="stAnn">0</div><div class="stat-label">Announcements</div></div></div>
     <div class="stat"><div class="stat-icon">📖</div><div><div class="stat-val" id="stHifz">0</div><div class="stat-label">Avg Surahs / Student</div></div></div>
   </div>
   <div class="two-col">
     <div class="card">
       <div class="card-title"><span>👥</span> Students</div>
-      <input class="search" type="text" placeholder="Search student…" oninput="filterS(this.value)">
+      <input class="search" type="text" placeholder="Search student..." oninput="filterS(this.value)">
       <div id="sList"><div class="no-s">No students yet</div></div>
     </div>
     <div class="card" id="dPanel">
@@ -137,10 +137,10 @@ body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);min-h
     <div id="mgmtList"><div class="no-s" style="color:#999;text-align:center;padding:12px;font-size:13px">No messages yet</div></div>
   </div>
   <div class="card">
-    <div class="card-title"><span>📢</span> Announcements — Visible to Students</div>
+    <div class="card-title"><span>📢</span> Announcements - Visible to Students</div>
     <div class="ann-form">
       <input type="text" id="annT" dir="auto" placeholder="Title / عنوان (Urdu, Arabic or English)">
-      <textarea id="annB" rows="3" dir="auto" placeholder="Write your message… / پیغام لکھیں…"></textarea>
+      <textarea id="annB" rows="3" dir="auto" placeholder="Write your message... / پیغام لکھیں..."></textarea>
       <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span id="akbMount"></span><button class="btn-p" onclick="postAnn(this)">Post Announcement</button></div>
     </div>
     <div id="annList"></div>
@@ -169,12 +169,12 @@ async function refreshLiveState(){
 }
 async function startClass(btn){
   if(!tClass){ if(!confirm('You have no class assigned, so students won\'t see a join button. Start anyway?'))return; }
-  btn.disabled=true;btn.textContent='Starting…';
+  btn.disabled=true;btn.textContent='Starting...';
   const room=slugClass(tClass||tId);
   const {data,error}=await _sb.from('live_sessions').insert({teacher_id:tId,teacher_name:tName,class_name:tClass||null,room,active:true}).select().single();
   if(error){ alert('Could not start class:\n'+error.message+(/live_sessions/.test(error.message)?'\n\n➡ Run the live-classes SQL in Supabase first.':'')); btn.disabled=false;btn.textContent='🟢 Start Class'; return; }
   liveRow=data;
-  toast('✓ Class is live — students can join now');
+  toast('✓ Class is live - students can join now');
   await refreshLiveState();
   joinClass();
 }
@@ -260,11 +260,11 @@ function renderHifz(uid,prog){
 }
 async function saveHifz(uid,btn){
   const mem=SURAHS.map((_,i)=>document.getElementById('hc'+(i+1))?.classList.contains('done')?i+1:null).filter(Boolean);
-  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving…';
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving...';
   await _sb.from('progress').upsert({id:uid,surahs:mem,last_updated:new Date().toISOString()});
   const s=students.find(x=>x.id===uid);if(s)s.surahs=mem;
   updateAvgHifz();
-  toast(`✓ Saved — ${mem.length} surahs memorized`);
+  toast(`✓ Saved - ${mem.length} surahs memorized`);
   btn.disabled=false;btn.textContent='💾 Save Progress';
 }
 
@@ -285,9 +285,9 @@ async function markAtt(uid,btn){
   const lesson=document.getElementById('aLesson').value.trim();
   const present=document.getElementById('aStat').value==='true';
   if(!date)return toast('Select a date');
-  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving…';
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving...';
   await _sb.from('attendance').insert({student_id:uid,date,lesson:lesson||'Class',present});
-  toast(`✓ Attendance marked — ${present?'Present':'Absent'}`);
+  toast(`✓ Attendance marked - ${present?'Present':'Absent'}`);
   const {data}=await _sb.from('attendance').select('*').eq('student_id',uid).order('date',{ascending:false}).limit(15);
   renderAtt(uid,data||[]);
 }
@@ -297,14 +297,14 @@ function renderSabaq(uid,p){
   document.getElementById('dContent').innerHTML=`
     <p style="font-size:13px;color:#666;margin-bottom:10px">Record what the student is currently reading (sabaq) and their latest marks. The student sees this in their portal.</p>
     <div class="form-row"><label>Current Sabaq / Portion</label><input type="text" id="sPortion" value="${portion}" placeholder="e.g. Para 5, or Noorani Qaida Lesson 10"></div>
-    <div class="form-row"><label>Latest Marks (0–100)</label><input type="number" id="sMarks" min="0" max="100" value="${p.marks??''}" placeholder="e.g. 85"></div>
+    <div class="form-row"><label>Latest Marks (0-100)</label><input type="number" id="sMarks" min="0" max="100" value="${p.marks??''}" placeholder="e.g. 85"></div>
     <button class="btn-p" onclick="saveSabaq('${uid}',this)">💾 Save Sabaq</button>`;
 }
 async function saveSabaq(uid,btn){
   const portion=document.getElementById('sPortion').value.trim();
   let marks=parseInt(document.getElementById('sMarks').value,10);
   if(isNaN(marks))marks=null; else marks=Math.max(0,Math.min(100,marks));
-  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving…';
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving...';
   await _sb.from('progress').upsert({id:uid,portion:portion||null,marks,last_updated:new Date().toISOString()});
   toast('✓ Sabaq saved');btn.disabled=false;btn.textContent='💾 Save Sabaq';
 }
@@ -315,7 +315,7 @@ function renderNotes(uid,notes){
     <button class="btn-p" onclick="saveNotes('${uid}',this)">💾 Save Notes</button>`;
 }
 async function saveNotes(uid,btn){
-  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving…';
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving...';
   await _sb.from('progress').upsert({id:uid,notes:document.getElementById('nArea').value,last_updated:new Date().toISOString()});
   toast('✓ Notes saved');btn.disabled=false;btn.textContent='💾 Save Notes';
 }
@@ -340,10 +340,10 @@ function renderPay(uid,u){
 async function savePay(uid,btn){
   const fee=parseInt(document.getElementById('pFee').value)||2000;
   const status=document.getElementById('pStat').value;
-  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving…';
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving...';
   await _sb.from('profiles').update({monthly_fee:fee,payment_status:status}).eq('id',uid);
   const s=students.find(x=>x.id===uid);if(s){s.monthly_fee=fee;s.payment_status=status;}
-  renderStudents(students);toast(`✓ Payment updated — ${status}`);
+  renderStudents(students);toast(`✓ Payment updated - ${status}`);
   btn.disabled=false;btn.textContent='💾 Update Payment';
 }
 
@@ -355,7 +355,7 @@ async function renderExams(uid){
     return `<div class="att-row" style="flex-wrap:wrap;gap:2px">
       <span style="font-weight:600">${e.title}${e.subject?' · '+e.subject:''}</span>
       <span style="font-weight:700;color:var(--g)">${e.obtained}/${e.total} (${pct}%)</span>
-      <span style="font-size:11px;color:#777;width:100%">${fmtDate(e.exam_date)}${e.remarks?' — '+e.remarks:''} · <span class="ann-del" onclick="delExam('${e.id}','${uid}')">Delete</span></span>
+      <span style="font-size:11px;color:#777;width:100%">${fmtDate(e.exam_date)}${e.remarks?' - '+e.remarks:''} · <span class="ann-del" onclick="delExam('${e.id}','${uid}')">Delete</span></span>
     </div>`;
   }).join(''):'<p style="text-align:center;color:#999;padding:16px;font-size:13px">No exam results yet</p>';
   document.getElementById('dContent').innerHTML=`
@@ -382,7 +382,7 @@ async function addExam(uid,btn){
   const remarks=document.getElementById('exR').value.trim();
   if(!title) return toast('Enter an exam title');
   if(isNaN(obtained)) return toast('Enter marks obtained');
-  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving…';
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Saving...';
   await _sb.from('exam_results').insert({student_id:uid,title,subject,obtained,total,exam_date,remarks});
   toast('✓ Result added');
   renderExams(uid);
@@ -397,7 +397,7 @@ async function postAnn(btn){
   const title=document.getElementById('annT').value.trim();
   const body=document.getElementById('annB').value.trim();
   if(!title||!body)return toast('Fill in both fields');
-  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Posting…';
+  btn.disabled=true;btn.innerHTML='<span class="spin-sm"></span>Posting...';
   const {error}=await _sb.from('announcements').insert({title,body,teacher_name:tName,audience:'students'});
   if(error){
     const miss=/audience/.test(error.message||'');
@@ -421,7 +421,7 @@ async function loadAnns(){
   el.innerHTML=data.map(a=>`<div class="ann-item"><div class="ann-t" dir="auto">${a.title}</div><div class="ann-b" dir="auto">${a.body}</div><div class="ann-m"><span>${fmtDate(a.created_at)} · ${a.teacher_name}</span><span class="ann-del" onclick="delAnn('${a.id}')">Delete</span></div></div>`).join('');
 }
 async function loadMgmtMsgs(){
-  // Read-only inbox: messages the CEO/Admin aimed at teachers (or everyone).
+
   const {data}=await _sb.from('announcements').select('*').in('audience',['teachers','all']).order('created_at',{ascending:false}).limit(15);
   const el=document.getElementById('mgmtList');
   if(!el)return;
@@ -441,18 +441,14 @@ function updateAvgHifz(){
   document.getElementById('navName').textContent=tName;
   document.getElementById('stDate').textContent=new Date().toLocaleDateString('en-PK',{day:'numeric',month:'short'});
 
-  // Each teacher sees ONLY the class assigned to them (profiles.class_name on
-  // their own account). Admin/CEO set this from their dashboard. If no class is
-  // assigned yet, fall back to showing all students so the dashboard isn't empty.
   const myClass=(auth.profile.class_name||'').trim();
   tClass=myClass;
-  // Show students assigned directly to this teacher (profiles.teacher_id) and/or
-  // in this teacher's class. A teacher with neither falls back to all students.
+
   const conds=['teacher_id.eq.'+tId];
   if(myClass) conds.push('class_name.eq.'+myClass);
   let r=await _sb.from('profiles').select('*').eq('role','student').or(conds.join(','));
   if(r.error){
-    // teacher_id column not added yet → fall back to class-only matching.
+
     let sq=_sb.from('profiles').select('*').eq('role','student');
     if(myClass) sq=sq.eq('class_name',myClass);
     r=await sq;
@@ -466,11 +462,10 @@ function updateAvgHifz(){
   students=studs||[];
   document.getElementById('stTotal').textContent=students.length;
   document.getElementById('classBannerText').textContent =
-    showingAll ? 'No class or students assigned yet — showing all students. Ask the admin to assign you.'
+    showingAll ? 'No class or students assigned yet - showing all students. Ask the admin to assign you.'
     : (myClass ? ('Your class: '+myClass+'  ·  '+students.length+' student'+(students.length===1?'':'s'))
                : (students.length+' student'+(students.length===1?'':'s')+' assigned to you'));
 
-  // Load progress for avg hifz — one batched query instead of one round-trip per student
   if(students.length){
     const ids=students.map(s=>s.id);
     const {data:progs}=await _sb.from('progress').select('id,surahs').in('id',ids);
