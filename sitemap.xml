@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url><loc>https://alfalah-academy.com/</loc><lastmod>2026-10-26</lastmod><changefreq>weekly</changefreq><priority>1.0</priority></url>
   <url><loc>https://alfalah-academy.com/courses</loc><lastmod>2026-10-26</lastmod><changefreq>weekly</changefreq><priority>0.9</priority></url>
   <url><loc>https://alfalah-academy.com/about</loc><lastmod>2026-10-26</lastmod><changefreq>monthly</changefreq><priority>0.8</priority></url>
@@ -16,4 +16,15 @@
   <url><loc>https://alfalah-academy.com/Al-Falah-Noorani-Qaida-Urdu</loc><lastmod>2026-10-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://alfalah-academy.com/Al-Falah-Noorani-Qaida-English</loc><lastmod>2026-10-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
   <url><loc>https://alfalah-academy.com/Al-Falah-Duas-Azkar</loc><lastmod>2026-10-26</lastmod><changefreq>monthly</changefreq><priority>0.6</priority></url>
+  <url>
+    <loc>https://alfalah-academy.com/portfolio/</loc>
+    <lastmod>2026-11-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://alfalah-academy.com/portfolio/muhammad-raees-devops-engineer.jpg</image:loc>
+      <image:title>Muhammad Raees — DevOps / MLOps Engineer</image:title>
+      <image:caption>Muhammad Raees, DevOps / MLOps / AIOps Engineer based in Islamabad, Pakistan</image:caption>
+    </image:image>
+  </url>
 </urlset>
