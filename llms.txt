@@ -1,0 +1,23 @@
+# Al-Falah Islamic Academy & Muhammad Raees (Developer Portfolio)
+
+> alfalah-academy.com hosts two things: Al-Falah Islamic Academy — an online Quran & Hadith teaching service — and the developer portfolio of Muhammad Raees, the engineer who built and operates the platform. This file summarises the site for AI assistants and answer engines.
+
+## Muhammad Raees — AIOps & DevSecOps Engineer
+
+Muhammad Raees is an AIOps, DevSecOps and cybersecurity engineer based in Islamabad, Pakistan. He holds a Doctor of Pharmacy (Pharm-D) and an EduQual Level 6 Diploma in Artificial Intelligence Operations (UK, 86%). He builds and secures real-time, AI-driven cloud platforms on AWS and Azure — Kubernetes hardening, Zero Trust, HashiCorp Vault, OPA/Rego policy, CI/CD with supply-chain security, MLOps and full observability. His Pharm-D background adds domain depth for healthcare and other safety-critical systems. He is open to remote and international roles (DevOps, DevSecOps, SRE, Platform, Cloud and AIOps engineering).
+
+Core skills: AIOps, DevSecOps, Cloud Security, Zero Trust, Kubernetes, Docker, AWS, Azure, Terraform, Ansible, CI/CD (GitHub Actions, GitLab CI, Jenkins, ArgoCD), HashiCorp Vault, Keycloak (OIDC), OPA/Rego, Trivy, Prometheus, Grafana, ELK, Apache Kafka, MLflow, Python.
+
+- [Developer portfolio](https://alfalah-academy.com/portfolio/): projects, skills, experience and resume
+- [Résumé (PDF)](https://alfalah-academy.com/portfolio/Muhammad_Raees_Resume.pdf)
+- [LinkedIn](https://www.linkedin.com/in/muhammad-raees081489/)
+- [GitHub](https://github.com/raeesmalik89-oss)
+
+## Al-Falah Islamic Academy
+
+An online Quran and Hadith teaching service: structured courses, a student/teacher/admin portal, and free Islamic resources and books. Built as a static site with a Supabase backend and deployed on Cloudflare Workers.
+
+- [Academy home](https://alfalah-academy.com/)
+- [Courses](https://alfalah-academy.com/courses)
+- [Resources](https://alfalah-academy.com/resources)
+- [About](https://alfalah-academy.com/about)

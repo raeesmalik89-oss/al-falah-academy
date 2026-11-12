@@ -6,4 +6,22 @@ Disallow: /teacher-dashboard
 Disallow: /admin-dashboard
 Disallow: /ceo-dashboard
 
+# AI assistants and answer engines are welcome to read and cite this site
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+Allow: /
+Disallow: /login
+Disallow: /student-dashboard
+Disallow: /teacher-dashboard
+Disallow: /admin-dashboard
+Disallow: /ceo-dashboard
+
 Sitemap: https://alfalah-academy.com/sitemap.xml
